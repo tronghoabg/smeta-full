@@ -1,0 +1,14 @@
+
+ .header-right{
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aqua;
+    background-color: #ddb7b73d;
+    padding: 2px 10px;
+    border-radius: 5px;
+ }           
+ .header-right--name{
+    margin-left: 5px;
+ }

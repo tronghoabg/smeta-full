@@ -1,0 +1,7 @@
+Note:
+    Clone lại extension sMeta sang React Apple
+        + Xây dựng giao diện giống sMeta
+        + viết api xử lý gửi message giữa react app và extension
+
+    extension
+        + Xây dựng api xử lý đọc message từ react app rồi cal api của facebook (Api này mình có sẵn hết)

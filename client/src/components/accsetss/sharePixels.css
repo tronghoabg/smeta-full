@@ -1,0 +1,188 @@
+.sharepixel{
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12.6px !important;
+  
+  justify-content: center;
+    
+}
+.ml_10{
+    margin-right: 20px;
+}
+
+.text-area{
+   border-radius: 4px;
+   height: 40px;
+   padding-left: 10px;
+   padding-top: 10px;
+}
+
+.text-area:focus {
+    border-color: blue; 
+  }
+  .txtelegantshadow {
+    color: #151315;
+    width: 100px;
+    font-style: unset;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .link-text{
+    padding-right: 15px;
+  }
+  .sharepixel_btn{
+    margin-top: 50px;
+    width: 150px;
+  }
+  .sharepixelbtn{
+    margin-top: 50px;
+  }
+
+  .createaccount{
+    box-sizing: border-box;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    background-color: rgb(237, 241, 226);
+    color: rgb(8, 8, 8);
+    padding: 5px;
+  }
+  .setcamp_post--an{
+    width: 250px;
+  }
+  .setcamp > div > div > div  {
+   padding: 0px !important;
+}
+.setcamp > div > div > input  {
+  padding: 2px;
+
+}
+.setcamp_radio{
+  display: flex;
+}
+
+.setcamp_radio > label > span:last-child {
+  font-size: 13px;
+}
+.sharepixel > div > div > div  {
+  padding: 0px !important;
+  height: 26px;
+}
+.sharepixel > div > div > input  {
+  padding: 2px;
+
+}
+.mb-10{
+  margin-bottom: 25px;
+}
+.setcamp_phannhom{
+padding: 3px 20px 3px 3px;
+border: 1px solid #ccc;
+background-color: #ccc;
+}
+.d-flex{
+  display: flex;
+  align-items: center;
+}
+.ali-baseline{
+  align-items: baseline !important;
+}
+.mt-0{
+  margin-top: 0;
+}
+.mt-5{
+  margin-top: 10px;
+}
+.sharepixel > div > div > div> input  {
+  font-size: 13px;
+  padding-right: 30px !important;
+}
+
+.option-container {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+.option-image {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+.option-image img{
+  width: 100%;
+}
+.option-text {
+  font-size: 12px;
+  margin: 0px !important;
+  text-align: left;
+}
+.changepost_title{
+  display: flex;
+  flex-direction: column;
+}
+.changepost_btn{
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  margin: 0px;
+  padding: 0px
+}
+.money {
+  font-size: 13px;
+  background-color: #56799d;
+    border-radius: 5px;
+    padding: 1px 5px;
+    color: #24ff25
+}
+
+.block-ellipsis {
+  display: block;
+  display: -webkit-box;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 12px;
+  line-height: 1;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden ;
+  text-overflow: ellipsis;
+}
+
+/* CSS for custom dots */
+.custom-carousel .slick-dots {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.custom-carousel .slick-dots li {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.custom-carousel .slick-dots li.slick-active {
+  background-color: white;
+  width: 10px;
+    height: 10px
+}
+.slick-dots.slick-dots-bottom >li>button{
+  background-color: black;
+}
+
+.sharepixel.setcamp.slect_post > div >div >div {
+  width: 300px;
+}
+.sharepixel.setcamp.slect_post > div >div >div> input {
+  transform: translateY(-4px);
+}
+.sharepixel.setcamp.slect_post_1 > div >div >div> input {
+  transform: translateY(-4px);
+}
