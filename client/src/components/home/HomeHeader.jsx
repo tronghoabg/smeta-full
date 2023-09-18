@@ -25,7 +25,6 @@ function HomeHeader() {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
       console.log(newDatatoken, "newDatatoken");
-
       const headers = {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
       };
@@ -41,7 +40,6 @@ function HomeHeader() {
     }
   };
 
-  console.log(user);
 
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
@@ -60,6 +58,7 @@ function HomeHeader() {
           </button>
           <button onClick={handleRedirectLogin}>Đăng nhập</button>
         </div> : <div className="flex text-base text-white opacity-80 font-medium ">
+          <p className="text-[#fff] mx-5 cursor-pointer">{user?.totleMoney/1000} Bit</p>
           {user?.role === "admin" ? <h1 className="text-[#fff] cursor-pointer" onClick={()=>{nav("/admin")}}>Quản trị viên</h1> : null}
           <h1 className="text-[#fff] mx-5 cursor-pointer"  onClick={()=>{nav("/profile")}}>{user?.username}</h1>
           <button className="" onClick={handleLogout}>Đăng xuất</button>

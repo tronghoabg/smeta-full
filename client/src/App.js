@@ -25,6 +25,8 @@ import Dashboard from "./components/admin/ABCD";
 import Profile from "./pages/profile";
 import MiddleWare from "./middleware/MiddleWare";
 import MiddleWareAdmin from "./middleware/MiddlewareAdmin";
+import Payment from "./pages/payment";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const [disable, setdisable] = useState(true);
@@ -85,6 +87,8 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/payment" element={<Payment />}></Route>
+        <Route path="/paymentsuccess" element={<PaymentSuccess />}></Route>
         <Route
           path="/admin"
           element={
