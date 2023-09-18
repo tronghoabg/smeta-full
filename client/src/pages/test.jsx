@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { Carousel } from 'antd';
 import { FaGamepad } from 'react-icons/fa';
@@ -6,9 +6,8 @@ import { AiOutlineSearch }from 'react-icons/ai';
 import { BsFileSpreadsheetFill} from 'react-icons/bs';
 import HomeHeader from "../components/home/HomeHeader";
 import HomeFooter from "../components/home/HomeFooter"
-
-
 import '../components/accsetss/sharePixels.css'
+
 const contentStyle = {
   height: '160px',
   color: '#fff',
@@ -17,12 +16,15 @@ const contentStyle = {
   // background: '#364d79',
 };
 
+
 const settings = {
   dots: true, 
   dotPosition: 'bottom', 
 };
 
+
 function Test({setdisable}) {
+  
 
   useEffect(()=>{
     setdisable(false)
@@ -57,6 +59,7 @@ function Test({setdisable}) {
       <div className="w-full relative  flex justify-center items-center">
         <img className="absolute top-0 left-0 h-[750px] w-full z-10" src="/hero-bg.png" alt="" />
         <div className="w-[1280px] z-[999] mt-[160px] flex justify-center items-center">
+     
           <div>
             <h1 className="text-white text-[48px] font-bold ">sMeta <br />
               Quản lý tài khoản quảng <br /> cáo dễ dàng chuyên <br />
@@ -226,6 +229,7 @@ function Test({setdisable}) {
       <div className="w-full bg-[#00428a]  z-[9999] p-8 text-white text-base  flex justify-center items-center">
       © Copyright <span className="font-bold">sMeta.vn</span>. All Rights Reserved
       </div> */}
+         
     </div>
   )
 
