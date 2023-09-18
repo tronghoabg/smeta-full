@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useTranslation } from 'react-i18next';
 import Sidebar from "./sidebar";
 import { NavLink } from "react-router-dom";
-import  './accsetss/header.css'
+import  '../components/accsetss/header.css'
 const Header = (props) => {
     const { t } = useTranslation();
     const [sidebarOpen, setSidebar] = useState(false)
@@ -45,7 +45,7 @@ const Header = (props) => {
                 </div>
             </div>
             <div className="header-mid">
-                <NavLink to='/'>
+                <NavLink to='/extention'>
                     <img className="logo" src="/logo.png" alt="sMeta.vn"></img>
                 </NavLink>
             </div>

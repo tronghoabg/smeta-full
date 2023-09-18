@@ -35,11 +35,15 @@ const sendTask = async (message) => {
 
 async function getAuthFb() {
     let getAuth = localStorage.getItem("getAuth");
-    getAuth = JSON.parse(getAuth);
+    try{
+        getAuth = JSON.parse(getAuth)
+    }catch{
+        getAuth = null
+    }
+
     if (getAuth === null) {
         localStorage.removeItem('getAuth')
         getAuth = await getAuthToken();
-        console.log(getAuth, "getAuthToken123123123");
         if (!getAuth) {
             return null;
         }
@@ -104,7 +108,6 @@ async function getAuthToken() {
 
 async function load_data() {
     var authFb = await getAuthFb();
-    console.log(authFb, "load_data");
     if (!authFb) {
         return { error: "201" };
     }
@@ -120,7 +123,7 @@ async function load_data() {
         authFb.listBM = data[1];
         authFb.listPage = data[2];
 
-        localStorage.setItem('getAuth', JSON.stringify(authFb));
+        localStorage.setItem('getAuth', authFb);
         return authFb;
     }
 }

@@ -23,7 +23,6 @@ const Home = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    
     async function fetchData() {
       var res = await chromeTask.load_data();
       if (res.error === "201") {
