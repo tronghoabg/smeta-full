@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema({
     },
     language:{
         type:String,
-        default:'VI'
+        default:'VN'
     },
     phone :{
         type:Number
@@ -40,8 +40,16 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0
     },
-    acction :{
+    createAt: {
+        type: Date,
+        default: Date.now()
+    },
+    action :{
         type:[]
+    },
+    usedMonney: {
+        type: Number,
+        default: 0
     }
 },{collection:'user'})
 

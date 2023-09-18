@@ -10,7 +10,7 @@ import instace from "./customer_axios";
 import { setUser, setDataToken } from "../redux/counterSlice";
 import RefreshToken from "./RefreshToken";
 import { message } from "antd";
-
+import Payment from "./payment";
 
 const Profile = ({ setdisable }) => {
     const counter = useSelector((state) => state.counter);
@@ -50,7 +50,7 @@ const Profile = ({ setdisable }) => {
         { title: "Số dư", value: user?.totleMoney },
         { title: "Role", value: user?.role },
         { title: "Premium", value: (user && user?.acction?.length > 0) ? user?.acction.join("") : "None" },
-        { title: "Ngày đăng ký", value: user ? (new Intl.DateTimeFormat('en-US', options)).format(new Date(user.createAt)) : "..." },
+        { title: "Ngày đăng ký", value: (user && user.createAt) ? (new Intl.DateTimeFormat('en-US', options)).format(new Date(user.createAt)) : "..." },
     ]
 
     const handleChangeValue = (e, key) => {
@@ -86,12 +86,11 @@ const Profile = ({ setdisable }) => {
         } else {
             setError("Điền đủ thông tin")
         }
-
     }
     return (
         <>
             <HomeHeader />
-            <div className="w-full h-screen bg-[#fff] pt-[100px] flex justify-center items-center">
+            <div className="w-full min-h-screen bg-[#fff] pt-[100px] flex justify-center items-center">
                 {error.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
@@ -108,7 +107,7 @@ const Profile = ({ setdisable }) => {
                     <p>{null}</p>
                 )}
                 <div className="w-[1200px] min-h-[600px] ">
-                    <h1 className="text-xl text-[#3f4146] mb-6">Thông tin cá nhân</h1>
+                    <h1 className="text-xl text-[#3f4146] mb-3">Thông tin cá nhân</h1>
                     <div className="grid grid-cols-3 gap-4">
                         <div className="flex flex-col justify-center items-center col-span-1 border !border-[#999] p-4 rounded-md">
                             <img className="w-[190px] rounded-full" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="" />
@@ -146,6 +145,15 @@ const Profile = ({ setdisable }) => {
                             </div>}
 
                         </div>
+                    </div>
+
+                    <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua bit</h1>
+                    <div className=" h-fit mb-5 border !border-[#999]">
+                         <Payment/>
+                    </div>
+                    <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Thông tin thanh toán</h1>
+                    <div className=" h-[500px] mb-5 border !border-[#999]">
+                    
                     </div>
                 </div>
             </div>

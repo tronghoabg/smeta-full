@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/smeta')
 
-const moneychitietSchema = mongoose.Schema({
+const buyerPackage = mongoose.Schema({
      userId :{
+        type: String,
         ref :'user'
     },
     time_start :{
@@ -11,11 +12,14 @@ const moneychitietSchema = mongoose.Schema({
     time_end :{
         type: Date
     },
-    money:{
+    key: {
+        type: String,
+    },
+    price:{
         type:Number,
     }
-},{collection:'moneychitiet'})
+},{collection:'buyerPackage'})
 
 
-const moneychitietModal = mongoose.model("moneychitiet",moneychitietSchema)
-module.exports = moneychitietModal
+const buyerPackageModal = mongoose.model("buyerPackage",buyerPackage)
+module.exports = buyerPackageModal

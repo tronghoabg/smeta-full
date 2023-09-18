@@ -4,6 +4,9 @@ var cors = require('cors')
 var app = express()
 const authRouter = require('./Router/auth')
 const password = require('./Router/password')
+const paymentRouter = require('./Router/payment')
+const buypackageRouter = require('./Router/buyerpackage')
+
 const dotenv = require("dotenv")
 const cookieParser = require('cookie-parser');
 dotenv.config()
@@ -16,6 +19,9 @@ const react = `/apps/server/client/build`
 
 app.use("/api/auth",authRouter)  
 app.use("/api/pass",password)  
+app.use("/api/payment",paymentRouter)  
+app.use("/api/buypackage",buypackageRouter)  
+
 app.use(express.static(react));
 
 app.get('*', (req, res) => {

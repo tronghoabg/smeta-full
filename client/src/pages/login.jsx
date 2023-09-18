@@ -75,7 +75,7 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
         <>
             <HomeHeader />
             <div className='w-full h-screen bg-[#fff] flex justify-center items-center pt-[120px]'>
-                {error.length > 0 ? (
+                {error?.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
                         open={open}
