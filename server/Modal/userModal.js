@@ -54,8 +54,8 @@ const userSchema = mongoose.Schema({
     action :{
         type:[],
         default: [{
-            product_name: "share pixel",
-            thoi_gian: getDefaultThoiGian()
+            key: "share pixel",
+            time_end: getDefaultThoiGian()
         }]
     },
     usedMonney: {
