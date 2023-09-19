@@ -9,6 +9,15 @@ const productSchema = mongoose.Schema(
     product_price: {
       type: Number,
     },
+    product_timezone: {
+      type: Number
+    },
+    product_desc:{
+      type:String
+    },
+    product_desc_discount:{
+      type: Number
+    }
   },
   { collection: "product" }
 );
