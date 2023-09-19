@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/smeta')
 
+const getDefaultThoiGian = () => {
+    const currentDate = new Date();
+    currentDate.setFullYear(currentDate.getFullYear() + 1000); 
+    return currentDate;
+};
+
+
 const userSchema = mongoose.Schema({
     username:{
         type: String,
@@ -45,7 +52,11 @@ const userSchema = mongoose.Schema({
         default: Date.now()
     },
     action :{
-        type:[]
+        type:[],
+        default: [{
+            product_name: "share pixel",
+            thoi_gian: getDefaultThoiGian()
+        }]
     },
     usedMonney: {
         type: Number,

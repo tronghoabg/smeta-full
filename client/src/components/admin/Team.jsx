@@ -8,9 +8,7 @@ import Loading from "../Loading";
 import RefreshToken from "../../pages/RefreshToken";
 import { setUser ,setDataToken} from "../../redux/counterSlice";
 import { Button } from "antd";
-import {
-  TablePagination,
-} from "@mui/material";
+import { TablePagination,} from "@mui/material";
 
 
 function Team(props) {
@@ -33,8 +31,6 @@ function Team(props) {
   const { darkmode, loading } = counter;
   const dispatch = useDispatch();
   let { dataToken } = counter
-
-
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [sttStart, setSttStart] = useState(0);
 

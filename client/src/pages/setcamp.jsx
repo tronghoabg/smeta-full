@@ -13,8 +13,15 @@ import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
 import chromeTask from "../services/chrome";
 import { Modal } from "antd";
+import instace from "./customer_axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataToken } from "../redux/counterSlice";
+import RefreshToken from "./RefreshToken"; 
 
 const SetCamp = (props) => {
+  const counter = useSelector((state) => state.counter);
+  let { dataToken } = counter
+  const dispatch =useDispatch()
   const { t } = useTranslation();
   const [page, setPage] = useState({});
   const [checkQC, setCheckQC] = useState(true);
@@ -172,7 +179,7 @@ const SetCamp = (props) => {
         setvaluePixel("no Pixel!");
         setOptionsPixel([{ value: "no Pixel!", label: "No Pixel!!" }]);
       }
-      // setIdtkqc(idtkqc);1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+     
     };
     fetchdata();
   }, [idtkqc]);
@@ -580,6 +587,18 @@ const SetCamp = (props) => {
   };
 
   const HandleUploadCamp = async () => {
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken));
+    const data  = await instace.post('/buypackage/checkedaction', {
+      idpackage: "650945da05dfe70ebcbd1983"
+    }, {
+      headers: {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+    },
+    }
+    )
+    console.log(data,'data')
     setOpen(true);
     const authFb = await chromeTask.getAuthFb();
     let clonedata = {

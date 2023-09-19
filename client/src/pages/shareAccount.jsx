@@ -8,7 +8,12 @@ import Button from "@mui/material/Button";
 import chromeTask from "../services/chrome";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import RefreshToken from "./RefreshToken";
+import { setDataToken } from "../redux/counterSlice";
+import { useDispatch,useSelector } from "react-redux";
+import instace from "./customer_axios";
 const SharePixel = (props) => {
+  const [data,setData] =useState([])
   const { t } = useTranslation();
   const [listTKQC, setListTKQC] = useState([]);
   const [listUser_id, setListUser_id] = useState([]);
@@ -19,6 +24,9 @@ const SharePixel = (props) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
   const [log, setLog] = useState([]);
+  const counter = useSelector((state) => state.counter);
+  let { dataToken } = counter
+  const dispatch = useDispatch()
   const options = [
     { value: "281423141961500", label: t("admin") },
     { value: "461336843905730", label: t("advertisers") },
@@ -57,6 +65,18 @@ const SharePixel = (props) => {
   };
 
   async function btnsharetkqc() {
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken));
+    const data  = await instace.post('/buypackage/checkedaction', {
+      idpackage: "650945d5b307fe0dcdcb256a"
+    }, {
+      headers: {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+    },
+    }
+    )
+    console.log(data,'data')
     setOpen(true);
     const tokensmeta = localStorage.getItem("tokensmeta");
     if (
