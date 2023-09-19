@@ -9,7 +9,15 @@ import Button from "@mui/material/Button";
 import chromeTask from "../services/chrome";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import instace from "./customer_axios";
+import RefreshToken from "./RefreshToken";
+import { setUser, setDataToken } from "../redux/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const SharePixel = (props) => {
+  const counter = useSelector((state) => state.counter);
+  let { dataToken, user } = counter
+  const dispatch = useDispatch()
   const { t } = useTranslation();
   const [pixelValue, setPixelValue] = useState("");
   const [selectedValue, setSelectedValue] = useState('');
@@ -78,51 +86,66 @@ const SharePixel = (props) => {
 
 
   const handleSharePixel = async () => {
-    setOpen(true);
-  console.log(pixelValue,"pixelValue");
-    if (selectedValue.length === 0) {
-      return setError('không phải tài khoản bm');
-    } else if (pixelValue === 'Dose have an account!') {
-      return setError('không có tài khoản pixelValue');
-    } else if (selectedValue.length === 0 || adlistValue.length === 0 || pixelValue === '') {
-      return setError('các trường không để trống');
-    } else {
-      try {
-        let option = {
-          token: tokens,
-          idBm: dataSharePixel.idBm,
-          idPixel: pixelValue,
-          listidAds: processedAdlist,
-        };
-        const btnsharepixel = async()=>{
-          let Arraydata = [];
-          await Promise.all(processedAdlist.map(async (value) => {
-            const res = await chromeTask.SharePixel_one(tokens, dataSharePixel.idBm, pixelValue, value);
-            Arraydata.push(res);
-          }));
-          return Arraydata
-        }
-        const kq = await btnsharepixel();
-        const data = kq;
-        let array = [];
-        data.map((value) => {
-            let messages = "";
-            if (value.obj.success) {
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken));
+    const data  = await instace.post('/buypackage/checkedaction', {
+      idpackage: "65082330bc28d754fa64ea2c"
+    }, {
+      headers: {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+    },
+    })
 
-              messages = `${value.idBm} ---> ${value.idPixel} ---> ${value.idAds} Share thành công`;
-            } else {
-              if (value.obj.error) {
-                messages = value.obj.error.message;
-              }
-            }
-            array.push(messages);
+    console.log(data, "123123123123123123");
+
+
+
+
+    // setOpen(true);
+    // if (selectedValue.length === 0) {
+    //   return setError('không phải tài khoản bm');
+    // } else if (pixelValue === 'Dose have an account!') {
+    //   return setError('không có tài khoản pixelValue');
+    // } else if (selectedValue.length === 0 || adlistValue.length === 0 || pixelValue === '') {
+    //   return setError('các trường không để trống');
+    // } else {
+    //   try {
+    //     let option = {
+    //       token: tokens,
+    //       idBm: dataSharePixel.idBm,
+    //       idPixel: pixelValue,
+    //       listidAds: processedAdlist,
+    //     };
+    //     const btnsharepixel = async()=>{
+    //       let Arraydata = [];
+    //       await Promise.all(processedAdlist.map(async (value) => {
+    //         const res = await chromeTask.SharePixel_one(tokens, dataSharePixel.idBm, pixelValue, value);
+    //         Arraydata.push(res);
+    //       }));
+    //       return Arraydata
+    //     }
+    //     const kq = await btnsharepixel();
+    //     const data = kq;
+    //     let array = [];
+    //     data.map((value) => {
+    //         let messages = "";
+    //         if (value.obj.success) {
+
+    //           messages = `${value.idBm} ---> ${value.idPixel} ---> ${value.idAds} Share thành công`;
+    //         } else {
+    //           if (value.obj.error) {
+    //             messages = value.obj.error.message;
+    //           }
+    //         }
+    //         array.push(messages);
           
-        });
-        setLog(array);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    //     });
+    //     setLog(array);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
   };
   
   const [processedAdlist, setProcessedAdlist] = useState([]);

@@ -3,7 +3,6 @@ const userModal = require("../Modal/userModal");
 
 const paymentControllers = {
   creatPayment: async (req, res) => {
-    console.log(req, "payment");
     try {
       const userdata = await userModal.findOne({ username: req.user.username });
       const checked = await paymentModal.findOne({
@@ -26,7 +25,6 @@ const paymentControllers = {
           { username: req.user.username },
           { $inc: { totleMoney: req.body.amount } } // Sử dụng $inc để tăng giá trị của totalMoney
         );
-        console.log(updateUser, "updateUser");
         res.status(200).json({ message: "success", data: createpayment, user: req.user});
       }
     } catch (error) {

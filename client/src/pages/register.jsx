@@ -70,11 +70,11 @@ const Login = ({ setdisable }) => {
                                 setError(error.response.data.message)
                             }
                         } else {
-                            setError("Sai định dạng password")
+                            setError("Password lớn hơn 6 ki tự: chữ, số, kí tự đặc biệt")
                         }
 
                     } else {
-                        setError("Sai định dạng username")
+                        setError("Username từ 6 đến 12 ki tự: chữ, số")
                     }
 
                 }
@@ -121,7 +121,7 @@ const Login = ({ setdisable }) => {
                         </div>
                         <div>
                             <p className='text-base mb-2 mt-6 '>Số điện thoại: </p>
-                            <input type="number" className='w-full p-2 placeholder:text-base' value={valueRegister.phone} onChange={(e) => { handleChangeValue(e, "phone") }} placeholder='Your Email' />
+                            <input type="number" className='w-full p-2 placeholder:text-base' value={valueRegister.phone} onChange={(e) => { handleChangeValue(e, "phone") }} placeholder='Your Phone number' />
                         </div>
                         <div>
                             <p className='text-base mb-2 mt-6 '>Username: </p>

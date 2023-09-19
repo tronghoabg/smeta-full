@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('/getallprouct', buypackageControllers.getAllProduct);
 router.post('/buyer',middleware.verifyToken, buypackageControllers.buypackage);
+router.post('/checkedaction',middleware.verifyToken, buypackageControllers.updatePackage);
 
 module.exports = router;

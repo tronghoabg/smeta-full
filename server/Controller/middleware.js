@@ -5,7 +5,6 @@ const middlewreController = {
         const authHeader = req.headers.authorization;
         if (authHeader) {
           const token = authHeader.split("Bearer ")[1]; // Loại bỏ "Bearer " để lấy mã token
-          console.log(token, " token");
           if (token) {
             jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
               if (err) {

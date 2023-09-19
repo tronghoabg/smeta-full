@@ -5,7 +5,6 @@ require("dotenv").config();
 const authController = {
   registerUser: async (req, res) => {
     try {
-      console.log(req.body);
       const checkemail = await userModal.find({ email: req.body.email });
       if (checkemail.length !== 0) {
         return res.status(401).json({ message: "Email đã tồn tại" });
@@ -151,7 +150,6 @@ const authController = {
   },
   logout: async (req, res) => {
     try {
-      console.log(req.user);
       const result = await userModal.updateOne(
         { username: req.user.username },
         { $unset: { refreshToken: 1 } }
@@ -167,10 +165,6 @@ const authController = {
     }
   },
   test_verifyToken: async (req, res) => {
-    console.log(12312313123, req.user);
-    // const ipAddress = req.ip;
-    // const ipv4Address = ip6.v4(ipAddress);
-
     res.status(200).json(req.user);
   },
 };

@@ -16,12 +16,12 @@ function HomeHeader() {
     nav("/login");
   };
   const { i18n } = useTranslation();
-      const [lng , setLng] = useState('vi');
-  
+  const [lng, setLng] = useState('vi');
+
   const changeLanguage = (lng) => {
-      i18n.changeLanguage(lng)
-      console.log(lng,'lng')
-      setLng(lng)
+    i18n.changeLanguage(lng)
+    console.log(lng, 'lng')
+    setLng(lng)
   }
   const handleRedirectregister = () => {
     nav("/register");
@@ -56,61 +56,59 @@ function HomeHeader() {
       borderRadius: "2px",
       margin: "0",
       height: "18px",
-      width:'60px'
+      width: '60px'
     },
     active: {
       border: "5px solid rgb(127, 200, 249)",
       borderRadius: "5px",
     },
-    span:{
-      marginLeft :'10px'
+    span: {
+      marginLeft: '10px'
     }
   };
-  
+
 
 
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
       <div className="w-[1280px]  flex justify-between items-center">
         <div className="flex justify-center items-center">
-          <img src="/logo.png" alt="" className="w-[118px]" />
+          <img src="/logo.png" alt="" className="w-[118px] cursor-pointer" onClick={()=>{nav('/')}}/>
           <h1
             className="text-base text-white opacity-80 font-medium ml-8 cursor-pointer"
           >
             <a href="/extention"> Go to Extention</a>
           </h1>
         </div>
-        {!dataToken ? <div className="text-base text-white opacity-80 font-medium">
-          <button className="mr-8" onClick={handleRedirectregister}>
-            Đăng ký
-          </button>
-          <button onClick={handleRedirectLogin}>Đăng nhập</button>
-        </div> : <div className="flex text-base text-white opacity-80 font-medium ">
-          <p className="text-[#fff] mx-5 cursor-pointer">{user?.totleMoney/1000} Bit</p>
-          {user?.role === "admin" ? <h1 className="text-[#fff] cursor-pointer" onClick={()=>{nav("/admin")}}>Quản trị viên</h1> : null}
-          <h1 className="text-[#fff] mx-5 cursor-pointer"  onClick={()=>{nav("/profile")}}>{user?.username}</h1>
-          <button className="" onClick={handleLogout}>Đăng xuất</button>
-        </div>}
-        <div className="footer-right">
-        <div className="language" style={languageStyles.language}>
-          <span
-   
-            onClick={() => changeLanguage('vi')}
-            style={lng === 'vi' ? { ...languageStyles.active } : {}}
-          >
-            <img src="/vi.png" alt="VI" style={languageStyles.img} />
-          </span>
-          <span
-  
-            onClick={() => changeLanguage('en')}
-            style={lng === 'en' ? { ...languageStyles.active } : {}}
-          >
-            <img src="/en.png" alt="EN" style={languageStyles.img} />
-          </span>
+        <div className="flex justify-center items-center ">
+          {!dataToken ? <div className="text-base text-white opacity-80 font-medium">
+            <button className="mr-8" onClick={handleRedirectregister}>
+              Đăng ký
+            </button>
+            <button onClick={handleRedirectLogin}>Đăng nhập</button>
+          </div> : <div className="flex text-base text-white opacity-80 font-medium ">
+            {user?.role === "admin" ? <h1 className="text-[#fff] cursor-pointer" onClick={() => { nav("/admin") }}>Quản trị viên</h1> : null}
+            <h1 className="text-[#fff] mx-5 cursor-pointer" onClick={() => { nav("/profile") }}>{user?.username}</h1>
+            <p className="text-[#fff] mx-5 cursor-pointer">{user?.totleMoney / 1000} Bit</p>
+            <button className="" onClick={handleLogout}>Đăng xuất</button>
+          </div>}
+          <div className="language !ml-8" style={languageStyles.language}>
+            <span
+              className="cursor-pointer mr-1"
+              onClick={() => changeLanguage('vi')}
+              style={lng === 'vi' ? { ...languageStyles.active } : {}}
+            >
+              <img src="/vi.png" alt="VI" style={languageStyles.img} />
+            </span>
+            <span
+              className="cursor-pointer"
+              onClick={() => changeLanguage('en')}
+              style={lng === 'en' ? { ...languageStyles.active } : {}}
+            >
+              <img src="/en.png" alt="EN" style={languageStyles.img} />
+            </span>
+          </div>
         </div>
-
-            </div>
-
       </div>
     </div>
   );

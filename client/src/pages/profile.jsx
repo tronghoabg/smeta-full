@@ -11,6 +11,7 @@ import { setUser, setDataToken } from "../redux/counterSlice";
 import RefreshToken from "./RefreshToken";
 import { message } from "antd";
 import Payment from "./payment";
+import ProductPackage from "./productPackage";
 
 const Profile = ({ setdisable }) => {
     const counter = useSelector((state) => state.counter);
@@ -41,15 +42,15 @@ const Profile = ({ setdisable }) => {
         timeZoneName: 'short'
     };
 
-
     const dataProfile = [
         { title: "Tên tài khoản", value: user?.username },
         { title: "Email", value: user?.email },
         { title: "Số điện thoại", value: user?.phone },
         { title: "Ngôn ngữ", value: user?.language },
         { title: "Số dư", value: user?.totleMoney },
+        { title: "Số tiền đã xử dụng", value: user?.usedMonney },
         { title: "Role", value: user?.role },
-        { title: "Premium", value: (user && user?.acction?.length > 0) ? user?.acction.join("") : "None" },
+        { title: "Premium", value: user?.action?.length > 0 ? user.action.map(value=> value.key).join(", ") : "None" },
         { title: "Ngày đăng ký", value: (user && user.createAt) ? (new Intl.DateTimeFormat('en-US', options)).format(new Date(user.createAt)) : "..." },
     ]
 
@@ -150,6 +151,10 @@ const Profile = ({ setdisable }) => {
                     <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua bit</h1>
                     <div className=" h-fit mb-5 border !border-[#999]">
                          <Payment/>
+                    </div>
+                    <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua Gói</h1>
+                    <div className=" h-fit mb-5 border !border-[#999]">
+                         <ProductPackage/>
                     </div>
                     <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Thông tin thanh toán</h1>
                     <div className=" h-[500px] mb-5 border !border-[#999]">

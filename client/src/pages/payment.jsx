@@ -96,8 +96,6 @@ function Payment() {
 
   ]
 
-  const [valueSmetaPackage, setvalueSmetaPackage] = useState({ name: "", value: 0 })
-  console.log(orderInfo);
 
   return (
     <div className='p-4'>
@@ -117,14 +115,14 @@ function Payment() {
       </div>
 
       <div className='grid grid-cols-5 w-full gap-4 mt-12'>
-      {SmetaPackage.map(value => {
+      {/* {SmetaPackage.map(value => {
           return (
             <div onClick={() => { setvalueSmetaPackage(value) }} className={`border-2 rounded-lg ${valueSmetaPackage.name == value.name ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
               <p className=' px-4 pb-2  pt-4'> {value.value / 1000} Bit</p>
             </div>
           )
-        })}
+        })} */}
       </div>
 
 
