@@ -39,7 +39,7 @@ const buypackageControllers = {
       } else {
         if (req.user.totleMoney >= productData.product_price) {
           const timeEnd = new Date(currentDate);
-          timeEnd.setDate(currentDate.getDate() + 30); 
+          timeEnd.setDate(currentDate.getDate() + Number(productData.product_timezone)); 
           // timeEnd.setMinutes(currentDate.getMinutes() + 10);
 
           const create = await buyerPackageModal.create({
