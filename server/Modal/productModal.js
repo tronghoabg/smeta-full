@@ -10,17 +10,18 @@ const productSchema = mongoose.Schema(
       type: Number,
     },
     product_timezone: {
-      type: Number
+      type: Number,
     },
-    product_desc:{
-      type:String
+    product_desc: {
+      type: String,
     },
-    product_desc_discount:{
-      type: Number
-    }
+    product_desc_discount: {
+      type: Number,
+    },
   },
   { collection: "product" }
 );
-
 const productModal = mongoose.model("product", productSchema);
+
+
 module.exports = productModal;

@@ -96,12 +96,6 @@ const SharePixel = (props) => {
             }`,
     },
     })
-
-    console.log(data, "123123123123123123");
-
-
-
-
     // setOpen(true);
     // if (selectedValue.length === 0) {
     //   return setError('không phải tài khoản bm');

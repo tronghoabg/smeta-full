@@ -14,7 +14,6 @@ function ProductPackage() {
         instace.get('/buypackage/getallprouct')
             .then(value => {
                 setdata(value.data)
-                console.log(value);
             })
 
     }, [])
@@ -31,6 +30,8 @@ function ProductPackage() {
         dispatch(setUser(data.data.user))
         console.log(data, "mua thanh cong");
     }
+    const percent_number = process.env.PERCENT_NUMBER || 100
+    console.log(data);
     return (
         <div className=' p-4'>
             <div className='grid grid-cols-5 gap-6'>
@@ -38,7 +39,7 @@ function ProductPackage() {
                     return (
                         <div key={value._id} onClick={() => { setvalueSmetaPackage(value._id) }} className={`border-2 rounded-lg ${valueSmetaPackage == value._id ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500 col-span-1  text-start shadow-sm cursor-pointer`}>
                             <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.product_name}</h1>
-                            <p className=' px-4 pb-2  pt-4'> {value.product_price / 1000} Bit</p>
+                            <p className=' px-4 pb-2  pt-4'> {value.product_price / Number(percent_number)} Bit</p>
                         </div>
                     )
                 })}

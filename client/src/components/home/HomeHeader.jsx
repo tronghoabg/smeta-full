@@ -20,19 +20,16 @@ function HomeHeader() {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng)
-    console.log(lng, 'lng')
     setLng(lng)
   }
   const handleRedirectregister = () => {
     nav("/register");
   };
   const dispatch = useDispatch()
-
   const handleLogout = async () => {
     try {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
-      console.log(newDatatoken, "newDatatoken");
       const headers = {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
       };
@@ -66,7 +63,7 @@ function HomeHeader() {
       marginLeft: '10px'
     }
   };
-
+  const percent_number = process.env.PERCENT_NUMBER || 100
 
 
   return (
@@ -89,7 +86,7 @@ function HomeHeader() {
           </div> : <div className="flex text-base text-white opacity-80 font-medium ">
             {user?.role === "admin" ? <h1 className="text-[#fff] cursor-pointer" onClick={() => { nav("/admin") }}>Quản trị viên</h1> : null}
             <h1 className="text-[#fff] mx-5 cursor-pointer" onClick={() => { nav("/profile") }}>{user?.username}</h1>
-            <p className="text-[#fff] mx-5 cursor-pointer">{user?.totleMoney / 1000} Bit</p>
+            <p className="text-[#fff] mx-5 cursor-pointer">{user?.totleMoney / Number(percent_number)} Bit</p>
             <button className="" onClick={handleLogout}>Đăng xuất</button>
           </div>}
           <div className="language !ml-8" style={languageStyles.language}>

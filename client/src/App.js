@@ -45,6 +45,7 @@ function App() {
         if (token) {
           const newDatatoken = await RefreshToken(dataToken);
           dispatch(setDataToken(newDatatoken));
+          console.log(newDatatoken, "newDatatoken");
           const datauser = await instace.get("/auth/profile", {
             headers: {
               Authorization: `Bearer ${
@@ -67,6 +68,7 @@ function App() {
     };
     fetch();
   }, []);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -92,7 +94,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <MiddleWareAdmin>
+            <MiddleWareAdmin user={user}>
               <Dashboard setdisable={setdisable} />
             </MiddleWareAdmin>
           }

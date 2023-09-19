@@ -1,41 +1,64 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
-import Main from "./Main";
 import { useSelector } from "react-redux";
 import Header from "./Header";
-import axios from "axios";
-import { AiFillCloseCircle } from "react-icons/ai";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
-import { BsCheckCircleFill } from "react-icons/bs";
-
-
+import instace from "../../pages/customer_axios";
 import { useDispatch } from "react-redux";
-import { setloading } from "../../redux/counterSlice";
 import Loading from "../Loading";
+import RefreshToken from "../../pages/RefreshToken";
+import { setUser, setDataToken } from "../../redux/counterSlice";
+import { Button } from "antd";
+import {
+  TablePagination,
+} from "@mui/material";
+
+
 function Team(props) {
   const tablehead = [
     { label: "STT", key: "stt" },
-    { label: "Name", key: "name" },
+    { label: "Name", key: "username" },
     { label: "Email", key: "email" },
-    { label: "Premium", key: "status" },
-    { label: "Email Send Total", key: "email_messenger_length" },
-    { label: "Email Send in month", key: "send_total" },
-    { label: "Voice total", key: "voice_length" },
-    { label: "Amount Purchasing", key: "purchasing_length" },
-    { label: "Purchasing total", key: "count_length" },
-  ];
+    { label: "Phone", key: "phone" },
+    { label: "Package", key: "action" },
+    { label: "Role", key: "role" },
+    { label: "Date", key: "createAt" },
+    { label: "Money", key: "totleMoney" },
+    { label: "UseMoney", key: "usedMonney" },
 
+  ];
+  const [page, setPage] = useState(0);
   const [data, setData] = useState([]);
   const [selectsort, setSelectsort] = useState({ key: "", count: 0 });
-
   const counter = useSelector((state) => state.counter);
   const { darkmode, loading } = counter;
   const dispatch = useDispatch();
+  let { dataToken } = counter
 
+
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sttStart, setSttStart] = useState(0);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  useEffect(() => {
+    const newSttStart = page * rowsPerPage;
+    setSttStart(newSttStart);
+  }, [page, rowsPerPage]);
+
+  const startIndex = sttStart;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedData = data.slice(startIndex, endIndex);
 
 
   const handleFilters = (values) => {
-    let dataclone = data;
+    let dataclone = displayedData;
     var newSelect = { ...selectsort };
     if (values.key !== selectsort.key) {
       newSelect.key = values.key;
@@ -82,6 +105,33 @@ function Team(props) {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const newDatatoken = await RefreshToken(dataToken);
+        dispatch(setDataToken(newDatatoken));
+
+        const response = await instace.get('/admin/getalluser', {
+          idpackage: "65082330bc28d754fa64ea2c"
+        }, {
+          headers: {
+            Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+          },
+        });
+
+        const dataa = response.data?.data;
+        setData(dataa)
+
+      } catch (error) {
+        console.error("Lỗi xảy ra khi gọi API:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
   return (
     <div className="w-full">
       <Header />
@@ -93,35 +143,33 @@ function Team(props) {
               {tablehead.map((value, index) => {
                 return (
                   <th
-                    className={`p-2 border text-sm cursor-pointer ${
-                      darkmode ? "text-white" : ""
-                    }`}
-                    onClick={() => {
+                    className={`p-2 border text-sm cursor-pointer ${darkmode ? "text-white" : ""
+                      }`}
+
+                    onClick={value.key  !== "stt"  ? () => {
                       handleFilters(value);
-                    }}
+                    } : null}
                     key={index}
                   >
                     <div className="flex justify-between items-center">
                       {value.label}
                       {selectsort.count === 0 ||
-                      (selectsort.key === value.key && selectsort.count > 0) ? (
-                        <div className="flex flex-col ml-2 ">
+                        (selectsort.key === value.key && selectsort.count > 0) ? (
+                        <div className={`flex flex-col ml-2  ${value.key === "stt" ? "hidden" : ""}`}>
                           <div
-                            className={`text-[8px]  ${
-                              selectsort.count % 2 === 0 &&
-                              selectsort.count > 0
+                            className={`text-[8px]  ${selectsort.count % 2 === 0 &&
+                                selectsort.count > 0
                                 ? "!text-red-600"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <BiSolidUpArrow />
                           </div>
                           <div
-                            className={`text-[8px] -translate-y-[2px] ${
-                              selectsort.count % 2 === 1
+                            className={`text-[8px] -translate-y-[2px] ${selectsort.count % 2 === 1
                                 ? "!text-red-600"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <BiSolidDownArrow />
                           </div>
@@ -135,36 +183,35 @@ function Team(props) {
           </thead>
           {!loading ? (
             <tbody>
-              {data.map((value, index) => {
+              {displayedData?.map((value, index) => {
                 return (
                   <tr
                     key={index}
                     className={`border text-sm ${darkmode ? "text-white" : ""}`}
                   >
-                    <td className="border p-2 text-center">{value.stt}</td>
-                    <td className="border p-2 ">{value.name}</td>
+                    <td className="border p-2 text-center">{index + 1}</td>
+                    <td className="border p-2 ">{value.username}</td>
                     <td className="border p-2 ">{value.email}</td>
                     <td className="border p-2">
-                      {/* {value.status == UserStatus.BUY ? (
-                        <BsCheckCircleFill className="text-green-500 ml-8" />
-                      ) : (
-                        <AiFillCloseCircle />
-                      )} */}
+                      {value.phone}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.email_messenger_length}
+                      {value?.action?.length > 0 ? value.action.map(value=> value.key).join(", ") : "None" }
                     </td>
                     <td className="border p-2 text-center">
-                      {value.send_total}
+                      {value.role}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.voice_length}
+                      {value.createAt}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.purchasing_length}
+                      {value.totleMoney}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.count_length}
+                      {value.usedMonney}
+                    </td>
+                    <td className="border p-2 text-center">
+                      <Button style={{ background: '#66FF33', }}>xem chi tiet</Button>
                     </td>
                   </tr>
                 );
@@ -177,6 +224,16 @@ function Team(props) {
           )}
         </table>
       </div>
+      <TablePagination
+        component="div"
+        style={{ color: darkmode ? 'white ' : '' }}
+        count={data.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[10, 15, 20]}
+      />
     </div>
   );
 }

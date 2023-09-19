@@ -12,6 +12,7 @@ import RefreshToken from "./RefreshToken";
 import { message } from "antd";
 import Payment from "./payment";
 import ProductPackage from "./productPackage";
+import PaymentInfo from "./paymentInfo";
 
 const Profile = ({ setdisable }) => {
     const counter = useSelector((state) => state.counter);
@@ -31,7 +32,7 @@ const Profile = ({ setdisable }) => {
     useEffect(() => {
         setdisable(false)
     }, [])
-
+    const percent_number = process.env.PERCENT_NUMBER || 100
     const options = {
         hour: 'numeric',
         minute: 'numeric',
@@ -50,7 +51,7 @@ const Profile = ({ setdisable }) => {
         { title: "Số dư", value: user?.totleMoney },
         { title: "Số tiền đã xử dụng", value: user?.usedMonney },
         { title: "Role", value: user?.role },
-        { title: "Premium", value: user?.action?.length > 0 ? user.action.map(value=> value.key).join(", ") : "None" },
+        { title: "Premium", value: user?.action?.length > 0 ? user.action.map(value => value.key).join(", ") : "None" },
         { title: "Ngày đăng ký", value: (user && user.createAt) ? (new Intl.DateTimeFormat('en-US', options)).format(new Date(user.createAt)) : "..." },
     ]
 
@@ -122,7 +123,7 @@ const Profile = ({ setdisable }) => {
                                     return (
                                         <div key={value.title} className="flex border-b border-b-[#c2c1c1] py-3">
                                             <div className="w-[200px] mr-[50px]">{value.title}</div>
-                                            <div className="w-full text-[#212529BF]">{value.value}</div>
+                                            <div className="w-full text-[#212529BF]">{value.title == "Số dư" || value.title == "Số tiền đã xử dụng" ?  value.value /Number(percent_number): value.value}</div>
                                         </div>
                                     )
                                 })}
@@ -150,15 +151,15 @@ const Profile = ({ setdisable }) => {
 
                     <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua bit</h1>
                     <div className=" h-fit mb-5 border !border-[#999]">
-                         <Payment/>
+                        <Payment />
                     </div>
                     <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua Gói</h1>
                     <div className=" h-fit mb-5 border !border-[#999]">
-                         <ProductPackage/>
+                        <ProductPackage />
                     </div>
                     <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Thông tin thanh toán</h1>
-                    <div className=" h-[500px] mb-5 border !border-[#999]">
-                    
+                    <div className=" h-[480px] mb-5 border !border-[#999] overflow-hidden overflow-y-auto p-0.5">
+                        <PaymentInfo />
                     </div>
                 </div>
             </div>

@@ -31,6 +31,16 @@ const paymentControllers = {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   },
+  getuserpayment: async(req, res) =>{
+    try {
+      const userdata = await userModal.findOne({ username: req.user.username });
+
+      const data = await paymentModal.find({userId: userdata._id})
+      res.status(200).json(data)
+    } catch (error) {
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 };
 
 module.exports = paymentControllers;

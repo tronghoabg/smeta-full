@@ -122,6 +122,7 @@ const authController = {
     const refreshToken = req.body.refreshToken;
     if (!refreshToken) res.status(401);
     const user = await userModal.findOne({ refreshToken: refreshToken });
+    console.log(user);
     if (!user) {
       return res.status(403);
     }
