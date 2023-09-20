@@ -95,58 +95,55 @@ const buypackageControllers = {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   },
-
   updatePackage: async (req, res) => {
+ 
     try {
       const currentDate = new Date();
-      if (req.user.action.length === 0) {
-        res
-          .status(401)
-          .json({ message: "Vui long nap tiền để sử dụng dịch vụ 1", user:req.user });
-      } else {
-        const packagedata = await productModal.findOne({_id: req.body.idpackage})
-        const checked = req.user.action.filter(
-          (value) => value.key === packagedata.product_name
-        );
-      
-        if (checked) {
-          console.log(checked[0].time_end , currentDate, "checked.timeEnd > currentDate");
-
-          if (new Date(checked[0].time_end).getTime() > currentDate.getTime()) {
-            console.log("con han");
-              const data_acction = await acctionModal.create({
-                name : req.user.name,
-                acction : packagedata.product_name,
-                ip : req.ip,
-                language: req.user.language,
-                date : new Date()
-              })
-            res.status(200).json({ status: true, data: checked ,data_acction:data_acction});
-          } else {
-            console.log("het han");
-            const newAction = req.user.action.filter(
-              (value) => value.key !== packagedata.product_name
-            );
-            const update = await userModal.updateOne(
-              { username: req.user.username },
-              {
-                action: [...newAction],
-              }
-            );
-            res
-              .status(401)
-              .json({ message: "Vui long nap tiền để sử dụng dịch vụ 2", user: {...req.user,  action: [...newAction] } });
-          }
+      const packagedata = await productModal.findOne({ _id: req.body.idpackage });
+      const checked = req.user.action.filter(
+        (value) => value.key === packagedata.product_name
+      );
+  
+      if (checked.length > 0) { 
+        // console.log(checked[0].time_end, currentDate, "checked.timeEnd > currentDate");
+  
+        if (new Date(checked[0].time_end).getTime() > currentDate.getTime()) {
+          console.log("còn hạn");
+          console.log(req.user.username,packagedata.product_name)
+          const data_action = await acctionModal.create({
+            name: req.user.username,
+            acction: packagedata.product_name,
+            ip: req.ip,
+            language: req.user.language,
+            date: new Date()
+          });
+          res.status(200).json({ status: true, data: checked, data_action: data_action });
         } else {
+          console.log("hết hạn");
+          const newAction = req.user.action.filter(
+            (value) => value.key !== packagedata.product_name
+          );
+          const update = await userModal.updateOne(
+            { username: req.user.username },
+            {
+              action: [...newAction],
+            }
+          );
           res
             .status(401)
-            .json({ message: "Vui long nap tiền để sử dụng dịch vụ 3", user:req.user });
+            .json({ message: "Vui lòng nạp tiền để sử dụng dịch vụ 2", user: { ...req.user, action: [...newAction] } });
         }
+      } else {
+        res
+          .status(401)
+          .json({ message: "Vui lòng nạp tiền để sử dụng dịch vụ 3", user: req.user });
       }
     } catch (error) {
-      return res.status(500).json({ message: "Internal Server Error" });
+      console.error(error); 
+      return res.status(500).json({ message: "Lỗi máy chủ nội bộ" });
     }
   },
+  
 };
 
 module.exports = buypackageControllers;

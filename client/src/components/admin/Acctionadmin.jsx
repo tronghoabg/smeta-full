@@ -67,7 +67,9 @@ function Acctionadmin() {
   const startIndex = sttStart;
   const endIndex = startIndex + rowsPerPage;
   const displayedData = data.slice(startIndex, endIndex);
+  console.log("displayedData:", displayedData);
 
+  
   return (
     <div className="w-full">
       <Header />
