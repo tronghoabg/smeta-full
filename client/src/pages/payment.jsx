@@ -3,9 +3,10 @@ import axios from 'axios';
 import CryptoJS from 'crypto-js';
 import getOrdercode from '../config/getOrdercode';
 import { useDispatch, useSelector } from "react-redux";
+import instace from './customer_axios';
 
 
-function Payment() {
+function Payment({setError}) {
   const counter = useSelector((state) => state.counter);
   let { dataToken, user } = counter
   const paymentGatewayUrl = 'https://api-merchant.payos.vn/v2/payment-requests';
@@ -43,7 +44,7 @@ function Payment() {
       'x-api-key': payosApiKey,
     };
 
-    axios
+    instace
       .post(paymentGatewayUrl, { ...orderInfo, signature, orderCode: newOrdercode }, { headers })
       .then((response) => {
         if (response.data.desc == "success") {
@@ -107,7 +108,7 @@ const percent_number = process.env.PERCENT_NUMBER ||100
           return (
             <div onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount == value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
-              <p className=' px-4 pb-2  pt-4'> {value.value / Number(percent_number)} Bit</p>
+              <p className=' px-4 pb-2  pt-4'> {value.value / Number(percent_number)} C</p>
             </div>
           )
         })}
@@ -127,15 +128,6 @@ const percent_number = process.env.PERCENT_NUMBER ||100
 
 
       <button className='px-4 py-2 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}> Thanh Toán</button>
-      {/* <button className='border-2 p-4' onClick={test}>test</button> */}
-      {/* {paymentLink && (
-        <div>
-          <p>Link thanh toán:</p>
-          <a href={paymentLink} target="_blank" rel="noopener noreferrer">
-            {paymentLink}
-          </a>
-        </div>
-      )} */}
     </div>
   );
 }

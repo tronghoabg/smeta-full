@@ -3,7 +3,7 @@ const buyerPackageModal = require("../Modal/buyerPackageModal");
 const paymentModal = require("../Modal/paymentModal");
 const productModal = require("../Modal/productModal");
 const userModal = require("../Modal/userModal");
-const acctionModal = require("../Modal/acctionModal")
+const acctionModal = require("../Modal/acctionModal");
 const buypackageControllers = {
   getAllProduct: async (req, res) => {
     try {
@@ -16,7 +16,7 @@ const buypackageControllers = {
 
   getAllpackagebuyed: async (req, res) => {
     try {
-      const data = await buyerPackageModal.find({userId: req.user.userId});
+      const data = await buyerPackageModal.find({ userId: req.user.userId });
       res.status(200).json(data);
     } catch (error) {
       return res.status(500).json({ message: "Internal Server Error" });
@@ -28,6 +28,14 @@ const buypackageControllers = {
       const currentDate = new Date();
       const userdata = await userModal.findOne({ username: req.user.username });
       const productData = await productModal.findOne({ _id: req.body._id });
+      const checkeddata = await buyerPackageModal.findOne({
+        userId: userdata._id,
+        key: "All",
+        time_end: { $gt: currentDate },
+      });
+      if(checkeddata){
+        return res.status(401).json({ message: "Đã mua" });
+      }
       const buyerData = await buyerPackageModal.findOne({
         userId: userdata._id,
         key: productData.product_name,
@@ -39,7 +47,9 @@ const buypackageControllers = {
       } else {
         if (req.user.totleMoney >= productData.product_price) {
           const timeEnd = new Date(currentDate);
-          timeEnd.setDate(currentDate.getDate() + Number(productData.product_timezone)); 
+          timeEnd.setDate(
+            currentDate.getDate() + Number(productData.product_timezone)
+          );
           // timeEnd.setMinutes(currentDate.getMinutes() + 10);
 
           const create = await buyerPackageModal.create({
@@ -96,30 +106,63 @@ const buypackageControllers = {
     }
   },
   updatePackage: async (req, res) => {
- 
     try {
       const currentDate = new Date();
-      const packagedata = await productModal.findOne({ _id: req.body.idpackage });
+      const packagedata = await productModal.findOne({
+        product_name: req.body.product_name,
+      });
       const checked = req.user.action.filter(
         (value) => value.key === packagedata.product_name
       );
-  
-      if (checked.length > 0) { 
-        // console.log(checked[0].time_end, currentDate, "checked.timeEnd > currentDate");
-  
-        if (new Date(checked[0].time_end).getTime() > currentDate.getTime()) {
-          console.log("còn hạn");
-          console.log(req.user.username,packagedata.product_name)
+
+      const checkedAll = req.user.action.filter((value) => value.key === "All");
+      if (checkedAll.length > 0) {
+        if (
+          new Date(checkedAll[0].time_end).getTime() > currentDate.getTime()
+        ) {
           const data_action = await acctionModal.create({
             name: req.user.username,
             acction: packagedata.product_name,
             ip: req.ip,
             language: req.user.language,
-            date: new Date()
+            date: new Date(),
           });
-          res.status(200).json({ status: true, data: checked, data_action: data_action });
+          return res
+            .status(200)
+            .json({ status: true, data: checkedAll, data_action: data_action });
+        }
+        const newAction = req.user.action.filter(
+          (value) => value.key !== packagedata.product_name
+        );
+        const update = await userModal.updateOne(
+          { username: req.user.username },
+          {
+            action: [...newAction],
+          }
+        );
+        res.status(401).json({
+          message: "Vui lòng nạp tiền để sử dụng dịch vụ 2",
+          user: { ...req.user, action: [...newAction] },
+          status: false,
+        });
+      }
+
+      if (checked.length > 0) {
+        // console.log(checked[0].time_end, currentDate, "checked.timeEnd > currentDate");
+
+        if (new Date(checked[0].time_end).getTime() > currentDate.getTime()) {
+          console.log(req.user.username, packagedata.product_name);
+          const data_action = await acctionModal.create({
+            name: req.user.username,
+            acction: packagedata.product_name,
+            ip: req.ip,
+            language: req.user.language,
+            date: new Date(),
+          });
+          res
+            .status(200)
+            .json({ status: true, data: checked, data_action: data_action });
         } else {
-          console.log("hết hạn");
           const newAction = req.user.action.filter(
             (value) => value.key !== packagedata.product_name
           );
@@ -129,21 +172,24 @@ const buypackageControllers = {
               action: [...newAction],
             }
           );
-          res
-            .status(401)
-            .json({ message: "Vui lòng nạp tiền để sử dụng dịch vụ 2", user: { ...req.user, action: [...newAction] } });
+          res.status(401).json({
+            message: "Vui lòng nạp tiền để sử dụng dịch vụ 2",
+            user: { ...req.user, action: [...newAction] },
+            status: false,
+          });
         }
       } else {
-        res
-          .status(401)
-          .json({ message: "Vui lòng nạp tiền để sử dụng dịch vụ 3", user: req.user });
+        res.status(401).json({
+          message: "Vui lòng nạp tiền để sử dụng dịch vụ 3",
+          user: req.user,
+          status: false,
+        });
       }
     } catch (error) {
-      console.error(error); 
+      console.error(error);
       return res.status(500).json({ message: "Lỗi máy chủ nội bộ" });
     }
   },
-  
 };
 
 module.exports = buypackageControllers;

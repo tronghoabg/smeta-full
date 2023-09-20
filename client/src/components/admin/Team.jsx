@@ -108,8 +108,6 @@ function Team(props) {
         dispatch(setDataToken(newDatatoken));
 
         const response = await instace.get('/admin/getalluser', {
-          idpackage: "65082330bc28d754fa64ea2c"
-        }, {
           headers: {
             Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
           },

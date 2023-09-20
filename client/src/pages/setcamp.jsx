@@ -590,7 +590,7 @@ const SetCamp = (props) => {
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
     const data  = await instace.post('/buypackage/checkedaction', {
-      idpackage: "650945da05dfe70ebcbd1983"
+      product_name: "Create Campaign"
     }, {
       headers: {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""

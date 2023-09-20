@@ -36,10 +36,8 @@ function Acctionadmin() {
       try {
         const newDatatoken = await RefreshToken(dataToken);
         dispatch(setDataToken(newDatatoken));
-        
+        console.log(newDatatoken, "newDatatoken");
         const response = await instace.get('/admin/getallacction', {
-          idpackage: "65082330bc28d754fa64ea2c"
-        }, {
           headers: {
             Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
           },

@@ -3,7 +3,7 @@ const middleware = require('../Controller/middleware')
 const router = express.Router();
 const adminController = require('../Controller/adminController')
 
-router.get('/getalluser', adminController.getallUser);
-router.get('/getallacction', adminController.getallAction);
+router.get('/getalluser',middleware.verifyTokenAndAdmin, adminController.getallUser);
+router.get('/getallacction',middleware.verifyTokenAndAdmin, adminController.getallAction);
 
 module.exports = router;

@@ -68,7 +68,7 @@ const SharePixel = (props) => {
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
     const data  = await instace.post('/buypackage/checkedaction', {
-      idpackage: "650945d5b307fe0dcdcb256a"
+      product_name: "Create Ad Account"
     }, {
       headers: {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
