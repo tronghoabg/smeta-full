@@ -95,7 +95,11 @@ const SharePixel = (props) => {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
             }`,
     },
-    })
+    }
+    )
+   
+
+
     // setOpen(true);
     // if (selectedValue.length === 0) {
     //   return setError('không phải tài khoản bm');

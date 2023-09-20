@@ -143,7 +143,7 @@ const buypackageControllers = {
           }
         );
         res.status(401).json({
-          message: "Vui lòng nạp tiền để sử dụng dịch vụ 2",
+          message: "Vui lòng nạp tiền để sử dụng dịch vụ ",
           user: { ...req.user, action: [...newAction] },
           status: false,
         });
@@ -175,14 +175,14 @@ const buypackageControllers = {
             }
           );
           res.status(401).json({
-            message: "Vui lòng nạp tiền để sử dụng dịch vụ 2",
+            message: "Vui lòng nạp tiền để sử dụng dịch vụ ",
             user: { ...req.user, action: [...newAction] },
             status: false,
           });
         }
       } else {
         res.status(401).json({
-          message: "Vui lòng nạp tiền để sử dụng dịch vụ 3",
+          message: "Vui lòng nạp tiền để sử dụng dịch vụ ",
           user: req.user,
           status: false,
         });
