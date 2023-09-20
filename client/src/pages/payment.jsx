@@ -97,7 +97,7 @@ function Payment({setError}) {
 
   ]
 
-const percent_number = process.env.PERCENT_NUMBER ||100
+const percent_number = process.env.PERCENT_NUMBER ||1000
   return (
     <div className='p-4'>
       <p>Nhập số tiền:</p>

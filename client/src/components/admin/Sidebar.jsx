@@ -24,7 +24,7 @@ const Sidebar = () => {
         >
           ADMIN
         </h1>
-        <Button
+        {/* <Button
           onClick={() => {
             dispatch(setisSidebar(!isSidebar));
           }}
@@ -35,7 +35,7 @@ const Sidebar = () => {
               darkmode ? "text-white" : "!text-black"
             }  hover:opacity-100`}
           />
-        </Button>
+        </Button> */}
       </div>
 
       <SidebarOpen />
