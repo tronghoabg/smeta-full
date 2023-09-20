@@ -69,7 +69,7 @@ console.log(percent_number, 123123123);
         { label: "Money", key: "totleMoney" },
     ];
     return (
-        <div>
+        <div className='p-4'>
             <table className="w-full table-auto border !border-[#ccc] border-collapse">
                 <thead>
                     <tr>

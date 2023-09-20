@@ -10,7 +10,7 @@ function Dashboard({setdisable}) {
   },[])
   const counter = useSelector((state) => state.counter);
   const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
-  console.log(selectedDashboard, "selectedTab");
+
 
 
   return (

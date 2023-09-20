@@ -20,7 +20,7 @@ const Profile = ({ setdisable }) => {
     let { dataToken, user } = counter
     const [openChange, setOpenChange] = useState(false)
     const [dataPass, setDataPass] = useState({ oldpass: null, newPass: null, renewPass: null })
-    const [error, setError] = useState("");
+    const [error, setError] = useState({ type: "error", error: "" });
     const [open, setOpen] = useState(false);
 
     const handleClose = (event, reason) => {
@@ -75,26 +75,26 @@ const Profile = ({ setdisable }) => {
                                     }`,
                             },
                         })
-                        message.success(data.data.message)
+                        setError({ type: "success", error: data.data.message })
                         setOpenChange(false)
                     } catch (error) {
                         setError(error.response.data)
                     }
                 } else {
-                    setError("Mật khẩu không trùng khớp")
+                    setError({ type: "error", error: "Mật khẩu không trùng khớp" })
                 }
             } else {
-                setError("Sai đinh dạng")
+                setError({ type: "error", error: "Sai đinh dạng" })
             }
         } else {
-            setError("Điền đủ thông tin")
+            setError({ type: "error", error: "Điền đủ thông tin" })
         }
     }
     return (
         <>
             <HomeHeader />
             <div className="w-full min-h-screen bg-[#fff] pt-[100px] flex justify-center items-center">
-                {error.length > 0 ? (
+                {error.error?.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
                         open={open}
@@ -102,15 +102,15 @@ const Profile = ({ setdisable }) => {
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "left" }}
                     >
-                        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-                            {error}
+                        <Alert onClose={handleClose} severity={error.type} sx={{ width: "100%" }}>
+                            {error.error}
                         </Alert>
                     </Snackbar>
                 ) : (
                     <p>{null}</p>
                 )}
                 <div className="w-[1200px] min-h-[600px] ">
-                    <h1 className="text-xl text-[#3f4146] mb-3">Thông tin cá nhân</h1>
+                    <h1 className="text-xl text-[#000] font-medium mb-3">Thông tin cá nhân</h1>
                     <div className="grid grid-cols-3 gap-4">
                         <div className="flex flex-col justify-center items-center col-span-1 border !border-[#999] p-4 rounded-md">
                             <img className="w-[190px] rounded-full" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="" />
@@ -124,7 +124,7 @@ const Profile = ({ setdisable }) => {
                                     return (
                                         <div key={value.title} className="flex border-b border-b-[#c2c1c1] py-3">
                                             <div className="w-[200px] mr-[50px]">{value.title}</div>
-                                            <div className="w-full text-[#212529BF]">{value.title == "Số dư" || value.title == "Số tiền đã xử dụng" ? priceFormat( value.value /Number(percent_number)) :priceFormat(value.value) }</div>
+                                            <div className="w-full text-[#212529BF]">{value.title == "Số dư" || value.title == "Số tiền đã xử dụng" ? priceFormat(value.value / Number(percent_number)) : priceFormat(value.value)}</div>
                                         </div>
                                     )
                                 })}
@@ -150,16 +150,17 @@ const Profile = ({ setdisable }) => {
                         </div>
                     </div>
 
-                    <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua bit</h1>
-                    <div className=" h-fit mb-5 border !border-[#999]">
-                        <Payment setError={setError}/>
+                    <h1 className="text-xl text-[#000] font-medium mt-[100px]  mb-3">Mua bit</h1>
+                    {/* border !border-[#999] */}
+                    <div className=" h-fit mb-5 border !border-[#f0f0f0]">
+                        <Payment setError={setError} />
                     </div>
-                    <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Mua Gói</h1>
-                    <div className=" h-fit mb-5 border !border-[#999]">
-                        <ProductPackage setError={setError} setOpen={setOpen}/>
+                    <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">Mua Gói</h1>
+                    <div className=" h-fit mb-5 border !border-[#f0f0f0]">
+                        <ProductPackage setError={setError} setOpen={setOpen} />
                     </div>
-                    <h1 className="text-xl text-[#3f4146] mt-6 mb-3">Thông tin thanh toán</h1>
-                    <div className=" h-[480px] mb-5 border !border-[#999] overflow-hidden overflow-y-auto p-0.5">
+                    <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">Thông tin thanh toán</h1>
+                    <div className=" h-[480px] mb-5 border !border-[#f0f0f0]  overflow-hidden overflow-y-auto p-0.5">
                         <PaymentInfo />
                     </div>
                 </div>

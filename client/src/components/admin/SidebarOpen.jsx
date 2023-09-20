@@ -58,7 +58,7 @@ const SidebarOpen = (props) => {
           }
         />
         <Tab
-          label={isSidebar ? "Manage Team" : ""}
+          label={isSidebar ? "User" : ""}
           value="team"
           icon={
             <LuUsers

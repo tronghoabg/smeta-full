@@ -6,8 +6,9 @@ import { setUser, setDataToken } from "../../redux/counterSlice";
 import RefreshToken from "../../pages/RefreshToken";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
-
-
+import { Button, Modal } from 'antd';
+import ProductPackage from "../../pages/productPackage";
+import { AiFillStar } from "react-icons/ai";
 function HomeHeader() {
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
@@ -65,17 +66,34 @@ function HomeHeader() {
   };
   const percent_number = process.env.PERCENT_NUMBER || 100
 
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
+      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered
+        footer={null}
+        width={990}
+        closable={false}>
+        <h1 className="text-2xl font-medium text-center p-2 text-yellow-400">Update plan</h1>
+        <ProductPackage />
+      </Modal>
       <div className="w-[1280px]  flex justify-between items-center">
         <div className="flex justify-center items-center">
-          <img src="/logo.png" alt="" className="w-[118px] cursor-pointer" onClick={()=>{nav('/')}}/>
+          <img src="/logo.png" alt="" className="w-[118px] cursor-pointer" onClick={() => { nav('/') }} />
           <h1
             className="text-base text-white opacity-80 font-medium ml-8 cursor-pointer"
           >
             <a href="/extention"> Go to Extention</a>
           </h1>
+          <button className="text-base text-[#fffc53] opacity-80 font-medium ml-8 cursor-pointer relative" onClick={showModal}>Nâng cấp tài khoản <span className="absolute text-[#fffc53] top-[100px] left-0"><AiFillStar /></span></button>
         </div>
         <div className="flex justify-center items-center ">
           {!dataToken ? <div className="text-base text-white opacity-80 font-medium">

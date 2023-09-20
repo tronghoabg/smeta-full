@@ -5,5 +5,9 @@ const adminController = require('../Controller/adminController')
 
 router.get('/getalluser',middleware.verifyTokenAndAdmin, adminController.getallUser);
 router.get('/getallacction',middleware.verifyTokenAndAdmin, adminController.getallAction);
+router.get('/getallpayment',middleware.verifyTokenAndAdmin, adminController.AdmingetAllpayment);
+router.get('/getpaymentmost',middleware.verifyTokenAndAdmin, adminController.getmosttimepayment);
+
+router.get('/getadminoption',middleware.verifyTokenAndAdmin, adminController.getadminoption);
 
 module.exports = router;

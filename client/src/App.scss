@@ -30,6 +30,19 @@ body {
   color: #4CCEAC;
 }
 
+.animation_show{
+  animation: fadeIn 0.3s linear;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .dark_mode_bg{
   background-color: #141b2d !important;
 }
