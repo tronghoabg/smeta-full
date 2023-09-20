@@ -114,7 +114,7 @@ const Login = ({ setdisable }) => {
                 )}
                 <div className='min-w-[900px]  border_login overflow-hidden	 rounded-2xl grid grid-cols-2 '>
                     <div className='p-8'>
-                        <h1 className='text-2xl text-center mb-[60px]'>Đăng ký</h1>
+                        <h1 className='text-2xl text-center mb-[60px]'>{t('register')}</h1>
                         <div>
                             <p className='text-base mb-2 '>Email: </p>
                             <input type="email" className='w-full p-2 placeholder:text-base' value={valueRegister.email} onChange={(e) => { handleChangeValue(e, "email") }} placeholder='Your Email' />
@@ -124,11 +124,11 @@ const Login = ({ setdisable }) => {
                             <input type="number" className='w-full p-2 placeholder:text-base' value={valueRegister.phone} onChange={(e) => { handleChangeValue(e, "phone") }} placeholder='Your Phone number' />
                         </div>
                         <div>
-                            <p className='text-base mb-2 mt-6 '>Username: </p>
+                            <p className='text-base mb-2 mt-6 '>{t('account')} </p>
                             <input type="text" className='w-full p-2 placeholder:text-base' value={valueRegister.username} onChange={(e) => { handleChangeValue(e, "username") }} placeholder='Your Username' />
                         </div>
                         <div>
-                            <p className='text-base mb-2 mt-6 '>Mật khẩu: </p>
+                            <p className='text-base mb-2 mt-6 '>{ t('password')}: </p>
                             <input type="password" className='w-full p-2 placeholder:text-base' value={valueRegister.password} onChange={(e) => { handleChangeValue(e, "password") }} placeholder='Password' />
                         </div>
                         <div>

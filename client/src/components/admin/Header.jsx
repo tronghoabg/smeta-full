@@ -4,15 +4,19 @@ import { BsFillMoonFill, BsSun } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { setdarkmode } from "../../redux/counterSlice";
 import { Dropdown, Space } from "antd";
+import { useTranslation } from "react-i18next";
+
 
 const Header = (props) => {
+const { t } = useTranslation();
+
   const counter = useSelector((state) => state.counter);
   const { darkmode } = counter;
   const dispatch = useDispatch();
 
   const items = [
     {
-      label: <div className="text-red-500 font-medium">Log out</div>,
+      label: <div className="text-red-500 font-medium">{t('logout')}</div>,
       key: "0",
     },
   ];
