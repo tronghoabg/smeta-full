@@ -9,6 +9,10 @@ import { useTranslation } from "react-i18next";
 import { Button, Modal } from 'antd';
 import ProductPackage from "../../pages/productPackage";
 import { AiFillStar } from "react-icons/ai";
+import priceFormat from "../../config/priceFormat";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
 function HomeHeader() {
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
@@ -64,7 +68,7 @@ function HomeHeader() {
       marginLeft: '10px'
     }
   };
-  const percent_number = process.env.PERCENT_NUMBER || 100
+  const percent_number = process.env.PERCENT_NUMBER || 1000
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -76,6 +80,15 @@ function HomeHeader() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const [error, setError] = useState({ type: "error", error: "" });
+  const [open, setOpen] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+        return;
+    }
+    setOpen(false);
+};
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
       <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered
@@ -83,8 +96,23 @@ function HomeHeader() {
         width={990}
         closable={false}>
         <h1 className="text-2xl font-medium text-center p-2 text-yellow-400">Update plan</h1>
-        <ProductPackage />
+        <ProductPackage cla="!gap-2" setError={setError} setOpen={setOpen} />
       </Modal>
+      {error.error?.length > 0 ? (
+                    <Snackbar
+                        className='!z-[999999]'
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        anchorOrigin={{ vertical: "top", horizontal: "left" }}
+                    >
+                        <Alert onClose={handleClose} severity={error.type} sx={{ width: "100%" }}>
+                            {error.error}
+                        </Alert>
+                    </Snackbar>
+                ) : (
+                    <p>{null}</p>
+                )}
       <div className="w-[1280px]  flex justify-between items-center">
         <div className="flex justify-center items-center">
           <img src="/logo.png" alt="" className="w-[118px] cursor-pointer" onClick={() => { nav('/') }} />
@@ -93,7 +121,8 @@ function HomeHeader() {
           >
             <a href="/extention"> Go to Extention</a>
           </h1>
-          <button className="text-base text-[#fffc53] opacity-80 font-medium ml-8 cursor-pointer relative" onClick={showModal}>Nâng cấp tài khoản <span className="absolute text-[#fffc53] top-[100px] left-0"><AiFillStar /></span></button>
+          <button className="text-base text-[#fffc53] opacity-80 font-medium ml-8 cursor-pointer relative hover:text-[rgb(124,255,130)]" onClick={showModal}>Nâng cấp tài khoản
+            <span className="!absolute text-[#fffc53] !-top-[1px] !-right-[13px] "><AiFillStar /></span></button>
         </div>
         <div className="flex justify-center items-center ">
           {!dataToken ? <div className="text-base text-white opacity-80 font-medium">
@@ -104,7 +133,7 @@ function HomeHeader() {
           </div> : <div className="flex text-base text-white opacity-80 font-medium ">
             {user?.role === "admin" ? <h1 className="text-[#fff] cursor-pointer" onClick={() => { nav("/admin") }}>Quản trị viên</h1> : null}
             <h1 className="text-[#fff] mx-5 cursor-pointer" onClick={() => { nav("/profile") }}>{user?.username}</h1>
-            <p className="text-[#fff] mx-5 cursor-pointer">{user?.totleMoney / Number(percent_number)} C</p>
+            <p className="text-[#56ff47] mx-5 cursor-pointer ">{priceFormat(user?.totleMoney / Number(percent_number))} C</p>
             <button className="" onClick={handleLogout}>Đăng xuất</button>
           </div>}
           <div className="language !ml-8" style={languageStyles.language}>

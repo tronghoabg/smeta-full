@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser, setDataToken } from "./redux/counterSlice";
 import Cookies from "js-cookie";
 import RefreshToken from "./pages/RefreshToken";
-import Dashboard from "./components/admin/ABCD";
+import Dashboard from "./components/admin/Dashboard";
 import Profile from "./pages/profile";
 import MiddleWare from "./middleware/MiddleWare";
 import MiddleWareAdmin from "./middleware/MiddlewareAdmin";

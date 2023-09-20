@@ -129,9 +129,9 @@ function Main() {
         })}
       </div>
 
-      <div className="flex justify-between items-start mt-8 gap-6">
+      <div className=" grid grid-cols-12 mt-8 gap-6">
         <div
-          className={` col-span-2 w-[800px] min-[1320px]:w-[1000px] min-h-[500px] ${darkmode ? "dark_mode_bg_items" : ""
+          className={` col-span-8 min-h-[500px] ${darkmode ? "dark_mode_bg_items" : ""
             } duration-800 border-gray-300 bg-gray-50 rounded-lg px-8 py-4`}
         >
           <h1
@@ -154,7 +154,7 @@ function Main() {
           </div>
         </div>
         <div
-          className={` ${isSidebar ? "w-[600px]" : "w-[800px]"} duration-500 overflow-y-auto border-gray-300   h-[500px] ${darkmode ? "dark_mode_bg_items" : "bg-gray-50"
+          className={` col-span-4 duration-500 overflow-y-auto border-gray-300   h-[500px] ${darkmode ? "dark_mode_bg_items" : "bg-gray-50"
             } duration-800 rounded-lg`}
         >
           <h1

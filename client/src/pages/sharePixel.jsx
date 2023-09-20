@@ -22,20 +22,20 @@ const SharePixel = (props) => {
   const [pixelValue, setPixelValue] = useState("");
   const [selectedValue, setSelectedValue] = useState('');
   const [tokens, settokens] = useState("");
-  const [log,setLog] = useState([])
+  const [log, setLog] = useState([])
   const [options, setoptions] = useState([]);
   const [optionPixel, setOptionPixel] = useState([]);
 
   const [dataSharePixel, setdataSharePixel] = useState({});
   const [adlistValue, setAdlistValue] = useState([]);
-  const [error,setError] =useState('')
+  const [error, setError] = useState('')
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const bmid = async () => {
       const authFb = await chromeTask.getAuthFb();
       settokens(authFb.token);
-  
+
       try {
         const abc = await chromeTask.getBusiness_id(authFb);
         const datas = abc.map((value) => {
@@ -88,18 +88,6 @@ const SharePixel = (props) => {
   const handleSharePixel = async () => {
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
-    const data  = await instace.post('/buypackage/checkedaction', {
-      idpackage: "share pixel"
-    }, {
-      headers: {
-        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
-            }`,
-    },
-    }
-    )
-   
-
-
     // setOpen(true);
     // if (selectedValue.length === 0) {
     //   return setError('không phải tài khoản bm');
@@ -129,25 +117,69 @@ const SharePixel = (props) => {
     //     data.map((value) => {
     //         let messages = "";
     //         if (value.obj.success) {
+    setOpen(true);
 
-    //           messages = `${value.idBm} ---> ${value.idPixel} ---> ${value.idAds} Share thành công`;
-    //         } else {
-    //           if (value.obj.error) {
-    //             messages = value.obj.error.message;
-    //           }
-    //         }
-    //         array.push(messages);
-          
-    //     });
-    //     setLog(array);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
+    try {
+      const data = await instace.post('/buypackage/checkedaction', {
+        product_name: "share pixel"
+      }, {
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+        },
+      })
+      if (data.data.status === true) {
+        // if (selectedValue.length === 0) {
+        //   return setError('không phải tài khoản bm');
+        // } else if (pixelValue === 'Dose have an account!') {
+        //   return setError('không có tài khoản pixelValue');
+        // } else if (selectedValue.length === 0 || adlistValue.length === 0 || pixelValue === '') {
+        //   return setError('các trường không để trống');
+        // } else {
+        //   try {
+        //     let option = {
+        //       token: tokens,
+        //       idBm: dataSharePixel.idBm,
+        //       idPixel: pixelValue,
+        //       listidAds: processedAdlist,
+        //     };
+        //     const btnsharepixel = async()=>{
+        //       let Arraydata = [];
+        //       await Promise.all(processedAdlist.map(async (value) => {
+        //         const res = await chromeTask.SharePixel_one(tokens, dataSharePixel.idBm, pixelValue, value);
+        //         Arraydata.push(res);
+        //       }));
+        //       return Arraydata
+        //     }
+        //     const kq = await btnsharepixel();
+        //     const data = kq;
+        //     let array = [];
+        //     data.map((value) => {
+        //         let messages = "";
+        //         if (value.obj.success) {
+
+        //           messages = `${value.idBm} ---> ${value.idPixel} ---> ${value.idAds} Share thành công`;
+        //         } else {
+        //           if (value.obj.error) {
+        //             messages = value.obj.error.message;
+        //           }
+        //         }
+        //         array.push(messages);
+
+        //     });
+        //     setLog(array);
+        //   } catch (error) {
+        //     console.error(error);
+        //   }
+        // }
+      }
+    } catch (error) {
+      setError(error.response.data.message)
+    }
   };
-  
+
   const [processedAdlist, setProcessedAdlist] = useState([]);
-  
+
   const handleChangeAdlist = (e) => {
     const inputValue = e.target.value;
     setAdlistValue(inputValue);
@@ -192,10 +224,10 @@ const SharePixel = (props) => {
                   options={options}
                   // defaultValue={options[0]?.value}
                   disableClearable
-                
+
                   sx={{ width: 200 }}
                   ListboxProps={{
-                    style: { fontSize: '12px' }, 
+                    style: { fontSize: '12px' },
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
@@ -205,12 +237,12 @@ const SharePixel = (props) => {
                 <Autocomplete
                   onChange={handlechangePixel}
                   disablePortal
-                    clearIcon={null}
+                  clearIcon={null}
                   value={pixelValue}
                   disableClearable
                   id="combo-box-demo"
                   ListboxProps={{
-                    style: { fontSize: '12px' }, 
+                    style: { fontSize: '12px' },
                   }}
                   options={optionPixel}
                   sx={{ width: 200 }}
@@ -220,7 +252,7 @@ const SharePixel = (props) => {
               <div className="sharepixel">
                 <span className="txtelegantshadow">{t("enterAdList")}</span>
                 <textarea
-                  style={{ width: "202px", padding: "0px", fontSize:"12.6px", outline: "none", border: "1px solid #c4c4c4", resize: "none" }}
+                  style={{ width: "202px", padding: "0px", fontSize: "12.6px", outline: "none", border: "1px solid #c4c4c4", resize: "none" }}
 
                   className="text-area"
                   value={adlistValue}
@@ -235,29 +267,29 @@ const SharePixel = (props) => {
                 >
                   {t("share")}
                 </Button>
-                {error.length >0 ? (
-                <Snackbar
-                  open={open}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-                  anchorOrigin={{ vertical: "top", horizontal: "left" }}
-                >
-                  <Alert
+                {error.length > 0 ? (
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
                     onClose={handleClose}
-                    severity="error"
-                    sx={{ width: "100%" }}
+                    anchorOrigin={{ vertical: "top", horizontal: "left" }}
                   >
-                    {error}
-                  </Alert>
-                </Snackbar>
-              ) : (
-                <p>{null}</p>
-              )}
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      sx={{ width: "100%" }}
+                    >
+                      {error}
+                    </Alert>
+                  </Snackbar>
+                ) : (
+                  <p>{null}</p>
+                )}
               </div>
             </div>
           </div>
           <div className="screen">
-            <Logs log={log}/>
+            <Logs log={log} />
           </div>
         </div>
       </div>

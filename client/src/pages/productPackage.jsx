@@ -5,7 +5,7 @@ import { setDataToken, setUser } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import priceFormat from '../config/priceFormat';
 
-function ProductPackage({ setError, setOpen }) {
+function ProductPackage({ setError, setOpen, cla }) {
     const counter = useSelector((state) => state.counter);
     let { dataToken, user } = counter
     const [data, setdata] = useState([])
@@ -61,20 +61,20 @@ function ProductPackage({ setError, setOpen }) {
             setError({ type: "error", error: error.response.data.message })
         }
     }
-    const percent_number = process.env.PERCENT_NUMBER || 100
+    const percent_number = process.env.PERCENT_NUMBER || 1000
 
 
 
     const [itemOption, setitemOption] = useState({ key: "", status: false })
-const handleshow =(key)=>{
-    setitemOption({ key:key, status: itemOption.key ==key ? !itemOption.status : true })
-}
+    const handleshow = (key) => {
+        setitemOption({ key: key, status: itemOption.key == key ? !itemOption.status : true })
+    }
     return (
         <div className=' p-4'>
-            <div className='grid grid-cols-4 gap-6'>
+            <div className={`grid grid-cols-4 gap-6 ${cla}`}>
                 {data.map(value => {
                     return (
-                        <div key={value._id} className={` !border-[#e4e2e2] border min-h-[380px] rounded-xl !rounded-tr-3xl   hover:!shadow-2xl overflow-hidden duration-500 col-span-1  text-start shadow-lg cursor-pointer`}>
+                        <div key={value._id} className={` !border-[#e4e2e2] border  min-h-[360px] rounded-xl !rounded-tr-3xl   hover:!shadow-2xl overflow-hidden duration-500 col-span-1  text-start shadow-lg cursor-pointer`}>
                             <h1 className='text-center text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#fff] text-[#267efa]'>{value.key}</h1>
                             {itemOption.key === value.key && itemOption.status === true ? <div className='h-[300px] text-center grid grid-cols-2 gap-4 p-4'>
                                 {value.option.map(item => {
@@ -90,7 +90,7 @@ const handleshow =(key)=>{
                             </div>}
                             {/* <p className=' px-4 pb-2  pt-4'> {value.product_price / Number(percent_number)} C</p> */}
                             <div className='flex justify-center items-center p-2 px-4'>
-                                <button onClick={ ()=>{handleshow(value.key)}}  className='bg-[#267efa] cursor-pointer duration-300 hover:bg-[#0a519d] px-12 py-2 rounded-md  text-white w-full font-medium text-base'>Option</button>
+                                <button onClick={() => { handleshow(value.key) }} className='bg-[#267efa] cursor-pointer duration-300 hover:bg-[#0a519d] px-12 py-2 rounded-md  text-white w-full font-medium text-base'>Option</button>
                             </div>
                         </div>
                     )

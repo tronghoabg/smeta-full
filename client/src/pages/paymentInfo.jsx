@@ -57,7 +57,7 @@ function PaymentInfo() {
 
     }, [])
     console.log(data);
-const percent_number = process.env.PERCENT_NUMBER || 100
+const percent_number = process.env.PERCENT_NUMBER || 1000
 console.log(percent_number, 123123123);
     const tablehead = [
         { label: "STT", key: "stt" },
