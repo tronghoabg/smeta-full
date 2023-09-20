@@ -6,8 +6,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "../components/accsetss/sharePixels.css";
 import Button from "@mui/material/Button";
 import chromeTask from "../services/chrome";
-
+import instace from "./customer_axios";
+import { setDataToken } from "../redux/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import RefreshToken from "./RefreshToken";
 const SharePixel = (props) => {
+  const counter = useSelector((state) => state.counter);
+  let { dataToken } = counter
+  const dispatch=useDispatch()
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [bmSelected, setBmSelected] = useState(null);
@@ -57,6 +63,18 @@ const SharePixel = (props) => {
   };
 
   const handlerCreate = async () => {
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken));
+    const data  = await instace.post('/buypackage/checkedaction', {
+      idpackage: "650945d5b307fe0dcdcb256a"
+    }, {
+      headers: {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+    },
+    }
+    )
+    console.log(data,'data')
     setLog([])
     console.log("123");
     if (!bmSelected || !accountName || !qty) {

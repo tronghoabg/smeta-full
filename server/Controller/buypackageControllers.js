@@ -3,7 +3,7 @@ const buyerPackageModal = require("../Modal/buyerPackageModal");
 const paymentModal = require("../Modal/paymentModal");
 const productModal = require("../Modal/productModal");
 const userModal = require("../Modal/userModal");
-
+const acctionModal = require("../Modal/acctionModal")
 const buypackageControllers = {
   getAllProduct: async (req, res) => {
     try {
@@ -108,13 +108,20 @@ const buypackageControllers = {
         const checked = req.user.action.filter(
           (value) => value.key === packagedata.product_name
         );
-        console.log(checked, "checkedchecked");
+      
         if (checked) {
           console.log(checked[0].time_end , currentDate, "checked.timeEnd > currentDate");
 
           if (new Date(checked[0].time_end).getTime() > currentDate.getTime()) {
             console.log("con han");
-            res.status(200).json({ status: true, data: checked });
+              const data_acction = await acctionModal.create({
+                name : req.user.name,
+                acction : packagedata.product_name,
+                ip : req.ip,
+                language: req.user.language,
+                date : new Date()
+              })
+            res.status(200).json({ status: true, data: checked ,data_acction:data_acction});
           } else {
             console.log("het han");
             const newAction = req.user.action.filter(
