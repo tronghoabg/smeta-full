@@ -180,7 +180,29 @@ const adminController = {
   //     res.status(500).json(error);
   //   }
   // }
-  
+  getUserBuyId : async (req, res)=>{
+    try {
+      console.log(req);
+        const userProfile = await userModal.find({_id: req.params.profileId})
+        const userPayment  = await paymentModal.find({userId: req.params.profileId})
+        const userBuyed  = await buyerPackageModal.find({userId: req.params.profileId})
+        newdata = [...userPayment, ...userBuyed]
+        newdata = newdata.map(value => {
+            if (value.key) {
+                value.createdAt = value.time_start
+            }
+            return value
+        }).sort((a, b) => {
+            const timeA = new Date(a.createdAt).getTime();
+            const timeB = new Date(b.createdAt).getTime();
+            return timeB - timeA;
+        });
+
+        res.status(200).json({userProfile: userProfile[0],userPayment:newdata});
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
   
 }
 

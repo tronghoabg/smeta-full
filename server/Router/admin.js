@@ -9,6 +9,7 @@ router.get('/getallpayment',middleware.verifyTokenAndAdmin, adminController.Admi
 router.get('/getpaymentmost',middleware.verifyTokenAndAdmin, adminController.getmosttimepayment);
 router.get('/getallpaymentadmin',middleware.verifyTokenAndAdmin, adminController.getallpayment);
 router.get('/getadminoption',middleware.verifyTokenAndAdmin, adminController.getadminoption);
+router.get('/getuserbuyid/:profileId',middleware.verifyTokenAndAdmin, adminController.getUserBuyId);
 
 // router.get('/serachuser',middleware.verifyTokenAndAdmin, adminController.serachuser);
 module.exports = router;

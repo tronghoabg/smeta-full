@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab, Tabs } from '@mui/material';
-import { setSelectedDashboard } from '../../redux/counterSlice';
+import { setSelectedDashboard, setprofileId } from '../../redux/counterSlice';
 import { BsCardChecklist } from "react-icons/bs";
 import { HiOutlineHome } from "react-icons/hi";
 import { LuUsers } from "react-icons/lu";
@@ -58,6 +58,7 @@ const SidebarOpen = (props) => {
           }
         />
         <Tab
+        onClick={()=>{dispatch(setprofileId(""))}}
           label={isSidebar ? "User" : ""}
           value="team"
           icon={

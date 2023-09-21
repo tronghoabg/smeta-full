@@ -6,11 +6,12 @@ import instace from "../../pages/customer_axios";
 import { useDispatch } from "react-redux";
 import Loading from "../Loading";
 import RefreshToken from "../../pages/RefreshToken";
-import { setUser, setDataToken } from "../../redux/counterSlice";
+import { setUser, setDataToken, setprofileId } from "../../redux/counterSlice";
 import { Button } from "antd";
 import { TablePagination,} from "@mui/material";
 import priceFormat from "../../config/priceFormat";
 import dateFormat from "../../config/dateFormat";
+import ViewProfileUser from "./ViewProfileUser";
 
 
 function Team(props) {
@@ -30,7 +31,7 @@ function Team(props) {
   const [data, setData] = useState([]);
   const [selectsort, setSelectsort] = useState({ key: "", count: 0 });
   const counter = useSelector((state) => state.counter);
-  const { darkmode, loading } = counter;
+  const { darkmode, loading, profileId } = counter;
   const dispatch = useDispatch();
   let { dataToken } = counter
   const [rowsPerPage, setRowsPerPage] = useState(7);
@@ -131,7 +132,7 @@ function Team(props) {
     setSearchKeyword(event.target.value);
   };
 
-  const search_btn = () => {
+  const search_btn = () => { 
 
   };
 
@@ -141,6 +142,7 @@ function Team(props) {
       <p className={`text-3xl font-medium ${darkmode ? "text-white" : ""}`}>
         User 
       </p>
+      {profileId ? <ViewProfileUser/> : <>
       <div id="searchbox">
         <input  type="text" size="15" placeholder="Enter keywords here..."  onChange={handleSearchChange}
               value={searchKeyword}/>
@@ -221,7 +223,7 @@ function Team(props) {
                       {`${priceFormat(value.usedMonney)} đ`}
                     </td>
                     <td className="border p-2 text-center">
-                      <Button style={{ background: '#66FF33', }}>xem chi tiet</Button>
+                      <Button style={{ background: '#66FF33', }} onClick={()=>{dispatch(setprofileId(value._id))}}>xem chi tiet</Button>
                     </td>
                   </tr>
                 );
@@ -243,7 +245,8 @@ function Team(props) {
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[10, 15, 20]}
-      />
+      /></>}
+     
     </div>
   );
 }

@@ -102,7 +102,6 @@ const buypackageControllers = {
               usedMonney: Number(req.user.usedMonney) + Number(create.price),
             }
           );
-          console.log(update, "update");
           res.status(200).json({
             message: "Đã mua thành công",
             user: {
