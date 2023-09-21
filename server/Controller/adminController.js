@@ -129,19 +129,31 @@ const adminController = {
   },
   getallpayment: async (req, res) => {
     try {
-      const data = await paymentModal
-        .find()
-        .populate("userId");
-        console.log(data,'11111')
-      res.status(200).json({ message: "sucsess", data });
+      const payments = await paymentModal.find().populate("userId");
+      const outputData = payments.map(payment => {
+        const { _id, username } = payment.userId;
+        return {
+          _id,
+          username,
+          orderCode: payment.orderCode,
+          amount: payment.amount, 
+          signature:payment.signature,
+          createdAt:payment.createdAt
+        };
+      });
+  
+      res.status(200).json({ message: "success", data: outputData });
     } catch (error) {
       res.status(500).json({ message: "lỗi server" });
     }
   },
+  
+  
+  
   searchProduct: async (req, res) => {
     try {
       const data = await userModal.find();
-      const keyword = req.body.searchbyname.trim().toLowerCase(); 
+      const keyword = req.query.searchbyname.trim().toLowerCase(); 
       const results = data.filter((item) => {
         for (const key in item) {
           if (typeof item[key] === 'string' || typeof item[key] === 'number') {
@@ -161,7 +173,6 @@ const adminController = {
   },
   getUserBuyId : async (req, res)=>{
     try {
-      console.log(req);
         const userProfile = await userModal.find({_id: req.params.profileId})
         const userPayment  = await paymentModal.find({userId: req.params.profileId})
         const userBuyed  = await buyerPackageModal.find({userId: req.params.profileId})
@@ -181,8 +192,63 @@ const adminController = {
     } catch (error) {
       res.status(500).json(error);
     }
-  }
-  
+  },
+  searchAction: async (req, res) => {
+    try {
+      const data = await acctionModal.find();
+      const keyword = req.query.searchbyname.trim().toLowerCase(); 
+      const results = data.filter((item) => {
+        for (const key in item) {
+          if (typeof item[key] === 'string' || typeof item[key] === 'number') {
+            const normalizedValue = String(item[key]).trim().toLowerCase(); 
+            if (normalizedValue.includes(keyword)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });  
+      res.status(200).json(results);
+    } catch (error) {
+      console.error('Lỗi:', error);
+      res.status(500).json(error);
+    }
+  },
+  searchPayment: async (req, res) => {
+    try {
+     
+      const data = await paymentModal
+      .find()
+      .populate("userId");
+      const outputData = data.map(payment => {
+        const { _id, username } = payment.userId;
+        return {
+          _id,
+          username,
+          orderCode: payment.orderCode,
+          amount: payment.amount, 
+          signature:payment.signature,
+          createdAt:payment.createdAt
+        };
+      });
+      const keyword = req.query.searchbyname.trim().toLowerCase(); 
+      const results = outputData.filter((item) => {
+        for (const key in item) {
+          if (typeof item[key] === 'string' || typeof item[key] === 'number') {
+            const normalizedValue = String(item[key]).trim().toLowerCase(); 
+            if (normalizedValue.includes(keyword)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });  
+      res.status(200).json(results);
+    } catch (error) {
+      console.error('Lỗi:', error);
+      res.status(500).json(error);
+    }
+  },
 }
 
 module.exports = adminController;

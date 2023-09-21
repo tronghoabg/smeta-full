@@ -127,9 +127,20 @@ function Invoice() {
       const handleSearchChange = (event) => {
         setSearchKeyword(event.target.value);
       };
-
-      const search_btn = () => {
-
+      const search_btn = async () => { 
+        try {
+          const newDatatoken = await RefreshToken(dataToken);
+          dispatch(setDataToken(newDatatoken));
+          const response = await instace.get(`/admin/searchPayment?searchbyname=${searchKeyword}`, {
+            headers: {
+              Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+            },
+          });
+      
+          setData(response.data)
+        } catch (error) {
+          console.error("Lỗi xảy ra khi gọi API:", error);
+        }
       };
   return (
     <div className="w-full">
@@ -197,7 +208,7 @@ function Invoice() {
                   className={`border text-sm ${darkmode ? "text-white" : ""}`}
                 >
                   <td className="border p-2 text-center">{index + 1}</td>
-                  <td className="border p-2">{value.userId.username}</td>
+                  <td className="border p-2">{value.username}</td>
                   <td className="border p-2 ">{value.amount}</td>
                   <td className="border p-2">
                     {value.orderCode}
