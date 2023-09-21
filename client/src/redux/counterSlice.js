@@ -11,11 +11,15 @@ const counterSlice = createSlice({
     loading: false,
     payment: false,
     isSidebar:true,
+    payFocus: false,
     selectedDashboard: 'main'
   },
   reducers: {
     setDataToken: (state, data) => {
       state.dataToken = data.payload;
+    },
+    setPayFocus: (state, data) => {
+      state.payFocus = data.payload;
     },
     setUser: (state, data) => {
       state.user = data.payload;
@@ -41,5 +45,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { setDataToken, settest, setUser,setdarkmode ,setloading,setpayment,setisSidebar,setSelectedDashboard} = counterSlice.actions;
+export const { setDataToken, settest,setPayFocus, setUser,setdarkmode ,setloading,setpayment,setisSidebar,setSelectedDashboard} = counterSlice.actions;
 export default counterSlice.reducer;

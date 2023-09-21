@@ -8,7 +8,19 @@ const buypackageControllers = {
   getAllProduct: async (req, res) => {
     try {
       const data = await productModal.find();
-      res.status(200).json(data);
+      const filteredData = data.filter(item => item.product_name !== 'share pixel').sort((a, b) => {
+        const nameA = a.product_name.toUpperCase(); // Để đảm bảo không phân biệt chữ hoa chữ thường
+        const nameB = b.product_name.toUpperCase();
+        
+        if (nameA > nameB) {
+          return -1; // Sử dụng -1 để đảm bảo sắp xếp giảm dần
+        }
+        if (nameA < nameB) {
+          return 1; // Sử dụng 1 để đảm bảo sắp xếp giảm dần
+        }
+        return 0;
+      })
+      res.status(200).json(filteredData);
     } catch (error) {
       return res.status(500).json({ message: "Internal Server Error" });
     }
@@ -30,6 +42,7 @@ const buypackageControllers = {
       const currentDate = new Date();
       const userdata = await userModal.findOne({ username: req.user.username });
       const productData = await productModal.findOne({ _id: req.body._id });
+      const realPrice = productData.product_desc_discount > 0 ? productData.product_price * ((100 - productData.product_desc_discount)/100) : productData.product_price
       const checkeddata = await buyerPackageModal.findOne({
         userId: userdata._id,
         key: "All",
@@ -47,7 +60,7 @@ const buypackageControllers = {
       if (buyerData) {
         res.status(401).json({ message: "Đã mua" });
       } else {
-        if (req.user.totleMoney >= productData.product_price) {
+        if (req.user.totleMoney >=realPrice) {
           const timeEnd = new Date(currentDate);
           timeEnd.setDate(
             currentDate.getDate() + Number(productData.product_timezone)
@@ -59,7 +72,7 @@ const buypackageControllers = {
             time_start: currentDate,
             time_end: timeEnd,
             key: productData.product_name,
-            price: productData.product_price,
+            price:realPrice,
           });
           let newAction = [];
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useRoutes } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import instace from "../../pages/customer_axios";
-import { setUser, setDataToken } from "../../redux/counterSlice";
+import { setUser, setDataToken, setPayFocus } from "../../redux/counterSlice";
 import RefreshToken from "../../pages/RefreshToken";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
@@ -12,11 +12,12 @@ import { AiFillStar } from "react-icons/ai";
 import priceFormat from "../../config/priceFormat";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import Payment from "../../pages/payment";
 
 function HomeHeader() {
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
-  let { dataToken, user } = counter;
+  let { dataToken, user , payFocus } = counter;
   const handleRedirectLogin = () => {
     nav("/login");
   };
@@ -79,7 +80,10 @@ function HomeHeader() {
   };
   const percent_number = process.env.PERCENT_NUMBER || 1000;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
+
   const showModal = () => {
+    setIsModalOpen1(false);
     setIsModalOpen(true);
   };
   const handleOk = () => {
@@ -113,6 +117,19 @@ function HomeHeader() {
           <span onClick={handleCancel} className="!absolute right-[16px] cursor-pointer top-[16px] text-blue-500 text-sm px-2 py-1 rounded-md hover:scale-110 duration-300 font-normal bg-slate-200">Skip for now</span>
         </h1>
         <ProductPackage cla="!gap-2" setError={setError} center_btn="flex w-full justify-center items-center" setOpen={setOpen} />
+      </Modal>
+
+      <Modal
+        open={isModalOpen1}
+        onCancel={()=>{setIsModalOpen1(false)}}
+        centered
+        footer={null}
+        width={990}
+        closable={false}
+      >
+        <div className="bg-[#fff] rounded-xl shadow-lg shadow-[#1d1c1c]">
+        <Payment setError={setError}/>
+        </div>
       </Modal>
       {error.error?.length > 0 ? (
         <Snackbar
@@ -184,7 +201,11 @@ function HomeHeader() {
               >
                 {user?.username}
               </h1>
-              <p className="text-[#56ff47] mx-5 cursor-pointer ">
+              <p onClick={()=>{
+                dispatch(setPayFocus(false))
+                setIsModalOpen1(true)
+                setIsModalOpen(false)
+              }} className={`text-[#56ff47] mx-5 cursor-pointer ${payFocus ? "payFocus_animation" :""}`}>
                 {priceFormat(user?.totleMoney / Number(percent_number))} C
               </p>
               <button className="" onClick={handleLogout}>

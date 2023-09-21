@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import instace from './customer_axios'
 import RefreshToken from "./RefreshToken";
-import { setDataToken, setUser } from "../redux/counterSlice";
+import { setDataToken, setPayFocus, setUser } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import priceFormat from '../config/priceFormat';
+import { useNavigate } from 'react-router-dom';
+import {useTranslation} from "react-i18next"
+import { BsFillCheckCircleFill } from "react-icons/bs";
+
 
 function ProductPackage({ setError, setOpen, cla, center_btn }) {
     const counter = useSelector((state) => state.counter);
+  const { t } = useTranslation();
+
     let { dataToken, user } = counter
     const [data, setdata] = useState([])
     const [valueSmetaPackage, setvalueSmetaPackage] = useState()
@@ -41,6 +47,8 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
 
     }, [])
 
+    const nav = useNavigate()
+
     const buypackage = async () => {
         setOpen(true)
 
@@ -60,6 +68,10 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
             dispatch(setUser(data.data.user))
         } catch (error) {
             setError({ type: "error", error: error.response.data.message })
+          
+            if("Vui long nap thêm tiền" === error.response.data.message){
+                dispatch(setPayFocus(true))
+            }
         }
     }
     const percent_number = process.env.PERCENT_NUMBER || 1000
@@ -81,13 +93,21 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
                                 {value.option.map(item => {
                                     return (
                                         <div key={item.product_timezone} onClick={() => { setvalueSmetaPackage(item._id) }} className={`col-span-1 animation_show border bg-[#f3f9ff]  ${valueSmetaPackage === item._id ? "!border-[#267efa]" : "!border-[#fff]"} duration-300 flex flex-col justify-center items-center`}>
-                                            <p className='text-xl text-[#267efa] font-medium'>{priceFormat(item.product_price / Number(percent_number))} C</p>
+                                            <p className='text-xl text-[#267efa] font-medium'>{ item.product_desc_discount > 0 ? priceFormat( (item.product_price - (item.product_price * (item.product_desc_discount/100))) / Number(percent_number)) :priceFormat(item.product_price / Number(percent_number))} C</p>
                                             <p className='italic text-[#687a8f]'>{item.product_timezone / 30} Tháng</p>
+                                           {item.product_desc_discount > 0 ?  <p className='italic text-[#000000]'>- {item.product_desc_discount} %</p>: null}
                                         </div>
                                     )
                                 })}
-                            </div> : <div className='h-[300px] text-center flex justify-center items-center flex-col'>
-                                Desc
+                            </div> : <div className='h-[280px] text-center flex justify-start items-start mt-[20px]  ml-3 flex-col'>
+                                {value.option[0].product_desc.split(",").map(value=>{
+                                    return (
+                                    <div className='flex items-center mt-4 italic text-[#687a8f]'>
+                                        <span><BsFillCheckCircleFill className='text-green-500 mr-1 '/></span>
+                                        {value}
+                                    </div>
+                                    )
+                                })}
                             </div>}
                             {/* <p className=' px-4 pb-2  pt-4'> {value.product_price / Number(percent_number)} C</p> */}
                             <div className='flex justify-center items-center p-2 px-4'>
@@ -100,7 +120,7 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
 
             </div>
             <div className={`${center_btn}`}>
-                <button className='px-4 py-2 border !border-[#0800f0] hover:scale-110 text-xl !rounded-md mt-6 hover:!border-[#0a519d] bg-[#fff] duration-300 cursor-pointer' onClick={buypackage}> Thanh Toán</button>
+                <button className='px-4 py-2 border !border-[#0800f0] hover:scale-110 text-xl !rounded-md mt-6 hover:!border-[#0a519d] bg-[#fff] duration-300 cursor-pointer' onClick={buypackage}> {t('Thanh toán')}</button>
 
             </div>
         </div>
