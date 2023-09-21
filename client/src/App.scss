@@ -34,13 +34,36 @@ body {
   animation: fadeIn 0.3s linear;
 }
 
+.animation_show_banner{
+  animation: fadeIn 0.8s linear;
+}
+
+
 @keyframes fadeIn {
   0% {
+    transform: scale(0);
     opacity: 0;
   }
   100% {
+    transform: scale(1);
     opacity: 1;
   }
+}
+
+@keyframes fadeIn_text {
+  0% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    ransform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.animation_text{
+  animation: fadeIn_text 1s linear;
+
 }
 
 .dark_mode_bg{

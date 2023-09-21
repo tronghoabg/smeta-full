@@ -60,13 +60,13 @@ function Test({setdisable}) {
         <img className="absolute top-0 left-0 h-[750px] w-full z-10" src="/hero-bg.png" alt="" />
         <div className="w-[1280px] z-[999] mt-[160px] flex justify-center items-center">
      
-          <div>
+          <div className="animation_text">
             <h1 className="text-white text-[48px] font-bold ">sMeta <br />
               Quản lý tài khoản quảng <br /> cáo dễ dàng chuyên <br />
               nghiệp</h1>
 
-            <button className="text-white text-base border-1 border font-bold mt-10 bg-[#007bff] py-[10px] px-[32px] !rounded-3xl  border-[#007bff] hover:border-white hover:bg-[#3c4b5c]">Tải xuống ngay</button>
-          </div>            <img src="/pc.png" className="w-[648px] h-[438px]" alt="" />
+            <button className="text-white  text-base border-1 border font-bold mt-10 bg-[#007bff] py-[10px] px-[32px] !rounded-3xl  border-[#007bff] hover:border-white hover:bg-[#3c4b5c]">Tải xuống ngay</button>
+          </div>            <img src="/pc.png" className="animation_show_banner w-[648px] h-[438px]" alt="" />
         </div>
       </div>
       <div className="w-full bg-[#fff] pb-[50px]  z-[9999] flex justify-center items-center">
