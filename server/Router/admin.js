@@ -9,7 +9,7 @@ router.get('/getallpayment',middleware.verifyTokenAndAdmin, adminController.Admi
 router.get('/getpaymentmost',middleware.verifyTokenAndAdmin, adminController.getmosttimepayment);
 router.get('/getallpaymentadmin',middleware.verifyTokenAndAdmin, adminController.getallpayment);
 router.get('/getadminoption',middleware.verifyTokenAndAdmin, adminController.getadminoption);
-router.get('/searchProduct', ,middleware.verifyTokenAndAdmin,adminController.searchProduct);
+router.get('/searchProduct', middleware.verifyTokenAndAdmin,adminController.searchProduct);
 // router.get('/serachuser',middleware.verifyTokenAndAdmin, adminController.serachuser);
 module.exports = router;
 
