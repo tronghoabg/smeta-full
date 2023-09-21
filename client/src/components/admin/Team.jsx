@@ -126,12 +126,26 @@ function Team(props) {
     fetchData();
   }, []);
 
+  const [searchKeyword, setSearchKeyword] = useState("");   
+  const handleSearchChange = (event) => {
+    setSearchKeyword(event.target.value);
+  };
 
+  const search_btn = () => {
+
+  };
 
   return (
     <div className="w-full">
       <Header />
-
+      <p className={`text-3xl font-medium ${darkmode ? "text-white" : ""}`}>
+        User 
+      </p>
+      <div id="searchbox">
+        <input  type="text" size="15" placeholder="Enter keywords here..."  onChange={handleSearchChange}
+              value={searchKeyword}/>
+        <input id="button-submit" type="submit" value=" "  onClick={search_btn}/>
+        </div>
       <div className="pt-12">
         <table className="w-full table-auto border border-collapse">
           <thead>
@@ -191,13 +205,13 @@ function Team(props) {
                     <td className="border p-2">
                       {value.phone}
                     </td>
-                    <td className="border p-2 text-center">
+                    <td className="border p-2 text-start">
                       {value?.action?.length > 0 ? value.action.map(value=> value.key).join(", ") : "None" }
                     </td>
                     <td className="border p-2 text-center">
                       {value.role}
                     </td>
-                    <td className="border p-2 text-center">
+                    <td className="border p-2 text-start">
                       {dateFormat(value.createAt)}
                     </td>
                     <td className="border p-2 text-center">

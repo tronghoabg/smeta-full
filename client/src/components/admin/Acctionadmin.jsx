@@ -66,8 +66,15 @@ function Acctionadmin() {
   const startIndex = sttStart;
   const endIndex = startIndex + rowsPerPage;
   const displayedData = data.slice(startIndex, endIndex);
-  console.log("displayedData:", displayedData);
 
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const handleSearchChange = (event) => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const search_btn = () => {
+
+  };
   
   return (
     <div className="w-full">
@@ -75,6 +82,11 @@ function Acctionadmin() {
       <p className={`text-3xl font-medium ${darkmode ? "text-white" : ""}`}>
         Nhật Ký Hoạt Động
       </p>
+      <div id="searchbox">
+        <input  type="text" size="15" placeholder="Enter keywords here..."  onChange={handleSearchChange}
+              value={searchKeyword}/>
+        <input id="button-submit" type="submit" value=" "  onClick={search_btn}/>
+        </div>
       <TableContainer
         component={Paper}
         className="mt-10"

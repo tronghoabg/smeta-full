@@ -7,7 +7,10 @@ router.get('/getalluser',middleware.verifyTokenAndAdmin, adminController.getallU
 router.get('/getallacction',middleware.verifyTokenAndAdmin, adminController.getallAction);
 router.get('/getallpayment',middleware.verifyTokenAndAdmin, adminController.AdmingetAllpayment);
 router.get('/getpaymentmost',middleware.verifyTokenAndAdmin, adminController.getmosttimepayment);
-
+router.get('/getallpaymentadmin',middleware.verifyTokenAndAdmin, adminController.getallpayment);
 router.get('/getadminoption',middleware.verifyTokenAndAdmin, adminController.getadminoption);
 
+// router.get('/serachuser',middleware.verifyTokenAndAdmin, adminController.serachuser);
 module.exports = router;
+
+

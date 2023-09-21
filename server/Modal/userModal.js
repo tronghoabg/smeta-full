@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
         required:true,
         minlength:6,
         maxlength:20,
-        unique:true
+        unique:true,
     },
     password:{
         type: String,
@@ -63,6 +63,12 @@ const userSchema = mongoose.Schema({
         default: 0
     }
 },{collection:'user'})
+// await userModal.collection.dropIndexes();
+// await userModal.createIndexes();
+
+
+userSchema.index({ '$**': 'text' });
 
 const userModal = mongoose.model("user",userSchema)
+
 module.exports = userModal
