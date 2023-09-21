@@ -4,10 +4,13 @@ import CryptoJS from 'crypto-js';
 import getOrdercode from '../config/getOrdercode';
 import { useDispatch, useSelector } from "react-redux";
 import instace from './customer_axios';
+import { useTranslation } from "react-i18next";
 
 
 function Payment({ setError }) {
   const counter = useSelector((state) => state.counter);
+  const { t } = useTranslation();
+
   let { dataToken, user } = counter
   const paymentGatewayUrl = 'https://api-merchant.payos.vn/v2/payment-requests';
   const payosApiKey = '2c147a4d-568a-454d-afd8-bb7ea084125f';
@@ -94,8 +97,8 @@ function Payment({ setError }) {
   const percent_number = process.env.PERCENT_NUMBER || 1000
   return (
     <div className='p-4'>
-      <p>Nhập số tiền:</p>
-      <input type="number" placeholder='Số tiền' className='py-2 w-[200px] text-xl mb-6' value={orderInfo.amount}
+      <p>{t('Nhập số tiền:')}</p>
+      <input type="number" placeholder={t('Số tiền')} className='py-2 w-[200px] text-xl mb-6' value={orderInfo.amount}
         onChange={(e) => {
           if (e.target.value >= 0) {
             setOrderInfo({ ...orderInfo, amount: e.target.value * 1 })
@@ -126,7 +129,7 @@ function Payment({ setError }) {
       </div>
 
 
-      <button className='px-4 py-2 hover:scale-110 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}> Thanh Toán</button>
+      <button className='px-4 py-2 hover:scale-110 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}>{t('Thanh toán')}</button>
     </div>
   );
 }
