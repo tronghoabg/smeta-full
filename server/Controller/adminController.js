@@ -138,50 +138,32 @@ const adminController = {
       res.status(500).json({ message: "lỗi server" });
     }
   },
-  // serachuser: async (req, res) => {
-  //   try {
-  //     const keyword = req.body.keyword; // Lấy từ khóa tìm kiếm từ query string
+  searchProduct: async (req, res) => {
+    try {
+      const data = await userModal.find();
+      const keyword = req.body.searchbyname.trim().toLowerCase(); 
+      const results = data.filter((item) => {
+        for (const key in item) {
+          if (typeof item[key] === 'string' || typeof item[key] === 'number') {
+            const normalizedValue = String(item[key]).trim().toLowerCase(); 
+            if (normalizedValue.includes(keyword)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      });
   
-  //     // Thực hiện truy vấn tìm kiếm sử dụng $text
-  //     const data = await userModal.find({ $text: { $search: keyword } });
-  
-  //     res.status(200).json({ message: "Tìm kiếm thành công", data });
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ message: "Lỗi server" });
-  //   }
-  // }
-  
-
-  
-  // searchProduct: async (req, res) => {
-  //   try {
-
-  //     const query = req.body.searchbyname.replace(/\s/g, '\\s*'); 
-  //     const regexQuery = new RegExp(query, 'i');
-  //     console.log(regexQuery, 'regexQuery');
-  
-  //     const results = await userModal.find({
-  //       $or: [
-  //         { username: { $regex: regexQuery } },
-  //         { email: { $regex: regexQuery } },
-  //         { usedMonney: { $regex: regexQuery } },
-  //         { phone: { $regex: regexQuery } },
-  //         { language: { $regex: regexQuery } },
-  //         { role: { $regex: regexQuery } },
-  //         { action: { $regex: regexQuery } },
-  //         { date: { $regex: regexQuery } },
-  //       ],
-  //     });
-  
-  //     res.status(200).json(results);
-  //   } catch (error) {
-  //     console.error('Lỗi:', error);
-  //     res.status(500).json(error);
-  //   }
-  // }
-  
-  
+      res.status(200).json(results);
+    } catch (error) {
+      console.error('Lỗi:', error);
+      res.status(500).json(error);
+    }
+  }
 }
 
 module.exports = adminController;
+
+
+
+
