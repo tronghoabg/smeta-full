@@ -30,6 +30,30 @@ body {
   color: #4CCEAC;
 }
 
+.payFocus_animation{
+  animation:  pay_animation 1s ease-in-out infinite;
+}
+
+
+@keyframes pay_animation {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    color: #42d55b;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+    color: yellow ;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+    color: #42d55b;
+  }
+}
+
+
 .ant-modal-content{
   background: unset !important;
   box-shadow: unset !important;

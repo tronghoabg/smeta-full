@@ -71,4 +71,5 @@ userSchema.index({ '$**': 'text' });
 
 const userModal = mongoose.model("user",userSchema)
 
+
 module.exports = userModal

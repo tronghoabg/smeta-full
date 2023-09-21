@@ -46,7 +46,10 @@ const Sidebar = ({ active }) => {
             console.log(error);
         }
     }
-
+    const handleGotoLogin = () =>{
+        closeSidebar()
+        nav('/login')
+    }
     return (
         <div className='sidebar' >
             <div className='top'>
@@ -84,12 +87,10 @@ const Sidebar = ({ active }) => {
                         <img src='/avatar.png' alt='avatar'></img>
                     </div>
                     <div className='controller'>
-                        <div className='name'>{name ? name : <p>Đăng Nhập</p>}</div>
-                        {name ? <NavLink to='/register' className='side-link' onClick={() => Logout()}>
-                            <div className='link-text'>Đăng Xuất</div>
-                        </NavLink> : <NavLink to='/intologin' className='side-link' onClick={closeSidebar}>
-                            <div className='link-text'>đăng nhập</div>
-                        </NavLink>
+                        <div className='name  cursor-pointer'>{user ? user.username : <p  onClick={handleGotoLogin}>Đăng Nhập</p>}</div>
+                        {user ? <div to='/register cursor-pointer' className='side-link' onClick={() => Logout()}>
+                            <div className='link-text cursor-pointer'>Đăng Xuất</div>
+                        </div> : null
                         }
                     </div>
                 </div>

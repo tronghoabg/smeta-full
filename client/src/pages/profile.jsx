@@ -95,7 +95,7 @@ const Profile = ({ setdisable }) => {
     return (
         <>
             <HomeHeader />
-            <div className="w-full min-h-screen bg-[#fff] pt-[100px] flex justify-center items-center">
+            <div className="w-full min-h-screen bg-[#fff] pt-[100px] flex justify-center items-center" >
                 {error.error?.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
@@ -154,7 +154,7 @@ const Profile = ({ setdisable }) => {
 
                     <h1 className="text-xl text-[#000] font-medium mt-[100px]  mb-3">{t('Mua coin')}</h1>
                     {/* border !border-[#999] */}
-                    <div className=" h-fit mb-5 border !border-[#f0f0f0]">
+                    <div id="payment" className=" h-fit mb-5 border !border-[#f0f0f0]">
                         <Payment setError={setError} />
                     </div>
                     <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">{t('Mua Gói')}</h1>

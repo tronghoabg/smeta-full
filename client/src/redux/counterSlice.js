@@ -7,15 +7,23 @@ const counterSlice = createSlice({
   initialState: {
     dataToken: token ? JSON.parse(token) : null,
     test: true,
+    profileId: "",
     user: null,
     loading: false,
     payment: false,
     isSidebar:true,
+    payFocus: false,
     selectedDashboard: 'main'
   },
   reducers: {
     setDataToken: (state, data) => {
       state.dataToken = data.payload;
+    },
+    setprofileId: (state, data) => {
+      state.profileId = data.payload;
+    },
+    setPayFocus: (state, data) => {
+      state.payFocus = data.payload;
     },
     setUser: (state, data) => {
       state.user = data.payload;
@@ -41,5 +49,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { setDataToken, settest, setUser,setdarkmode ,setloading,setpayment,setisSidebar,setSelectedDashboard} = counterSlice.actions;
+export const { setDataToken,setprofileId, settest,setPayFocus, setUser,setdarkmode ,setloading,setpayment,setisSidebar,setSelectedDashboard} = counterSlice.actions;
 export default counterSlice.reducer;
