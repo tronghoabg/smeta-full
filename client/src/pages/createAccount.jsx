@@ -10,7 +10,12 @@ import instace from "./customer_axios";
 import { setDataToken } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import RefreshToken from "./RefreshToken";
-const SharePixel = (props) => {
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+
+const CreateAccount = (props) => {
+  const [error, setError] = useState("");
+
   const counter = useSelector((state) => state.counter);
   let { dataToken } = counter
   const dispatch=useDispatch()
@@ -22,6 +27,7 @@ const SharePixel = (props) => {
   const [qty, setQty] = useState(slot);
   const [delay, setDelay] = useState(0);
   const [log, setLog] = useState([]);
+  const [open, setOpen] = useState(false);
 
 
   useEffect(() => {
@@ -61,42 +67,53 @@ const SharePixel = (props) => {
   const fDelay = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   const handlerCreate = async () => {
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
-    const data  = await instace.post('/buypackage/checkedaction', {
-      product_name: "Create Ad Account"
-    }, {
-      headers: {
-        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
-            }`,
-    },
-    }
-    )
-    console.log(data,'data')
-    setLog([])
-    console.log("123");
-    if (!bmSelected || !accountName || !qty) {
-      alert("Vui lòng nhập đầy đủ thông tin");
-      return;
-    }
-
-    for (var i = 1; i <= qty; i++) {
-      let create = await chromeTask.create_ad_account(
-        bmSelected.id,
-        `${accountName}_${i}`,
-        bmSelected.currency,
-        bmSelected.timezone
-      )
-      create = `${i}: ${create}`
-      const newLog = (log) => {
-        return [...log, create]
+    setOpen(true)
+    try {
+      const data  = await instace.post('/buypackage/checkedaction', {
+        product_name: "Create Ad Account"
+      }, {
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+              }`,
+      },
       }
+      )
+      if(data.data.status === true){
 
-      setLog(newLog)
-      await fDelay(delay * 1000);
-    }
+      }
+      setLog([])
+      if (!bmSelected || !accountName || !qty) {
+        alert("Vui lòng nhập đầy đủ thông tin");
+        return;
+      }
+  
+      for (var i = 1; i <= qty; i++) {
+        let create = await chromeTask.create_ad_account(
+          bmSelected.id,
+          `${accountName}_${i}`,
+          bmSelected.currency,
+          bmSelected.timezone
+        )
+        create = `${i}: ${create}`
+        const newLog = (log) => {
+          return [...log, create]
+        }
+  
+        setLog(newLog)
+        await fDelay(delay * 1000);
+      }
+  } catch (error) {
+    setError(error.response.data.message)
+  }
   };
 
   return (
@@ -195,6 +212,24 @@ const SharePixel = (props) => {
                   {t("create")}
                 </Button>
               </div>
+              {error.length > 0 ? (
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "top", horizontal: "left" }}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      sx={{ width: "100%" }}
+                    >
+                      {error}
+                    </Alert>
+                  </Snackbar>
+                ) : (
+                  <p>{null}</p>
+                )}
             </div>
           </div>
           <div className="screen">
@@ -205,4 +240,4 @@ const SharePixel = (props) => {
     </>
   );
 };
-export default SharePixel;
+export default CreateAccount;

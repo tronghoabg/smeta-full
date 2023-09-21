@@ -56,9 +56,7 @@ function PaymentInfo() {
             })
 
     }, [])
-    console.log(data);
 const percent_number = process.env.PERCENT_NUMBER || 1000
-console.log(percent_number, 123123123);
     const tablehead = [
         { label: "STT", key: "stt" },
         { label: "Name", key: "username" },
@@ -137,36 +135,6 @@ console.log(percent_number, 123123123);
                             </tr>
                             )
                             }
-                            // return (
-                            //   <tr
-                            //     key={index}
-                            //     className={`border text-sm `}
-                            //   >
-                            //     <td className="border p-2 text-center">{index + 1}</td>
-                            //     <td className="border p-2 ">{value.username}</td>
-                            //     <td className="border p-2 ">{value.email}</td>
-                            //     <td className="border p-2">
-                            //       {value.phone}
-                            //     </td>
-                            //     <td className="border p-2 text-center">
-                            //       {value?.action?.length > 0 ? value.action.map(value=> value.key).join(", ") : "None" }
-                            //     </td>
-                            //     <td className="border p-2 text-center">
-                            //       {value.role}
-                            //     </td>
-                            //     <td className="border p-2 text-center">
-                            //       {value.createAt}
-                            //     </td>
-                            //     <td className="border p-2 text-center">
-                            //       {value.totleMoney}
-                            //     </td>
-                            //     <td className="border p-2 text-center">
-                            //       {value.usedMonney}
-                            //     </td>
-                            //     <td className="border p-2 text-center">
-                            //     </td>
-                            //   </tr>
-                            // );
                         })}
                     </tbody>
                 ) : (

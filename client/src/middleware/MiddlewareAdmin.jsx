@@ -10,6 +10,9 @@ function MiddleWareAdmin({  user, children }) {
     // let { dataToken, user } = counter;
     let token = Cookies.get('datatoken')
     console.log(user, "check admin");
+    if(!token){
+        return  window.location.href = '/';
+    }
     if(user === null){
         return  <Loading/>
     }

@@ -1,23 +1,50 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { setUser, setDataToken } from "../redux/counterSlice";
+import RefreshToken from "../pages/RefreshToken";
+import instace from '../pages/customer_axios';
+import Cookies from "js-cookie";
+
 
 const Sidebar = ({ active }) => {
     const nav = useNavigate()
-    const [name ,setName] = useState('')
+    const [name, setName] = useState('')
     const { t } = useTranslation();
     const closeSidebar = () => {
         active(false)
     }
     useEffect(() => {
-    const facebookname= localStorage.getItem('facebookname')
-     setName(facebookname)
+        const facebookname = localStorage.getItem('facebookname')
+        setName(facebookname)
     }, [])
-    
-    const Logout = ()=>{
-        localStorage.removeItem('facebookname')
-        active(false)
-        nav('/register')
+
+    const dispatch = useDispatch()
+
+    const counter = useSelector((state) => state.counter);
+    let { dataToken, user } = counter;
+
+    const Logout = async () => {
+        try {
+            const newDatatoken = await RefreshToken(dataToken);
+            dispatch(setDataToken(newDatatoken));
+            const headers = {
+                Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+            };
+            const data = await instace.patch("/auth/logout", null, { headers });
+            if (data?.data?.message == "Đăng xuất thành công") {
+                Cookies.remove("datatoken");
+                localStorage.removeItem('facebookname')
+                dispatch(setUser(null));
+                active(false)
+                dispatch(setDataToken(null));
+                nav('/login')
+            }
+            // Rest of your code
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -57,13 +84,13 @@ const Sidebar = ({ active }) => {
                         <img src='/avatar.png' alt='avatar'></img>
                     </div>
                     <div className='controller'>
-                        <div className='name'>{name ? name :<p>Đăng Nhập</p>}</div>
-                        {name ?  <NavLink to='/register' className='side-link' onClick={()=>Logout()}>
+                        <div className='name'>{name ? name : <p>Đăng Nhập</p>}</div>
+                        {name ? <NavLink to='/register' className='side-link' onClick={() => Logout()}>
                             <div className='link-text'>Đăng Xuất</div>
-                        </NavLink>:<NavLink to='/intologin' className='side-link' onClick={closeSidebar}>
+                        </NavLink> : <NavLink to='/intologin' className='side-link' onClick={closeSidebar}>
                             <div className='link-text'>đăng nhập</div>
                         </NavLink>
-                         }
+                        }
                     </div>
                 </div>
             </div>

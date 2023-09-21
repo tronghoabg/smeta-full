@@ -1,7 +1,10 @@
 import React from "react";
 import { AiOutlineFieldTime,AiFillFacebook,AiOutlineSend } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 function HomeFooter() {
+  const { t } = useTranslation();
+
   return (
     <div className="">
       <div className=" w-full bg-[#004a99] pb-[80px] z-[9999]   flex justify-center items-center">
@@ -11,10 +14,10 @@ function HomeFooter() {
               SMETA.VN
             </h1>
             <p className="text-[#EEEEEE] text-[14px]">
-              Một sản phẩm thuộc VenusTeam
+              {t("Một sản phẩm thuộc VenusTeam")}
             </p>
             <div className="border-t-[0.5px] w-ful border-gray-350 opacity-30 my-4"></div>
-            <p className="text-[#EEEEEE] text-[16px] ">Chính sách</p>
+            <p className="text-[#EEEEEE] text-[16px] ">{t('policy')}</p>
           </div>
           <div className="w-[160px] mx-[30px]">
             <h1 className="text-white font-bold text-[14px] tracking-[1.5px] mb-[30px]">
@@ -33,10 +36,9 @@ function HomeFooter() {
 
           <div className="w-[280px] mx-[100px]">
             <h1 className="text-white font-bold text-[14px] tracking-[1.5px] mb-[30px]">
-              MẠNG XÃ HỘI
-            </h1>
+              {t('MẠNG XÃ HỘI')} </h1>
             <p className="text-[#EEEEEE] text-[15px] mb-10">
-              Theo dõi và đóng góp ý kiến với chúng tôi qua các kênh mạng xã hội
+             {t('Theo dõi và đóng góp ý kiến với chúng tôi qua các kênh mạng xã hội')}
             </p>
             <p className="text-[#EEEEEE] text-[14px] mt-2 flex">
               <div className="p-2 bg-[#007bff] rounded-full mr-3  hover:bg-[#3f79b8] cursor-pointer flex justify-center items-center">

@@ -4,15 +4,43 @@ import { BsFillMoonFill, BsSun } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { setdarkmode } from "../../redux/counterSlice";
 import { Dropdown, Space } from "antd";
+import { useTranslation } from "react-i18next";
+import Cookies from "js-cookie";
+import instace from "../../pages/customer_axios";
+import { setUser, setDataToken } from "../../redux/counterSlice";
+import RefreshToken from "../../pages/RefreshToken";
+import { useNavigate } from "react-router-dom";
+
 
 const Header = (props) => {
-  const counter = useSelector((state) => state.counter);
-  const { darkmode } = counter;
-  const dispatch = useDispatch();
+const { t } = useTranslation();
 
+  const counter = useSelector((state) => state.counter);
+  const { darkmode, dataToken, user } = counter;
+  const dispatch = useDispatch();
+  const nav = useNavigate()
+  const handleLogout = async () => {
+    try {
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+      const headers = {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+      };
+      const data = await instace.patch("/auth/logout", null, { headers });
+      if (data?.data?.message == "Đăng xuất thành công") {
+        Cookies.remove("datatoken");
+        dispatch(setUser(null));
+        dispatch(setDataToken(null));
+        nav("/login")
+      }
+      // Rest of your code
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const items = [
     {
-      label: <div className="text-red-500 font-medium">Log out</div>,
+      label: <div className="text-red-500 font-medium" onClick={handleLogout}>{t('logout')}</div>,
       key: "0",
     },
   ];

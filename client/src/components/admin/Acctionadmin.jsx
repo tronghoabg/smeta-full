@@ -14,6 +14,7 @@ import { useSelector,useDispatch } from "react-redux";
 import RefreshToken from "../../pages/RefreshToken";
 import instace from "../../pages/customer_axios";
 import { setDataToken } from "../../redux/counterSlice";
+import dateFormat from "../../config/dateFormat";
 function Acctionadmin() {
   const counter = useSelector((state) => state.counter);
   const { darkmode,dataToken } = counter;
@@ -107,7 +108,7 @@ function Acctionadmin() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {displayedData.map((row, index) => (
+            {displayedData.reverse().map((row, index) => (
               <TableRow key={index}>
                 <TableCell style={{ borderBottom: "1px solid #4CCEAC" ,color: darkmode ? 'white ':'' }}>
                   {sttStart + index + 1}
@@ -125,7 +126,7 @@ function Acctionadmin() {
                   {row.ip}
                 </TableCell>
                 <TableCell style={{ borderBottom: "1px solid #4CCEAC" ,color: darkmode ? 'white ':'' }}>
-                  {row.date}
+                  {dateFormat(row.date)}
                 </TableCell>
               </TableRow>
             ))}

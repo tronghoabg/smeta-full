@@ -9,6 +9,8 @@ import RefreshToken from "../../pages/RefreshToken";
 import { setUser, setDataToken } from "../../redux/counterSlice";
 import { Button } from "antd";
 import { TablePagination,} from "@mui/material";
+import priceFormat from "../../config/priceFormat";
+import dateFormat from "../../config/dateFormat";
 
 
 function Team(props) {
@@ -196,13 +198,13 @@ function Team(props) {
                       {value.role}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.createAt}
+                      {dateFormat(value.createAt)}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.totleMoney}
+                      {`${priceFormat(value.totleMoney)} đ`}
                     </td>
                     <td className="border p-2 text-center">
-                      {value.usedMonney}
+                      {`${priceFormat(value.usedMonney)} đ`}
                     </td>
                     <td className="border p-2 text-center">
                       <Button style={{ background: '#66FF33', }}>xem chi tiet</Button>

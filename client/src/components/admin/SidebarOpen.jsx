@@ -44,8 +44,8 @@ const SidebarOpen = (props) => {
         variant="scrollable"
         textColor="primary"
         indicatorColor="primary"
-        className={` ${isSidebar ? "border_sidebar": ""} ${isSidebar ? '' : ''
-          } pr-18 ${darkmode ? 'bg-[#1f2a40]' : 'bg-[#fff]'}`}
+        className={` ${isSidebar ? "": ""} ${isSidebar ? '' : ''
+          } pr-18 ${darkmode ? 'bg-[#1f2a40] !text-white' : 'bg-[#fff]'}`}
       >
         <Tab
           label={isSidebar ? "Dashboard" : ""}

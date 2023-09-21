@@ -76,7 +76,7 @@ const adminController = {
         }
       });
       const test = recentMonths.map((value) => {
-        let newdata = { month: `Tháng ${value.split("-")[1]}`, $: 0, user: 0 };
+        let newdata = { name: `Tháng ${value.split("-")[1]}`, $: 0, user: 0 };
         FormatData.map((item) => {
           if (item.date === value) {
             newdata = { ...newdata, user: item.totaluser, $: item.totalprice };

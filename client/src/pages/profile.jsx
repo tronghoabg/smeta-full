@@ -124,7 +124,7 @@ const Profile = ({ setdisable }) => {
                                     return (
                                         <div key={value.title} className="flex border-b border-b-[#c2c1c1] py-3">
                                             <div className="w-[200px] mr-[50px]">{value.title}</div>
-                                            <div className="w-full text-[#212529BF]">{value.title == "Số dư" || value.title == "Số tiền đã xử dụng" ? priceFormat(value.value / Number(percent_number)) : priceFormat(value.value)}</div>
+                                            <div className="w-full text-[#212529BF]">{value.title == "Số dư" || value.title == "Số tiền đã xử dụng" ?`${ priceFormat(value.value / Number(percent_number))} C` : priceFormat(value.value)}</div>
                                         </div>
                                     )
                                 })}

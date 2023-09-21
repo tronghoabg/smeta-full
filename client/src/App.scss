@@ -30,6 +30,11 @@ body {
   color: #4CCEAC;
 }
 
+.ant-modal-content{
+  background: unset !important;
+  box-shadow: unset !important;
+}
+
 .animation_show{
   animation: fadeIn 0.3s linear;
 }

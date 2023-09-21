@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import instace from './customer_axios';
 
 
-function Payment({setError}) {
+function Payment({ setError }) {
   const counter = useSelector((state) => state.counter);
   let { dataToken, user } = counter
   const paymentGatewayUrl = 'https://api-merchant.payos.vn/v2/payment-requests';
@@ -91,17 +91,16 @@ function Payment({setError}) {
     { name: "500,000 đ", value: 500000 },
   ]
 
-  const SmetaPackage = [
-    { name: "Share pixel", value: 1000 },
-    { name: "All", value: 1000 },
-
-  ]
-
-const percent_number = process.env.PERCENT_NUMBER ||1000
+  const percent_number = process.env.PERCENT_NUMBER || 1000
   return (
     <div className='p-4'>
       <p>Nhập số tiền:</p>
-      <input type="number" placeholder='Số tiền' className='py-2 w-[200px] text-xl mb-6' value={orderInfo.amount} onChange={(e) => { setOrderInfo({ ...orderInfo, amount: e.target.value * 1 }) }} />
+      <input type="number" placeholder='Số tiền' className='py-2 w-[200px] text-xl mb-6' value={orderInfo.amount}
+        onChange={(e) => {
+          if (e.target.value >= 0) {
+            setOrderInfo({ ...orderInfo, amount: e.target.value * 1 })
+          }
+        }} />
 
       <div className='grid grid-cols-5 w-full gap-4'>
         {dataCard.map(value => {
@@ -112,11 +111,11 @@ const percent_number = process.env.PERCENT_NUMBER ||1000
             </div>
           )
         })}
-       
+
       </div>
 
       <div className='grid grid-cols-5 w-full gap-4 mt-12'>
-      {/* {SmetaPackage.map(value => {
+        {/* {SmetaPackage.map(value => {
           return (
             <div onClick={() => { setvalueSmetaPackage(value) }} className={`border-2 rounded-lg ${valueSmetaPackage.name == value.name ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
@@ -127,7 +126,7 @@ const percent_number = process.env.PERCENT_NUMBER ||1000
       </div>
 
 
-      <button className='px-4 py-2 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}> Thanh Toán</button>
+      <button className='px-4 py-2 hover:scale-110 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}> Thanh Toán</button>
     </div>
   );
 }

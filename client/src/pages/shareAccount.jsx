@@ -67,6 +67,8 @@ const SharePixel = (props) => {
   async function btnsharetkqc() {
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
+    setOpen(true);
+  try {
     const data  = await instace.post('/buypackage/checkedaction', {
       product_name: "Create Ad Account"
     }, {
@@ -74,10 +76,9 @@ const SharePixel = (props) => {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
             }`,
     },
-    }
-    )
-    console.log(data,'data')
-    setOpen(true);
+  }
+  )
+  if(data.data.status === true){
     const tokensmeta = localStorage.getItem("tokensmeta");
     if (
       listTKQC.length === 0 ||
@@ -125,6 +126,11 @@ const SharePixel = (props) => {
       });
       setLog(array);
     }
+
+  }
+} catch (error) {
+  setError(error.response.data.message)
+  }
   }
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

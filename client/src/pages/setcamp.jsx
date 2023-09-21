@@ -588,7 +588,9 @@ const SetCamp = (props) => {
 
   const HandleUploadCamp = async () => {
     const newDatatoken = await RefreshToken(dataToken);
+    setOpen(true);
     dispatch(setDataToken(newDatatoken));
+  try {
     const data  = await instace.post('/buypackage/checkedaction', {
       product_name: "Create Campaign"
     }, {
@@ -598,31 +600,36 @@ const SetCamp = (props) => {
     },
     }
     )
-    console.log(data,'data')
-    setOpen(true);
-    const authFb = await chromeTask.getAuthFb();
-    let clonedata = {
-      ...valueSetcampAll,
-      budget: (
-        Number(valueSetcampAll.account_currency_ratio_to_usd) *
-        Number(valueSetcampAll.budget)
-      ).toFixed(0),
-      token: authFb.token,
-    };
-
-    if (clonedata.isDRAFT) {
-      if (clonedata.TYPE) {
-        setCampPostDraft(clonedata);
+    if(data.data.status === true){
+  
+      const authFb = await chromeTask.getAuthFb();
+      let clonedata = {
+        ...valueSetcampAll,
+        budget: (
+          Number(valueSetcampAll.account_currency_ratio_to_usd) *
+          Number(valueSetcampAll.budget)
+        ).toFixed(0),
+        token: authFb.token,
+      };
+  
+      if (clonedata.isDRAFT) {
+        if (clonedata.TYPE) {
+          setCampPostDraft(clonedata);
+        } else {
+          setCampUploadDraft(clonedata);
+        }
       } else {
-        setCampUploadDraft(clonedata);
-      }
-    } else {
-      if (clonedata.TYPE) {
-        setCampPost(clonedata);
-      } else {
-        setCampUpload(clonedata);
+        if (clonedata.TYPE) {
+          setCampPost(clonedata);
+        } else {
+          setCampUpload(clonedata);
+        }
       }
     }
+  } catch (error) {
+    setError(error.response.data.message)
+  }
+  
 
     // const data = await chromeTask.HandleSetCamp(clonedata);
   };

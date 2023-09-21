@@ -5,7 +5,7 @@ import { setDataToken, setUser } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import priceFormat from '../config/priceFormat';
 
-function ProductPackage({ setError, setOpen, cla }) {
+function ProductPackage({ setError, setOpen, cla, center_btn }) {
     const counter = useSelector((state) => state.counter);
     let { dataToken, user } = counter
     const [data, setdata] = useState([])
@@ -42,10 +42,11 @@ function ProductPackage({ setError, setOpen, cla }) {
     }, [])
 
     const buypackage = async () => {
+        setOpen(true)
+
         if (!valueSmetaPackage) {
             return setError({ type: "error", error: "Chọn gói của bạn" })
         }
-        setOpen(true)
         try {
             const newDatatoken = await RefreshToken(dataToken);
             dispatch(setDataToken(newDatatoken));
@@ -74,7 +75,7 @@ function ProductPackage({ setError, setOpen, cla }) {
             <div className={`grid grid-cols-4 gap-6 ${cla}`}>
                 {data.map(value => {
                     return (
-                        <div key={value._id} className={` !border-[#e4e2e2] border  min-h-[360px] rounded-xl !rounded-tr-3xl   hover:!shadow-2xl overflow-hidden duration-500 col-span-1  text-start shadow-lg cursor-pointer`}>
+                        <div key={value._id} className={` !border-[#e4e2e2] bg-[#fff] border  min-h-[360px] rounded-xl !rounded-tr-3xl   hover:!shadow-2xl overflow-hidden duration-500 col-span-1  text-start shadow-lg cursor-pointer`}>
                             <h1 className='text-center text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#fff] text-[#267efa]'>{value.key}</h1>
                             {itemOption.key === value.key && itemOption.status === true ? <div className='h-[300px] text-center grid grid-cols-2 gap-4 p-4'>
                                 {value.option.map(item => {
@@ -98,8 +99,10 @@ function ProductPackage({ setError, setOpen, cla }) {
                 })}
 
             </div>
-            <button className='px-4 py-2 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={buypackage}> Thanh Toán</button>
+            <div className={`${center_btn}`}>
+                <button className='px-4 py-2 border !border-[#0800f0] hover:scale-110 text-xl !rounded-md mt-6 hover:!border-[#0a519d] bg-[#fff] duration-300 cursor-pointer' onClick={buypackage}> Thanh Toán</button>
 
+            </div>
         </div>
     )
 }

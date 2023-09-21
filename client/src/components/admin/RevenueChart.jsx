@@ -12,6 +12,8 @@ function ChartExample({ data }) {
     { name: 'Tháng 6', $: 2390, user: 3800 },
     { name: 'Tháng 7', $: 3490, user: 4300 },
   ]
+
+  console.log(data);
   return (
     <ResponsiveContainer className="chart" height={300} width="100%">
       <LineChart
