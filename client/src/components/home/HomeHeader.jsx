@@ -17,13 +17,19 @@ import Payment from "../../pages/payment";
 function HomeHeader() {
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
-  let { dataToken, user , payFocus } = counter;
+  let { dataToken, user , payFocus,buyaction } = counter;
   const handleRedirectLogin = () => {
     nav("/login");
   };
   const { i18n } = useTranslation();
   const [lng, setLng] = useState("vi");
   const { t } = useTranslation();
+
+  useEffect(()=>{
+    if(buyaction){
+      setIsModalOpen(true)
+    }
+  },[buyaction])
 
   useEffect(()=>{
     if(user){

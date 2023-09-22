@@ -5,6 +5,7 @@ let token = Cookies.get("datatoken");
 const counterSlice = createSlice({
   name: "counter",
   initialState: {
+    buyaction:false,
     dataToken: token ? JSON.parse(token) : null,
     test: true,
     profileId: "",
@@ -16,6 +17,9 @@ const counterSlice = createSlice({
     selectedDashboard: 'main'
   },
   reducers: {
+    setbuyaction: (state, data) => {
+      state.buyaction = data.payload;
+    },
     setDataToken: (state, data) => {
       state.dataToken = data.payload;
     },
@@ -49,5 +53,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { setDataToken,setprofileId, settest,setPayFocus, setUser,setdarkmode ,setloading,setpayment,setisSidebar,setSelectedDashboard} = counterSlice.actions;
+export const { setDataToken,setprofileId, settest,setPayFocus,setbuyaction, setUser,setdarkmode ,setloading,setpayment,setisSidebar,setSelectedDashboard} = counterSlice.actions;
 export default counterSlice.reducer;
