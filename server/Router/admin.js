@@ -9,9 +9,14 @@ router.get('/getallpayment',middleware.verifyTokenAndAdmin, adminController.Admi
 router.get('/getpaymentmost',middleware.verifyTokenAndAdmin, adminController.getmosttimepayment);
 router.get('/getallpaymentadmin',middleware.verifyTokenAndAdmin, adminController.getallpayment);
 router.get('/getadminoption',middleware.verifyTokenAndAdmin, adminController.getadminoption);
+router.get('/searchProduct', middleware.verifyTokenAndAdmin,adminController.searchProduct);
 router.get('/getuserbuyid/:profileId',middleware.verifyTokenAndAdmin, adminController.getUserBuyId);
+router.get('/searchAction', middleware.verifyTokenAndAdmin,adminController.searchAction);
+router.get('/searchPayment', middleware.verifyTokenAndAdmin,adminController.searchPayment);
+
 
 // router.get('/serachuser',middleware.verifyTokenAndAdmin, adminController.serachuser);
 module.exports = router;
+
 
 

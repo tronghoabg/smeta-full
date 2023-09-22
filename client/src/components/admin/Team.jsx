@@ -132,8 +132,21 @@ function Team(props) {
     setSearchKeyword(event.target.value);
   };
 
-  const search_btn = () => { 
+  const search_btn = async () => { 
+    try {
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+      const response = await instace.get(`/admin/searchProduct?searchbyname=${searchKeyword}`, {
 
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+        },
+      });
+  
+      setData(response.data)
+    } catch (error) {
+      console.error("Lỗi xảy ra khi gọi API:", error);
+    }
   };
 
   return (

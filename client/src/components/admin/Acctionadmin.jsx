@@ -45,9 +45,7 @@ function Acctionadmin() {
         });
   
         const dataa = response.data?.data; 
-        setData(dataa)
-        console.log(dataa,'dataa')
-  
+        setData(dataa)  
       } catch (error) {
         console.error("Lỗi xảy ra khi gọi API:", error);
       }
@@ -56,8 +54,6 @@ function Acctionadmin() {
     fetchData();
   }, []); 
   
-
-
   useEffect(() => {
     const newSttStart = page * rowsPerPage;
     setSttStart(newSttStart);
@@ -72,8 +68,21 @@ function Acctionadmin() {
     setSearchKeyword(event.target.value);
   };
 
-  const search_btn = () => {
+  const search_btn = async () => { 
+    try {
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+      const response = await instace.get(`/admin/searchAction?searchbyname=${searchKeyword}`, {
 
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+        },
+      });
+  
+      setData(response.data)
+    } catch (error) {
+      console.error("Lỗi xảy ra khi gọi API:", error);
+    }
   };
   
   return (
