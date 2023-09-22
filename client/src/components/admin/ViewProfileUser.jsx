@@ -173,7 +173,7 @@ function ViewProfileUser() {
                                             {dateFormat(value.time_start)}
                                         </td>
                                         <td className="!border-[#ccc] border p-2 text-center text-base text-red-500 font-medium">
-                                            -{value.price / Number(percent_number)}
+                                            -{priceFormat(value.price / Number(percent_number))} C
                                         </td>
                                     </tr>
                                 )
@@ -196,7 +196,7 @@ function ViewProfileUser() {
                                     {dateFormat(value.createdAt)}
                                 </td>
                                 <td className="!border-[#ccc] border p-2 text-center text-base text-green-500 font-medium">
-                                    +{value.amount / Number(percent_number)}
+                                    +{priceFormat(value.amount / Number(percent_number))} C
                                 </td>
                             </tr>
                             )

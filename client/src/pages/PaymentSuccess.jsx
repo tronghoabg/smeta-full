@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { setDataToken, setUser } from "../redux/counterSlice";
 import RefreshToken from "./RefreshToken";
+import priceFormat from '../config/priceFormat';
 
 function PaymentSuccess() {
     const payosApiKey = '2c147a4d-568a-454d-afd8-bb7ea084125f';
@@ -13,8 +14,8 @@ function PaymentSuccess() {
     let { dataToken, user } = counter
     const nav = useNavigate()
     const dispatch = useDispatch()
-
-    const [open, setOpen]= useState(false)
+    const [price, setPrice] = useState(0)
+    const [open, setOpen]= useState(true)
     useEffect(() => {
         const fetchdata = async () => {
             const newDatatoken = await RefreshToken(dataToken);
@@ -44,11 +45,14 @@ function PaymentSuccess() {
 
 
         fetchdata().then((data) => {
-            console.log(data);
+            if(!data){
+              return  nav('/')
+            }
             if (data?.createPayment.data.message === "Error") {
-                nav('/')
+                return  nav('/')
             }else{
-                let newuser = {...data?.createPayment.data.user, totleMoney: Number(data?.createPayment.data.user.totleMoney) + Number(data.data.data.data.amount) }
+                setPrice(data.data.data.data.amount)
+                let newuser = {...data?.createPayment?.data.user, totleMoney: Number(data?.createPayment?.data.user.totleMoney) + Number(data.data.data.data.amount) }
                 dispatch(setUser(newuser))
                 setOpen(true)
             }
@@ -59,10 +63,11 @@ function PaymentSuccess() {
     return (
         <div className='!w-full h-screen bg-white flex justify-center items-center flex-col'>
             <img src="./paymentsuccess.png" alt="" className='w-[300px]' />
+            <p className='text-4xl font-medium text-green-500 mt-12 mb-4'>{priceFormat(Number(price))} vnđ</p>
 
             <div>
-                {open ? <p>Bạn đã nạp tiền thanh công</p> : ""}
-                {open ? <button className='text-blue-600' onClick={()=>{nav("/")}}>Trở về trang chủ</button> : ""}
+                {open ? <p className='text-xl'>Bạn đã nạp tiền thành công</p> : ""}
+                {open ? <button className='text-blue-600 text-center w-full text-base mt-2' onClick={()=>{nav("/")}}>Trở về trang chủ</button> : ""}
             </div>
         </div>
     )

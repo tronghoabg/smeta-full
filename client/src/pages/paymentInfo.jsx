@@ -5,6 +5,7 @@ import { setDataToken, setUser } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from '../components/Loading';
 import dateFormat from '../config/dateFormat';
+import priceFormat from '../config/priceFormat';
 
 function PaymentInfo() {
     const counter = useSelector((state) => state.counter);
@@ -107,7 +108,7 @@ const percent_number = process.env.PERCENT_NUMBER || 1000
                                             {dateFormat(value.createdAt)}
                                         </td>
                                         <td className="!border-[#ccc] border p-2 text-center text-base text-red-500 font-medium">
-                                            -{value.price / Number(percent_number)}
+                                            -{priceFormat(value.price / Number(percent_number))} C
                                         </td>
                                     </tr>
                                 )
@@ -130,7 +131,7 @@ const percent_number = process.env.PERCENT_NUMBER || 1000
                                     {dateFormat(value.createdAt)}
                                 </td>
                                 <td className="!border-[#ccc] border p-2 text-center text-base text-green-500 font-medium">
-                                    +{value.amount / Number(percent_number)}
+                                    +{priceFormat(value.amount / Number(percent_number))} C
                                 </td>
                             </tr>
                             )
