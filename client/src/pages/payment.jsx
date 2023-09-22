@@ -50,13 +50,12 @@ function Payment({ setError }) {
     instace
       .post(paymentGatewayUrl, { ...orderInfo, signature, orderCode: newOrdercode }, { headers })
       .then((response) => {
-        if (response.data.desc == "success") {
+        if (response.data.desc === "success") {
           const paymentLink = response.data.data.checkoutUrl;
           window.location.href = paymentLink
         } else {
           console.error('Phản hồi từ API không chứa thông tin về payment_url');
         }
-        console.log(response, 'response')
       })
       .catch((error) => {
         console.error(error);

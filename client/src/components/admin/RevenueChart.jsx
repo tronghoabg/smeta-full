@@ -3,17 +3,6 @@ import React, { Component, useEffect, useState } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 function ChartExample({ data }) {
-  const datas = [
-    { name: 'Tháng 1', $: 4000, user: 2400 },
-    { name: 'Tháng 2', $: 3000, user: 1398 },
-    { name: 'Tháng 3', $: 2000, user: 9800 },
-    { name: 'Tháng 4', $: 2780, user: 3908 },
-    { name: 'Tháng 5', $: 1890, user: 4800 },
-    { name: 'Tháng 6', $: 2390, user: 3800 },
-    { name: 'Tháng 7', $: 3490, user: 4300 },
-  ]
-
-  console.log(data);
   return (
     <ResponsiveContainer className="chart" height={300} width="100%">
       <LineChart

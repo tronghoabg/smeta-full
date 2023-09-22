@@ -126,7 +126,6 @@ const SetCamp = (props) => {
       const listaccountId = res.data?.map(function (value, index) {
         return { value: value.account_id, label: value.account_id };
       });
-      console.log(listaccountId, "listaccountId");
       setIdtkqc(listaccountId ?  listaccountId[0]?.value : "");
       setOptionId(listaccountId ?listaccountId : [] );
     };
