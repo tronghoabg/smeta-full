@@ -17,14 +17,14 @@ const Sidebar = () => {
           isSidebar ? "" : "!justify-center hover:bg-[#F3F3F3] !p-4"
         } ${!isSidebar && darkmode ? "hover:!bg-[#1f2a40] " : ""}`}
       >
-        <h1
+        {/* <h1
           className={`font-medium text-xl duration-500 ${
             isSidebar ? "" : "hidden w-0 h-0"
           } ${darkmode ? "!text-white" : "!text-black"}`}
         >
           ADMIN
-        </h1>
-        <Button
+        </h1> */}
+        {/* <Button
           onClick={() => {
             dispatch(setisSidebar(!isSidebar));
           }}
@@ -35,7 +35,7 @@ const Sidebar = () => {
               darkmode ? "text-white" : "!text-black"
             }  hover:opacity-100`}
           />
-        </Button>
+        </Button> */}
       </div>
 
       <SidebarOpen />

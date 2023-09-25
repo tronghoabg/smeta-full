@@ -9,5 +9,5 @@ const antIcon = (
     spin
   />
 );
-const Loading = ({loadingoption}) => <div className={`${loadingoption} loading__icons `}> <Spin indicator={antIcon} /></div>;
+const Loading = ({loadingoption}) => <div className={`${loadingoption} loading__icons absolute w-full h-full`}> <Spin indicator={antIcon} /></div>;
 export default Loading;

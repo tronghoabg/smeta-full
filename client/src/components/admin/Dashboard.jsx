@@ -4,13 +4,14 @@ import Main from "./Main";
 import { useSelector } from "react-redux";
 import Team from "./Team";
 import Acctionadmin from "./Acctionadmin";
+import Invoice from "./Invoice";
 function Dashboard({setdisable}) {
   useEffect(()=>{
     setdisable(false)
   },[])
   const counter = useSelector((state) => state.counter);
   const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
-  console.log(selectedDashboard, "selectedTab");
+
 
 
   return (
@@ -39,7 +40,7 @@ const Render = () => {
     case "main":
       return <Main />
     default:
-      return <Main />
+      return <Invoice />
   }
 }
 

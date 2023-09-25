@@ -75,7 +75,7 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
         <>
             <HomeHeader />
             <div className='w-full h-screen bg-[#fff] flex justify-center items-center pt-[120px]'>
-                {error.length > 0 ? (
+                {error?.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
                         open={open}
@@ -92,25 +92,25 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
                 )}
                 <div className='w-[800px]  border_login overflow-hidden	 rounded-2xl grid grid-cols-2 '>
                     <div className='p-8'>
-                        <h1 className='text-2xl text-center mb-[60px]'>Đăng nhập</h1>
+                        <h1 className='text-2xl text-center mb-[60px]'>{t('login')}</h1>
                         <div>
-                            <p className='text-base mb-2 '>Tên đăng nhập </p>
+                            <p className='text-base mb-2 '>{t('account')} </p>
                             <input type="text" className='w-full p-2 placeholder:text-base' value={valueLogin.username} onChange={(e) => { handleChangeValue(e, "username") }} placeholder='Tên đăng nhập bằng SDT' />
                         </div>
                         <div>
-                            <p className='text-base mb-2 mt-6 '>Mật khẩu </p>
+                            <p className='text-base mb-2 mt-6 '>{t('password')} </p>
                             <input type="password" className='w-full p-2 placeholder:text-base' value={valueLogin.password} onChange={(e) => { handleChangeValue(e, "password") }} placeholder='Password' />
                         </div>
                         <div onClick={()=>{nav("/verifypassword")}} className='text-right mt-2 cursor-pointer hover:text-blue-600 text-blue-800'>
                             Quên mật khẩu ?
                         </div>
                         <div className='flex justify-center items-center'>
-                            <button className='bg-[#064262] p-2 px-4 rounded-lg text-white text-xl mt-8' onClick={handlelogin}>Đăng nhập</button>
+                            <button className='bg-[#064262] p-2 px-4 rounded-lg text-white text-xl mt-8' onClick={handlelogin}>{t('login')}</button>
                         </div>
 
                         <div className='flex justify-center items-center mt-12'>
                             <p>Bạn chưa có tài khoản?</p>
-                            <button  onClick={()=>{nav("/register")}} className='border-2 ml-3 border-red-500 py-1 px-2 duration-300 hover:bg-red-500 hover:text-white text-red-500 rounded-lg text-base'>Đăng ký</button>
+                            <button  onClick={()=>{nav("/register")}} className='border-2 ml-3 border-red-500 py-1 px-2 duration-300 hover:bg-red-500 hover:text-white text-red-500 rounded-lg text-base'>{t('register')}</button>
                         </div>
                     </div>
                     <div className='bg_login flex flex-col justify-center items-start pl-12 text-white'>

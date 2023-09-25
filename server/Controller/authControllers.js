@@ -5,13 +5,14 @@ require("dotenv").config();
 const authController = {
   registerUser: async (req, res) => {
     try {
-      console.log(req.body);
       const checkemail = await userModal.find({ email: req.body.email });
       if (checkemail.length !== 0) {
         return res.status(401).json({ message: "Email đã tồn tại" });
       }
 
-      const checkusername = await userModal.find({ username: req.body.username });
+      const checkusername = await userModal.find({
+        username: req.body.username,
+      });
       if (checkusername.length !== 0) {
         return res.status(401).json({ message: "Tên người dùng đã tồn tại" });
       }
@@ -21,6 +22,8 @@ const authController = {
         username: req.body.username,
         password: password,
         email: req.body.email,
+        phone: req.body.phone,
+        language: req.body.language,
       });
       const userdata = await userModal.find();
 
@@ -30,14 +33,47 @@ const authController = {
     }
   },
   generateToken: (payload) => {
-    const { userId, username, email, role } = payload;
+    const {
+      userId,
+      username,
+      email,
+      role,
+      language,
+      phone,
+      totleMoney,
+      createAt,
+      action,
+      usedMonney,
+    } = payload;
     const accessToken = jwt.sign(
-      { userId, username, email, role },
+      {
+        userId,
+        username,
+        email,
+        role,
+        language,
+        phone,
+        totleMoney,
+        createAt,
+        action,
+        usedMonney,
+      },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30s" }
     );
     const refreshToken = jwt.sign(
-      { userId, username, email, role },
+      {
+        userId,
+        username,
+        email,
+        role,
+        language,
+        phone,
+        totleMoney,
+        createAt,
+        action,
+        usedMonney,
+      },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "30d" }
     );
@@ -62,6 +98,12 @@ const authController = {
         username: user.username,
         email: user.email,
         role: user.role,
+        phone: user.phone,
+        language: user.language,
+        totleMoney: user.totleMoney,
+        createAt: user.createAt,
+        action: user.action,
+        usedMonney: user.usedMonney,
       });
       // res.cookie( 'token1231231', JSON.stringify(token) , {expires: new Date( Date.now() + 30000)})
       let user_refreshToken = await userModal.updateOne(
@@ -69,7 +111,9 @@ const authController = {
         { refreshToken: token.refreshToken }
       );
 
-      res.status(200).json({ message: "Đăng nhập thành công", token, user:user });
+      res
+        .status(200)
+        .json({ message: "Đăng nhập thành công", token, user: user });
     } catch (error) {
       res.status(500).json({ message: "Lỗi đăng nhập", error });
     }
@@ -89,6 +133,12 @@ const authController = {
         username: user.username,
         email: user.email,
         role: user.role,
+        phone: user.phone,
+        language: user.language,
+        totleMoney: user.totleMoney,
+        createAt: user.createAt,
+        action: user.action,
+        usedMonney: user.usedMonney,
       });
       const user_refreshToken = await userModal.updateOne(
         { username: user.username },
@@ -101,7 +151,6 @@ const authController = {
   },
   logout: async (req, res) => {
     try {
-      console.log(req.user);
       const result = await userModal.updateOne(
         { username: req.user.username },
         { $unset: { refreshToken: 1 } }
@@ -110,19 +159,14 @@ const authController = {
       if (result.modifiedCount === 1) {
         return res.status(200).json({ message: "Đăng xuất thành công" });
       } else {
-        return res
-          .status(401)
-          .json({ message: "Không tìm thấy refreshToken" });
+        return res.status(401).json({ message: "Không tìm thấy refreshToken" });
       }
     } catch (error) {
       res.status(500).json({ message: "Lỗi đăng xuất", error });
     }
   },
-  test_verifyToken: async (req, res) =>{
-    const ipAddress = req.ip;
-    // const ipv4Address = ip6.v4(ipAddress);
-    
-    res.status(200).json(ipAddress);
-}
-}
+  test_verifyToken: async (req, res) => {
+    res.status(200).json(req.user);
+  },
+};
 module.exports = authController;

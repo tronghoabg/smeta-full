@@ -8,7 +8,12 @@ import Button from "@mui/material/Button";
 import chromeTask from "../services/chrome";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import RefreshToken from "./RefreshToken";
+import { setDataToken } from "../redux/counterSlice";
+import { useDispatch,useSelector } from "react-redux";
+import instace from "./customer_axios";
 const SharePixel = (props) => {
+  const [data,setData] =useState([])
   const { t } = useTranslation();
   const [listTKQC, setListTKQC] = useState([]);
   const [listUser_id, setListUser_id] = useState([]);
@@ -19,6 +24,9 @@ const SharePixel = (props) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(null);
   const [log, setLog] = useState([]);
+  const counter = useSelector((state) => state.counter);
+  let { dataToken } = counter
+  const dispatch = useDispatch()
   const options = [
     { value: "281423141961500", label: t("admin") },
     { value: "461336843905730", label: t("advertisers") },
@@ -57,7 +65,20 @@ const SharePixel = (props) => {
   };
 
   async function btnsharetkqc() {
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken));
     setOpen(true);
+  try {
+    const data  = await instace.post('/buypackage/checkedaction', {
+      product_name: "Create Ad Account"
+    }, {
+      headers: {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+    },
+  }
+  )
+  if(data.data.status === true){
     const tokensmeta = localStorage.getItem("tokensmeta");
     if (
       listTKQC.length === 0 ||
@@ -105,6 +126,11 @@ const SharePixel = (props) => {
       });
       setLog(array);
     }
+
+  }
+} catch (error) {
+  setError(error.response.data.message)
+  }
   }
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

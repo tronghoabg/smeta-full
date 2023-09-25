@@ -36,7 +36,7 @@ const Login = ({ setdisable }) => {
     // t('account')
     // t('password')
     // t('register')
-    const [valueRegister, setValueRegister] = useState({ email: "", username: "", password: "", phone: "", language: "VN" })
+    const [valueRegister, setValueRegister] = useState({ email: "", username: "", password: "", phone: "", language: "vi" })
     const [error, setError] = useState("");
     const [open, setOpen] = useState(false);
 
@@ -70,11 +70,11 @@ const Login = ({ setdisable }) => {
                                 setError(error.response.data.message)
                             }
                         } else {
-                            setError("Sai định dạng password")
+                            setError("Password lớn hơn 6 ki tự: chữ, số, kí tự đặc biệt")
                         }
 
                     } else {
-                        setError("Sai định dạng username")
+                        setError("Username từ 6 đến 12 ki tự: chữ, số")
                     }
 
                 }
@@ -91,12 +91,30 @@ const Login = ({ setdisable }) => {
         { value: "US", label: "English" },
 
     ]
+    const languageStyles = {
+        language: {
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "rgba(167, 170, 200, 0.365)",
+          borderRadius: "2px",
+          margin: "0",
+          height: "18px",
+          width: "60px",
+        },
+        active: {
+          border: "5px solid rgb(127, 200, 249)",
+          borderRadius: "5px",
+        },
+        span: {
+          marginLeft: "10px",
+        },
+      };
 
     return (
         <>
 
             <HomeHeader />
-            <div className='w-full h-screen bg-[#fff] flex justify-center items-center pt-[120px]'>
+            <div className='w-full h-fit pb-[100px] bg-[#fff] flex justify-center items-center pt-[120px]'>
                 {error.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
@@ -114,33 +132,49 @@ const Login = ({ setdisable }) => {
                 )}
                 <div className='min-w-[900px]  border_login overflow-hidden	 rounded-2xl grid grid-cols-2 '>
                     <div className='p-8'>
-                        <h1 className='text-2xl text-center mb-[60px]'>Đăng ký</h1>
+                        <h1 className='text-2xl text-center mb-[60px]'>{t('register')}</h1>
                         <div>
                             <p className='text-base mb-2 '>Email: </p>
                             <input type="email" className='w-full p-2 placeholder:text-base' value={valueRegister.email} onChange={(e) => { handleChangeValue(e, "email") }} placeholder='Your Email' />
                         </div>
                         <div>
                             <p className='text-base mb-2 mt-6 '>Số điện thoại: </p>
-                            <input type="number" className='w-full p-2 placeholder:text-base' value={valueRegister.phone} onChange={(e) => { handleChangeValue(e, "phone") }} placeholder='Your Email' />
+                            <input type="number" className='w-full p-2 placeholder:text-base' value={valueRegister.phone} onChange={(e) => { handleChangeValue(e, "phone") }} placeholder='Your Phone number' />
                         </div>
                         <div>
-                            <p className='text-base mb-2 mt-6 '>Username: </p>
+                            <p className='text-base mb-2 mt-6 '>{t('account')} </p>
                             <input type="text" className='w-full p-2 placeholder:text-base' value={valueRegister.username} onChange={(e) => { handleChangeValue(e, "username") }} placeholder='Your Username' />
                         </div>
                         <div>
-                            <p className='text-base mb-2 mt-6 '>Mật khẩu: </p>
+                            <p className='text-base mb-2 mt-6 '>{t('password')}: </p>
                             <input type="password" className='w-full p-2 placeholder:text-base' value={valueRegister.password} onChange={(e) => { handleChangeValue(e, "password") }} placeholder='Password' />
                         </div>
-                        <div>
-                            <p className='text-base mb-2 mt-6 '>Ngôn ngữ:</p>
+                        <div className="flex items-center mb-2 mt-6">
+                            <p className='text-base  '>Ngôn ngữ:</p>
                             <div className="flex ">
-                                {language.map(value => {
+                                <div className="language !ml-8" style={languageStyles.language}>
+                                    <span
+                                        className="cursor-pointer mr-1"
+                                        onClick={() => { setValueRegister({ ...valueRegister, language: 'vi' }) }}
+                                        style={valueRegister.language === "vi" ? { ...languageStyles.active } : {}}
+                                    >
+                                        <img src="/vi.png" alt="VI" style={languageStyles.img} />
+                                    </span>
+                                    <span
+                                        className="cursor-pointer"
+                                        onClick={() => { setValueRegister({ ...valueRegister, language: "en" }) }}
+                                        style={valueRegister.language === "en" ? { ...languageStyles.active } : {}}
+                                    >
+                                        <img src="/en.png" alt="EN" style={languageStyles.img} />
+                                    </span>
+                                </div>
+                                {/* {language.map(value => {
                                     return (
                                         <div onClick={() => { setValueRegister({ ...valueRegister, language: value.value }) }} key={value.value} className={`!border-2 relative w-fit mx-2 px-2 py-1 ${valueRegister.language == value.value ? "border-[#004a99f5]" : ""} rounded-md cursor-pointer`}>
                                             {value.label}
                                         </div>
                                     )
-                                })}
+                                })} */}
                             </div>
                         </div>
                         <div className='flex justify-center items-center'>

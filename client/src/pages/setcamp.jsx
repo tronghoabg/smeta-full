@@ -13,8 +13,15 @@ import Switch from "@mui/material/Switch";
 import Checkbox from "@mui/material/Checkbox";
 import chromeTask from "../services/chrome";
 import { Modal } from "antd";
+import instace from "./customer_axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataToken } from "../redux/counterSlice";
+import RefreshToken from "./RefreshToken"; 
 
 const SetCamp = (props) => {
+  const counter = useSelector((state) => state.counter);
+  let { dataToken } = counter
+  const dispatch =useDispatch()
   const { t } = useTranslation();
   const [page, setPage] = useState({});
   const [checkQC, setCheckQC] = useState(true);
@@ -119,7 +126,6 @@ const SetCamp = (props) => {
       const listaccountId = res.data?.map(function (value, index) {
         return { value: value.account_id, label: value.account_id };
       });
-      console.log(listaccountId, "listaccountId");
       setIdtkqc(listaccountId ?  listaccountId[0]?.value : "");
       setOptionId(listaccountId ?listaccountId : [] );
     };
@@ -172,7 +178,7 @@ const SetCamp = (props) => {
         setvaluePixel("no Pixel!");
         setOptionsPixel([{ value: "no Pixel!", label: "No Pixel!!" }]);
       }
-      // setIdtkqc(idtkqc);1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+     
     };
     fetchdata();
   }, [idtkqc]);
@@ -580,30 +586,49 @@ const SetCamp = (props) => {
   };
 
   const HandleUploadCamp = async () => {
+    const newDatatoken = await RefreshToken(dataToken);
     setOpen(true);
-    const authFb = await chromeTask.getAuthFb();
-    let clonedata = {
-      ...valueSetcampAll,
-      budget: (
-        Number(valueSetcampAll.account_currency_ratio_to_usd) *
-        Number(valueSetcampAll.budget)
-      ).toFixed(0),
-      token: authFb.token,
-    };
-
-    if (clonedata.isDRAFT) {
-      if (clonedata.TYPE) {
-        setCampPostDraft(clonedata);
+    dispatch(setDataToken(newDatatoken));
+  try {
+    const data  = await instace.post('/buypackage/checkedaction', {
+      product_name: "Create Campaign"
+    }, {
+      headers: {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+    },
+    }
+    )
+    if(data.data.status === true){
+  
+      const authFb = await chromeTask.getAuthFb();
+      let clonedata = {
+        ...valueSetcampAll,
+        budget: (
+          Number(valueSetcampAll.account_currency_ratio_to_usd) *
+          Number(valueSetcampAll.budget)
+        ).toFixed(0),
+        token: authFb.token,
+      };
+  
+      if (clonedata.isDRAFT) {
+        if (clonedata.TYPE) {
+          setCampPostDraft(clonedata);
+        } else {
+          setCampUploadDraft(clonedata);
+        }
       } else {
-        setCampUploadDraft(clonedata);
-      }
-    } else {
-      if (clonedata.TYPE) {
-        setCampPost(clonedata);
-      } else {
-        setCampUpload(clonedata);
+        if (clonedata.TYPE) {
+          setCampPost(clonedata);
+        } else {
+          setCampUpload(clonedata);
+        }
       }
     }
+  } catch (error) {
+    setError(error.response.data.message)
+  }
+  
 
     // const data = await chromeTask.HandleSetCamp(clonedata);
   };

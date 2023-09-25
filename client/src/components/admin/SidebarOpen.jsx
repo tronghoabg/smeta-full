@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Tab, Tabs } from '@mui/material';
-import { setSelectedDashboard } from '../../redux/counterSlice';
+import { setSelectedDashboard, setprofileId } from '../../redux/counterSlice';
 import { BsCardChecklist } from "react-icons/bs";
 import { HiOutlineHome } from "react-icons/hi";
 import { LuUsers } from "react-icons/lu";
@@ -13,7 +13,6 @@ const SidebarOpen = (props) => {
   const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
 
   const handleTabChange = (event, newValue) => {
-    console.log(newValue,'1111111');
     dispatch(setSelectedDashboard(newValue));
   };
 
@@ -40,12 +39,12 @@ const SidebarOpen = (props) => {
         value={selectedDashboard}
         onChange={handleTabChange}
         orientation="vertical"
-        scrollButtons="off"
+        scrollButtons="auto"
         variant="scrollable"
         textColor="primary"
         indicatorColor="primary"
-        className={` ${isSidebar ? "border_sidebar": ""} ${isSidebar ? '' : ''
-          } pr-18 ${darkmode ? 'bg-[#1f2a40]' : 'bg-[#fff]'}`}
+        className={` ${isSidebar ? "": ""} ${isSidebar ? '' : ''
+          } pr-18 ${darkmode ? 'bg-[#1f2a40] !text-white' : 'bg-[#fff]'}`}
       >
         <Tab
           label={isSidebar ? "Dashboard" : ""}
@@ -58,7 +57,8 @@ const SidebarOpen = (props) => {
           }
         />
         <Tab
-          label={isSidebar ? "Manage Team" : ""}
+        onClick={()=>{dispatch(setprofileId(""))}}
+          label={isSidebar ? "User" : ""}
           value="team"
           icon={
             <LuUsers

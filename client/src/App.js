@@ -21,10 +21,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser, setDataToken } from "./redux/counterSlice";
 import Cookies from "js-cookie";
 import RefreshToken from "./pages/RefreshToken";
-import Dashboard from "./components/admin/ABCD";
+import Dashboard from "./components/admin/Dashboard";
 import Profile from "./pages/profile";
 import MiddleWare from "./middleware/MiddleWare";
 import MiddleWareAdmin from "./middleware/MiddlewareAdmin";
+import Payment from "./pages/payment";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const [disable, setdisable] = useState(true);
@@ -43,6 +45,7 @@ function App() {
         if (token) {
           const newDatatoken = await RefreshToken(dataToken);
           dispatch(setDataToken(newDatatoken));
+     
           const datauser = await instace.get("/auth/profile", {
             headers: {
               Authorization: `Bearer ${
@@ -66,6 +69,7 @@ function App() {
     fetch();
   }, []);
 
+
   useEffect(() => {
     async function fetchData() {
       let checkInstall = await chromeTask.sendTask("checkinstall");
@@ -85,10 +89,12 @@ function App() {
   return (
     <>
       <Routes>
+        <Route path="/payment" element={<Payment />}></Route>
+        <Route path="/paymentsuccess" element={<PaymentSuccess />}></Route>
         <Route
           path="/admin"
           element={
-            <MiddleWareAdmin>
+            <MiddleWareAdmin user={user}>
               <Dashboard setdisable={setdisable} />
             </MiddleWareAdmin>
           }

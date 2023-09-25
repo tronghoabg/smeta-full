@@ -7,7 +7,7 @@ import { BsFileSpreadsheetFill} from 'react-icons/bs';
 import HomeHeader from "../components/home/HomeHeader";
 import HomeFooter from "../components/home/HomeFooter"
 import '../components/accsetss/sharePixels.css'
-
+import { useTranslation } from "react-i18next";
 const contentStyle = {
   height: '160px',
   color: '#fff',
@@ -23,8 +23,12 @@ const settings = {
 };
 
 
+// downloadFromStore
 function Test({setdisable}) {
-  
+  const downnow = () => {
+    window.location.href = 'https://chrome.google.com/webstore/detail/smeta/ookgnahfklmejhicejjbfjifppjbfnlk?hl=vi';
+  }
+  const { t } = useTranslation();
 
   useEffect(()=>{
     setdisable(false)
@@ -60,32 +64,32 @@ function Test({setdisable}) {
         <img className="absolute top-0 left-0 h-[750px] w-full z-10" src="/hero-bg.png" alt="" />
         <div className="w-[1280px] z-[999] mt-[160px] flex justify-center items-center">
      
-          <div>
+          <div className="animation_text">
             <h1 className="text-white text-[48px] font-bold ">sMeta <br />
-              Quản lý tài khoản quảng <br /> cáo dễ dàng chuyên <br />
-              nghiệp</h1>
+             {t("Manage advertising accounts fox")} {t("easily professional")} <br />
+              </h1>
 
-            <a href="/files/smeta_beta.zip"className="text-white text-base border-1 border font-bold mt-10 bg-[#007bff] py-[10px] px-[32px] !rounded-3xl  border-[#007bff] hover:border-white hover:bg-[#3c4b5c]">Tải xuống ngay</a>
-          </div>            <img src="/pc.png" className="w-[648px] h-[438px]" alt="" />
+            <button className="text-white  text-base border-1 border font-bold mt-10 bg-[#007bff] py-[10px] px-[32px] !rounded-3xl  border-[#007bff] hover:border-white hover:bg-[#3c4b5c]" onClick={downnow} >{t('downloadFromStore')}</button>
+          </div>            <img src="/pc.png" className="w-[648px] h-[438px] animation_show_banner" alt="" />
         </div>
       </div>
       <div className="w-full bg-[#fff] pb-[50px]  z-[9999] flex justify-center items-center">
         <div className=" w-[1280px] pt-[182px]">
           <div className="flex  justify-center items-center flex-col">
-            <h1 className="text-[36px] font-base text-[#283d50]">Tính năng</h1>
-            <p className="text-[#556877] text-[15px] tracking-[0.1px] mt-3">Duyệt qua các tính năng chính của tiện ích sMeta</p>
+            <h1 className="text-[36px] font-base text-[#283d50]">{t('Feature')}</h1>
+            <p className="text-[#556877] text-[15px] tracking-[0.1px] mt-3">{t("Browse the key features of the sMeta widget")}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-6 mt-[54px] text-[#444] text-[16px]">
             <div>
-              <div>sMeta là một tiện ích dùng để quản lý tài khoản doanh nghiệp trên nền tảng faceook người dùng có thể dễ dàng cài đặt và sử dụng trên hầu hết các trình duyệt!</div>
+              <div>{t("sMeta is a utility used to manage business accounts on the Facebook platform, users can easily install and use on most browsers!")}</div>
               <div className="mt-6 flex justify-between items-center">
                 <div className="border-2  w-[68px] h-[68px] rounded-full flex justify-center items-center border-[#007bff] duration-300 hover:bg-[#007bff] cursor-default text-[#007bff] hover:text-white">
                 <FaGamepad style={{ fontSize: '30px' }} />
                 </div>
                 <div>
-                  <h1 className="font-bold text-xl mb-2">Giao diện trực quan</h1>
-                  <p className="text-[14px] w-[550px]">Thông qua giao diện của tiện ích khách hàng có thể dễ dàng xem tất cả những TKQC, BM, FAN PAGE, CAMPAIGN của tài khoản đang sở hữu</p>
+                  <h1 className="font-bold text-xl mb-2">{t('Intuitive interface')}</h1>
+                  <p className="text-[14px] w-[550px]">{t('Through the utilitys interface, customers can easily view all account accounts, BMs, FAN PAGES, and CAMPAIGNs of their accounts.')}</p>
                 </div>
               </div>
               <div className="mt-6 flex justify-between items-center">
@@ -93,8 +97,8 @@ function Test({setdisable}) {
                  <AiOutlineSearch style={{ fontSize: '30px' }}></AiOutlineSearch>
                 </div>
                 <div>
-                  <h1 className="font-bold text-xl mb-2">Xem các thông tin ẩn</h1>
-                  <p className="text-[14px] w-[550px]">Khách hàng sẽ có thể xem các thông tin ẩn trong trình quản lý của nền tảng như ngưỡng và limit của tài khoản quảng cáo</p>
+                  <h1 className="font-bold text-xl mb-2">{t('View hidden information')}</h1>
+                  <p className="text-[14px] w-[550px]">{t("View hidden Customers will be able to view hidden information in the platform's manager such as ad account thresholds and limits")}</p>
                 </div>
               </div>
               <div className="mt-6 flex justify-between items-center">
@@ -102,8 +106,8 @@ function Test({setdisable}) {
                   <BsFileSpreadsheetFill style={{ fontSize: '30px' }}></BsFileSpreadsheetFill>
                 </div>
                 <div>
-                  <h1 className="font-bold text-xl mb-2">Xuất dữ liệu</h1>
-                  <p className="text-[14px] w-[550px]">Thông qua sMeta khách hàng, doanh nghiệp có thể xuất dữ liệu tài khoảng quảng cáo phục vụ cho các công việc báo cáo</p>
+                  <h1 className="font-bold text-xl mb-2">{t('Export data')}</h1>
+                  <p className="text-[14px] w-[550px]">{t('Through customer sMeta, businesses can export advertising account data for reporting purposes.')}</p>
                 </div>
               </div>
             </div>
@@ -115,9 +119,9 @@ function Test({setdisable}) {
           <div className="grid grid-cols-2 gap-6 mt-[54px] text-[#444] text-[16px]">
             <img src="/s2.png" alt="" className="rounded-xl" />
             <div>
-              <h1 className="font-bold text-2xl mb-2">Tương tác với bảng</h1>
-              <p className="text-[16px] mt-4">Trên bảng thông tin về các TKQC, BM, FANPAGE, CAMPAIGN hiển thị thông tin tổng quan về các trường quang trọng của tài khoản quảng cáo</p>
-              <p className="text-[16px] mt-8">sMeta cho phép người dùng có thể xem và sắp xếp thông tin dữ liệu trong bảng (A-Z) và ngược lại, tính năng tìm kiếm thông minh trên toàn bộ dữ liệu theo từ khóa người dùng. Đồng thời trên bảng dữ liệu có những nút bấm giúp người dùng có thể truy cập nhanh chóng tới các trang như chiến dịch, bill của tài khoản quảng cáo đó</p>
+              <h1 className="font-bold text-2xl mb-2">{t('Interact with the board')}</h1>
+              <p className="text-[16px] mt-4">{t('On the information panel about Accounts, BM, FANPAGE, CAMPAIGN displays overview information about important fields of the advertising account')}</p>
+              <p className="text-[16px] mt-8">{t('sMeta allows users to view and arrange data information in tables (A-Z) and vice versa, intelligent search feature across all data according to user keywords. At the same time, there are buttons on the data panel to help users quickly access pages such as campaigns and bills of that advertising account.')}</p>
             </div>
           </div>
 
@@ -125,11 +129,11 @@ function Test({setdisable}) {
           <div className="grid grid-cols-2 gap-6 mt-[54px] text-[#444] text-[16px]">
 
             <div>
-              <h1 className="font-bold text-2xl mb-2">Tính năng nâng cao</h1>
-              <p className="text-[16px] mt-4">Người dùng có thể dễ dàng share pixel nhanh chóng cho một hoặc nhiều tài khoản quảng cáo thông qua tính năng Share</p>
-              <p className="text-[16px] mt-8">Người dùng có thể dễ dàng share TKQC nhanh chóng cho một hoặc nhiều tài khoản facebook thông qua tính năng Share TKQC</p>
-              <p className="text-[16px] mt-4">Tính năng tạo tài khoản quảng cáo trong BM nhanh chóng và hoàn toàn tự động</p>
-              <p className="text-[16px] mt-4 bg-[#822a56] text-[#ffdb1d] p-1 rounded-md">Tính năng xóa Admin ẩn trong Tài khoản quảng cáo Cá nhân, doanh nghiệp</p>
+              <h1 className="font-bold text-2xl mb-2">{t('Advanced features')}</h1>
+              <p className="text-[16px] mt-4">{t("Users can easily share pixels quickly to one or more advertising accounts through the Share feature")}</p>
+              <p className="text-[16px] mt-8">{t('Users can easily share accounts quickly to one or more Facebook accounts through the Share Accounts feature.')}</p>
+              <p className="text-[16px] mt-4">{t('The feature to create advertising accounts in BM is quick and completely automatic')}</p>
+              <p className="text-[16px] mt-4 bg-[#822a56] text-[#ffdb1d] p-1 rounded-md">{t('Hidden Admin deletion feature in Personal and business advertising accounts')}</p>
 
 
             </div>
@@ -139,14 +143,14 @@ function Test({setdisable}) {
       </div>
       <div className="w-full bg-[#dbf7fa]  pb-[80px] shadow-xl z-[9999] flex justify-center items-center">
         <div className="w-[1280px] ">
-          <h1 className="text-[36px] text-center mt-8 mb-8">Tại sao chọn chúng tôi?</h1>
+          <h1 className="text-[36px] text-center mt-8 mb-8">{t('Why choose us?')}</h1>
           <div className="grid grid-cols-4 gap-14">
             {datawhy.map(value => {
               return (
                 <div key={value.title} className="text-center bg-[#1b444c] duration-500 hover:bg-[#007a66] px-4 py-8 rounded-[34px]">
                   <div className="text-[#d8eafe] flex justify-center items-center text-6xl p-4">{value.icon}</div>
-                  <h1 className="text-[22px] font-bold text-white mb-2">{value.title}</h1>
-                  <p className="text-[#d8eafe] text-[15px]">{value.desc}</p>
+                  <h1 className="text-[22px] font-bold text-white mb-2">{t(value.title)}</h1>
+                  <p className="text-[#d8eafe] text-[15px]">{t(value.desc)}</p>
                 </div>
               )
             })}
@@ -168,7 +172,7 @@ function Test({setdisable}) {
       <div className="w-full bg-[#ecf5ff] pb-[80px] z-[9999] flex-col flex justify-center items-center">
         <div className="h-[10px] bg-[#dbf7fa] w-full shadow-lg"></div>
         <div className="">
-          <h1 className="text-[36px] text-center my-8 mb-[72px]">Nhận xét từ khách hàng</h1>
+          <h1 className="text-[36px] text-center my-8 mb-[72px]">{t('Reviews from customers')}</h1>
         <div className="flex justify-center items-center ">
         <div className="w-[800px]">
         <Carousel {...settings} className="custom-carousel">

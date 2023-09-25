@@ -30,6 +30,71 @@ body {
   color: #4CCEAC;
 }
 
+.payFocus_animation{
+  animation:  pay_animation 1s ease-in-out infinite;
+}
+
+
+@keyframes pay_animation {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    color: #42d55b;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+    color: yellow ;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+    color: #42d55b;
+  }
+}
+
+
+.ant-modal-content{
+  background: unset !important;
+  box-shadow: unset !important;
+}
+
+.animation_show{
+  animation: fadeIn 0.3s linear;
+}
+
+.animation_show_banner{
+  animation: fadeIn 0.8s linear;
+}
+
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn_text {
+  0% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    ransform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.animation_text{
+  animation: fadeIn_text 1s linear;
+
+}
+
 .dark_mode_bg{
   background-color: #141b2d !important;
 }

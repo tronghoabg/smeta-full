@@ -14,7 +14,6 @@ const acctionSchema = mongoose.Schema({
    },
    language: {
       type: String,
-      default: 'VN'
    },
    date: {
       type: Date
