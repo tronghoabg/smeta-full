@@ -12,6 +12,7 @@ import { TablePagination,} from "@mui/material";
 import priceFormat from "../../config/priceFormat";
 import dateFormat from "../../config/dateFormat";
 import ViewProfileUser from "./ViewProfileUser";
+import io from 'socket.io-client'
 
 
 function Team(props) {
@@ -36,6 +37,15 @@ function Team(props) {
   let { dataToken } = counter
   const [rowsPerPage, setRowsPerPage] = useState(7);
   const [sttStart, setSttStart] = useState(0);
+
+  const socket = io.connect('http://localhost:5000')
+
+  useEffect(()=>{
+    socket.on('register_socket', function (data) {
+      console.log(data, 12312313);
+      setData(data.data)
+    });
+  },[])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

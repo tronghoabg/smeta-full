@@ -141,6 +141,9 @@ const buypackageControllers = {
             language: req.user.language,
             date: new Date(),
           });
+          let data = await acctionModal.find().sort({ _id: -1 })
+          res.io.emit("action_socket", {data:data, key: "action_socket"});
+
           return res
             .status(200)
             .json({ status: true, data: checkedAll, data_action: data_action });
@@ -173,6 +176,7 @@ const buypackageControllers = {
             language: req.user.language,
             date: new Date(),
           });
+          res.io.emit("action_socket", {data:userdata, key: "action_socket"});
           res
             .status(200)
             .json({ status: true, data: checked, data_action: data_action });
