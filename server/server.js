@@ -2,6 +2,7 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 var app = express()
+const path = require('path');
 const authRouter = require('./Router/auth')
 const password = require('./Router/password')
 const dotenv = require("dotenv")
@@ -12,11 +13,14 @@ app.use(cors())
 app.use(bodyParser.json())
 
 app.use(cookieParser());
+
 const react = `/apps/server/client/build`
+app.use(express.static(react));
 
 app.use("/api/auth",authRouter)  
 app.use("/api/pass",password)  
-app.use(express.static(react));
+
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
     res.sendFile(`${react}/index.html`);
