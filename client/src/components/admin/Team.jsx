@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback  } from "react";
 import { useSelector } from "react-redux";
 import Header from "./Header";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
@@ -12,10 +12,15 @@ import { TablePagination,} from "@mui/material";
 import priceFormat from "../../config/priceFormat";
 import dateFormat from "../../config/dateFormat";
 import ViewProfileUser from "./ViewProfileUser";
+<<<<<<< HEAD
+import io from 'socket.io-client';
+=======
 import io from 'socket.io-client'
 
+>>>>>>> 3ed406fad62c7dac95b43f414ff33a09fe643793
 
 function Team(props) {
+  // const socket = io('http://localhost:5000'); // URL máy chủ WebSocket của bạn
   const tablehead = [
     { label: "STT", key: "stt" },
     { label: "Name", key: "username" },
@@ -114,28 +119,70 @@ function Team(props) {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const newDatatoken = await RefreshToken(dataToken);
-        dispatch(setDataToken(newDatatoken));
+  
 
-        const response = await instace.get('/admin/getalluser', {
-          headers: {
-            Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
-          },
-        });
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const newDatatoken = await RefreshToken(dataToken);
+//       dispatch(setDataToken(newDatatoken));
 
-        const dataa = response.data?.data;
-        setData(dataa)
+//       const response = await instace.get('/admin/getalluser', {
+//         headers: {
+//           Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+//         },
+//       });
 
-      } catch (error) {
-        console.error("Lỗi xảy ra khi gọi API:", error);
-      }
-    };
+//       const dataa = response.data?.data;
+//       setData(dataa)
 
-    fetchData();
-  }, []);
+//     } catch (error) {
+//       console.error("Lỗi xảy ra khi gọi API:", error);
+//     }
+//   };
+//   fetchData()
+// }, [])
+
+
+const [userRegisteredEvent, setUserRegisteredEvent] = useState(false);
+
+useEffect(() => {
+  const socket = io('http://localhost:5000')
+  const fetchData = async () => {
+    try {
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+
+      const response = await instace.get('/admin/getalluser', {
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+        },
+      });
+
+      const dataa = response.data?.data;
+      setData(dataa);
+
+    } catch (error) {
+      console.error("Lỗi xảy ra khi gọi API:", error);
+    }
+  };
+
+  // Gọi fetchData() khi component được load và khi có sự kiện 'userRegistered'
+  fetchData();
+
+  const handleUserRegistered = () => {
+    // Đánh dấu rằng có sự kiện 'userRegistered' đã xảy ra
+    setUserRegisteredEvent(true);
+  };
+
+  // Lắng nghe sự kiện 'userRegistered' và gọi fetchData() nếu có sự kiện này
+  socket.on('userRegistered', handleUserRegistered);
+
+  // Cleanup: Ngắt lắng nghe khi component unmount
+  return () => {
+    socket.off('userRegistered', handleUserRegistered);
+  };
+}, [dataToken, dispatch, setData, userRegisteredEvent]);
 
   const [searchKeyword, setSearchKeyword] = useState("");   
   const handleSearchChange = (event) => {

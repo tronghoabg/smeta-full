@@ -3,37 +3,36 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-
 const authController = {
-  registerUser: async (req, res) => {
-    try {
-      const checkemail = await userModal.find({ email: req.body.email });
-      if (checkemail.length !== 0) {
-        return res.status(401).json({ message: "Email đã tồn tại" });
-      }
+    registerUser: async (req, res) => {
+      try {
+        const checkemail = await userModal.find({ email: req.body.email });
+        if (checkemail.length !== 0) {
+          return res.status(401).json({ message: "Email đã tồn tại" });
+        }
 
-      const checkusername = await userModal.find({
-        username: req.body.username,
-      });
-      if (checkusername.length !== 0) {
-        return res.status(401).json({ message: "Tên người dùng đã tồn tại" });
+        const checkusername = await userModal.find({
+          username: req.body.username,
+        });
+        if (checkusername.length !== 0) {
+          return res.status(401).json({ message: "Tên người dùng đã tồn tại" });
+        }
+        const salt = await bcrypt.genSalt(10);
+        const password = await bcrypt.hash(req.body.password, salt);
+        let newUser = await userModal.create({
+          username: req.body.username,
+          password: password,
+          email: req.body.email,
+          phone: req.body.phone,
+          language: req.body.language,
+        });
+        const userdata = await userModal.find();
+        io.emit('userRegistered', { message: 'Người dùng mới đã đăng ký', userData: userdata });
+        res.status(200).json({ message: "Đăng ký thành công", userdata });
+      } catch (error) {
+        res.status(500).json({ message: "Đăng ký error", error });
       }
-      const salt = await bcrypt.genSalt(10);
-      const password = await bcrypt.hash(req.body.password, salt);
-      let newUser = await userModal.create({
-        username: req.body.username,
-        password: password,
-        email: req.body.email,
-        phone: req.body.phone,
-        language: req.body.language,
-      });
-      const userdata = await userModal.find().sort({ _id: -1 });
-      res.io.emit("register_socket", {data:userdata, key: "register_socket"});
-      res.status(200).json({ message: "Đăng ký thành công", userdata });
-    } catch (error) {
-      res.status(500).json({ message: "Đăng ký error", error });
-    }
-  },
+    },
   generateToken: (payload) => {
     const {
       userId,
