@@ -2,8 +2,7 @@ const userModal = require("../Modal/userModal");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const http = require('http');
-const io = require('socket.io')(http);
+
 const authController = {
     registerUser: async (req, res) => {
       try {

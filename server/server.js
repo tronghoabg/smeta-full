@@ -13,13 +13,41 @@ const cookieParser = require('cookie-parser');
 
 dotenv.config();
 const app = express();
-const server = http.createServer(app); // Sửa đổi tên biến này từ httpServer thành server
-const io = socketIo(server);
-
 app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(cors());
 app.use(cors({ origin:'http://localhost:3000'}));
 app.use(bodyParser.json());
+
+
+const http = require('http');
+const socketIo = require('socket.io');
+
+const server = http.createServer(app);
+ const io =  socketIo(server, {
+        cors:{
+            origin: "http://localhost:3000",
+            methods: ["GET", "POST",]
+        }
+      });
+
+app.use(function(req, res, next){
+    res.io = io;
+    next();
+});
+// const http = require("http");
+// const { Server } = require("socket.io");
+// const realtime = require('./socket/socket')
+// const server = http.createServer(app)
+// const io = new Server(server, {
+//     cors:{
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST",]
+//     }
+//   });
+
+//  module.exports = realtime(io, "")
+
+
 app.use(cookieParser());
 const react = `/apps/server/client/build`;
 
@@ -29,8 +57,6 @@ app.use('/api/payment', paymentRouter);
 app.use('/api/buypackage', buypackageRouter);
 app.use('/api/admin', adminRouter);
 app.use(express.static(react));
-
-
 io.on('connection', (socket) => {
     console.log('A client connected');
   
@@ -61,3 +87,9 @@ server.listen(5000, () => {
 
 
 
+//TEST REAL TIME
+server.listen(5000,()=>{
+    console.log("server is running")  
+})
+
+module.exports = { io, server };
