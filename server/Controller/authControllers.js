@@ -2,6 +2,8 @@ const userModal = require("../Modal/userModal");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
+
 const authController = {
   registerUser: async (req, res) => {
     try {
@@ -25,8 +27,8 @@ const authController = {
         phone: req.body.phone,
         language: req.body.language,
       });
-      const userdata = await userModal.find();
-
+      const userdata = await userModal.find().sort({ _id: -1 });
+      res.io.emit("register_socket", {data:userdata, key: "register_socket"});
       res.status(200).json({ message: "Đăng ký thành công", userdata });
     } catch (error) {
       res.status(500).json({ message: "Đăng ký error", error });

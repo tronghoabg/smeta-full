@@ -11,7 +11,6 @@ import { setUser, setDataToken } from "../../redux/counterSlice";
 import RefreshToken from "../../pages/RefreshToken";
 import instace from "../../pages/customer_axios";
 
-
 function Main() {
   const counter = useSelector(
     (state) => state.counter
@@ -30,6 +29,17 @@ function Main() {
   const [dataTrans, setDataTrans] = useState([])
 
   const [dataOption, setDataOption] = useState({})
+
+ 
+  // socket.on('register_socket', function (data) {
+  //   console.log(data, 12312313);
+  // });
+
+
+
+  const handletest = () => {
+    // socket.emit('soket-reveive', "client to sever ")
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,7 +100,7 @@ function Main() {
     <div className="w-full">
       <Header />
       <div className="pt-12 ">
-        <h1 className={`text-3xl font-medium ${darkmode ? "text-white" : ""}`}>
+        <h1 onClick={handletest} className={`text-3xl font-medium ${darkmode ? "text-white" : ""}`}>
           Dashboard
         </h1>
         <p className="text-dashboard">Welcome to your dashboard</p>
@@ -117,7 +127,7 @@ function Main() {
                   ? `${value.amount
                     .toLocaleString("en-US")
                     .replace(".00", "")} đ`
-                  : value.amount.toLocaleString("en-US").replace(".00", "")} 
+                  : value.amount.toLocaleString("en-US").replace(".00", "")}
               </p>
               <p className="text-dashboard">{value.label}</p>
             </div>

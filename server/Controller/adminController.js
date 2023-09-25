@@ -2,10 +2,14 @@ const userModal = require("../Modal/userModal");
 const acctionModal = require("../Modal/acctionModal");
 const paymentModal = require("../Modal/paymentModal");
 const buyerPackageModal = require("../Modal/buyerPackageModal");
+const {server} = require("../server")
+// const io = require('socket.io')(server);
+
+
 const adminController = {
   getallUser: async (req, res) => {
     try {
-      const data = await userModal.find();
+      const data = await userModal.find().sort({ _id: -1 });
       res.status(200).json({ message: "sucsess", data });
     } catch (error) {
       res.status(500).json({ message: "lỗi server" });
@@ -13,7 +17,7 @@ const adminController = {
   },
   getallAction: async (req, res) => {
     try {
-      const data = await acctionModal.find();
+      const data = await acctionModal.find().sort({ _id: -1 });
       res.status(200).json({ message: "sucsess", data });
     } catch (error) {
       res.status(500).json({ message: "lỗi server" });
