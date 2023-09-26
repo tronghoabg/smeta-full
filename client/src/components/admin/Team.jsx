@@ -177,7 +177,6 @@ function Team(props) {
     try {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
-      console.log(idedit, "idedit");
       const response = await instace.get(`/admin/getuserbuyid/${id}`, {
         headers: {
           Authorization: `Bearer ${
@@ -397,6 +396,7 @@ function Team(props) {
               <input
                 type="radio"
                 name="role"
+                value="user"
                 checked={role === "user"}
                 onChange={handleRoleChange}
               />{" "}
