@@ -57,7 +57,7 @@ function PaymentInfo() {
             })
 
     }, [])
-const percent_number = process.env.PERCENT_NUMBER || 1000
+const percent_number = process.env.PERCENT_NUMBER || 1
     const tablehead = [
         { label: "STT", key: "stt" },
         { label: "Name", key: "username" },

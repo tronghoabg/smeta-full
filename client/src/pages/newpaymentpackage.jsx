@@ -92,7 +92,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
             }
         }
     }
-    const percent_number = process.env.PERCENT_NUMBER || 1000
+    const percent_number = process.env.PERCENT_NUMBER || 1
 
     const [valueTimezone, setValue] = useState(30);
     const [valueOption, setValueOption] = useState([])

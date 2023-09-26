@@ -201,12 +201,12 @@ function Team(props) {
     try {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
-      const response = await instace.patch(`/admin/getuserbuyid/${idedit}`,{
+      const response = await instace.patch(`/admin/updateoneuser/${idedit}`,{
           username:username,
           email:email,
           phone:phone,
           role:role,
-          money:money,
+          totalmoney:money,
           action:selectedValues
       }, {
         headers: {
@@ -215,7 +215,7 @@ function Team(props) {
           }`,
         },
       });
-      console.log(response)
+      setData(response.data.data);
     } catch (error) {
       console.error("Lỗi xảy ra khi gọi API:", error);
     }
@@ -290,6 +290,7 @@ function Team(props) {
           >
             <label style={{ width: "20%" }}>Name</label>
             <input
+            disabled={true}
               type="text"
               style={{ width: "80%" }}
               value={username}
@@ -297,6 +298,7 @@ function Team(props) {
             ></input>
           </div>
           <div
+            
             style={{
               display: "flex",
               justifyContent: "center",
@@ -306,6 +308,7 @@ function Team(props) {
           >
             <label style={{ width: "20%" }}>Email</label>
             <input
+            disabled={true}
               type="text"
               style={{ width: "80%" }}
               value={email}
@@ -528,10 +531,10 @@ function Team(props) {
                           {dateFormat(value.createAt)}
                         </td>
                         <td className="border p-2 text-start">
-                          {`${priceFormat(value.totleMoney)} đ`}
+                          {`${priceFormat(value.totleMoney)} c`}
                         </td>
                         <td className="border p-2 text-start">
-                          {`${priceFormat(value.usedMonney)} đ`}
+                          {`${priceFormat(value.usedMonney)} c`}
                         </td>
                         <td className=" p-2 text-center">
                           <Button

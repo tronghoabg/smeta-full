@@ -93,7 +93,7 @@ function Payment({ setError }) {
     { name: "500,000 đ", value: 500000 },
   ]
 
-  const percent_number = process.env.PERCENT_NUMBER || 1000
+  const percent_number = process.env.PERCENT_NUMBER || 1
   return (
     <div className='p-4'>
       <p>{t('Nhập số tiền:')}</p>

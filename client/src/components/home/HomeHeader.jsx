@@ -14,11 +14,13 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Payment from "../../pages/payment";
 import Newpaymentpackage from "../../pages/newpaymentpackage";
+import { IoIosArrowDown } from "react-icons/io";
+import Loading from "../Loading"
 
 function HomeHeader() {
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
-  let { dataToken, user , payFocus,buyaction } = counter;
+  let { dataToken, user, payFocus, buyaction } = counter;
   const handleRedirectLogin = () => {
     nav("/login");
   };
@@ -26,20 +28,32 @@ function HomeHeader() {
   const [lng, setLng] = useState("vi");
   const { t } = useTranslation();
 
-  useEffect(()=>{
-    if(buyaction){
+  useEffect(() => {
+    if (buyaction) {
       setIsModalOpen(true)
     }
-  },[buyaction])
+  }, [buyaction])
 
-  useEffect(()=>{
-    if(user){
+  useEffect(() => {
+    if (user) {
       i18n.changeLanguage(user?.language);
       setLng(user?.language)
     }
-  },[user])
+  }, [user])
+  const [loading, setLoading] = useState(false)
 
-  const changeLanguage = (lng) => {
+  const changeLanguage = async (lng) => {
+    setLoading(true)
+    if(dataToken){
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+      const headers = {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+      };
+      const data = await instace.patch("/auth/updatelang", { language: lng }, { headers });
+    }
+    
+    setLoading(false)
     i18n.changeLanguage(lng);
     setLng(lng);
   };
@@ -85,7 +99,7 @@ function HomeHeader() {
       marginLeft: "10px",
     },
   };
-  const percent_number = process.env.PERCENT_NUMBER || 1000;
+  const percent_number = process.env.PERCENT_NUMBER || 1;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen1, setIsModalOpen1] = useState(false);
 
@@ -108,8 +122,17 @@ function HomeHeader() {
     }
     setOpen(false);
   };
+
+  const datalang = [
+    { value: "vi", name: "Tiếng viêt", img: "./vi.png" },
+    { value: "en", name: "English", img: "./en.png" },
+  ]
+
+  const [dropvalue, setDropvalue] = useState(false)
+console.log(lng);
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
+      {loading ? <Loading /> : null}
       <Modal
         open={isModalOpen}
         onOk={handleOk}
@@ -124,19 +147,19 @@ function HomeHeader() {
           <span onClick={handleCancel} className="!absolute right-[16px] cursor-pointer top-[16px] text-blue-500 text-sm px-2 py-1 rounded-md hover:scale-110 duration-300 font-normal bg-slate-200">Skip for now</span> */}
         </h1>
         {/* <ProductPackage cla="!gap-2" setError={setError} center_btn="flex w-full justify-center items-center" setOpen={setOpen} /> */}
-        <Newpaymentpackage setError={setError} setOpen={setOpen}/>
+        <Newpaymentpackage setError={setError} setOpen={setOpen} />
       </Modal>
 
       <Modal
         open={isModalOpen1}
-        onCancel={()=>{setIsModalOpen1(false)}}
+        onCancel={() => { setIsModalOpen1(false) }}
         centered
         footer={null}
         width={990}
         closable={false}
       >
         <div className="bg-[#fff] rounded-xl shadow-lg shadow-[#1d1c1c]">
-        <Payment setError={setError}/>
+          <Payment setError={setError} />
         </div>
       </Modal>
       {error.error?.length > 0 ? (
@@ -171,7 +194,7 @@ function HomeHeader() {
           <h1 className="text-base text-white opacity-80 font-medium ml-8 cursor-pointer">
             <a href="/extention"> Go to Extention</a>
           </h1>
-         { dataToken ?  <button
+          {dataToken ? <button
             className="text-base text-[#fffc53] opacity-80 font-medium ml-8 cursor-pointer relative hover:text-[rgb(124,255,130)]"
             onClick={showModal}
           >
@@ -209,19 +232,37 @@ function HomeHeader() {
               >
                 {user?.username}
               </h1>
-              <p onClick={()=>{
+              <p onClick={() => {
                 dispatch(setPayFocus(false))
                 setIsModalOpen1(true)
                 setIsModalOpen(false)
-              }} className={`text-[#56ff47] mx-5 cursor-pointer ${payFocus ? "payFocus_animation" :""}`}>
-                {priceFormat(user?.totleMoney / Number(percent_number))} C
+              }} className={`text-[#56ff47] mx-5 cursor-pointer ${payFocus ? "payFocus_animation" : ""}`}>
+                {priceFormat(user?.totleMoney)} C
               </p>
               <button className="" onClick={handleLogout}>
                 {t("logout")}
               </button>
             </div>
           )}
-          <div className="language !ml-8" style={languageStyles.language}>
+          <div onClick={() => { setDropvalue(!dropvalue) }} className="text-[#fff] flex items-center justify-center ml-8 relative group/item  p-2 cursor-pointer">
+          <img className="rounded-full w-4 h-4 mr-2 mt-0.5" src={`./${lng}.png`} alt="" />
+            <p className="mr-3 text-base">{lng.toLocaleUpperCase()}</p>
+            <IoIosArrowDown />
+            <div className={`w-[180px] px-4 py-1 bg-[#fff] ${dropvalue ? "!opacity-100" : "!opacity-0"}  duration-300  !absolute top-[40px] -right-[18px] rounded-lg shadow-lg`}>
+              {datalang.map(value => {
+                return (
+                  <div onClick={() => {
+                    // setDropvalue(false)
+                    changeLanguage(value.value)
+                  }} className="flex items-center text-[#000] my-3 hover:text-blue-400">
+                    <img className="rounded-full w-4 h-4" src={value.img} alt="" />
+                    <p className="text-base ml-4" >{value.name}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+          {/* <div className="language !ml-8" style={languageStyles.language}>
             <span
               className="cursor-pointer mr-1"
               onClick={() => changeLanguage("vi")}
@@ -236,7 +277,7 @@ function HomeHeader() {
             >
               <img src="/en.png" alt="EN" style={languageStyles.img} />
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
