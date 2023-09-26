@@ -2,7 +2,7 @@ const userModal = require("../Modal/userModal");
 const acctionModal = require("../Modal/acctionModal");
 const paymentModal = require("../Modal/paymentModal");
 const buyerPackageModal = require("../Modal/buyerPackageModal");
-const {server} = require("../server")
+const { server } = require("../server")
 // const io = require('socket.io')(server);
 
 
@@ -140,59 +140,59 @@ const adminController = {
           _id,
           username,
           orderCode: payment.orderCode,
-          amount: payment.amount, 
-          signature:payment.signature,
-          createdAt:payment.createdAt
+          amount: payment.amount,
+          signature: payment.signature,
+          createdAt: payment.createdAt
         };
       });
-  
+
       res.status(200).json({ message: "success", data: outputData });
     } catch (error) {
       res.status(500).json({ message: "lỗi server" });
     }
   },
-  
-  
-  
+
+
+
   searchProduct: async (req, res) => {
     try {
       const data = await userModal.find();
-      const keyword = req.query.searchbyname.trim().toLowerCase(); 
+      const keyword = req.query.searchbyname.trim().toLowerCase();
       const results = data.filter((item) => {
         for (const key in item) {
           if (typeof item[key] === 'string' || typeof item[key] === 'number') {
-            const normalizedValue = String(item[key]).trim().toLowerCase(); 
+            const normalizedValue = String(item[key]).trim().toLowerCase();
             if (normalizedValue.includes(keyword)) {
               return true;
             }
           }
         }
         return false;
-      });  
+      });
       res.status(200).json(results);
     } catch (error) {
       console.error('Lỗi:', error);
       res.status(500).json(error);
     }
   },
-  getUserBuyId : async (req, res)=>{
+  getUserBuyId: async (req, res) => {
     try {
-        const userProfile = await userModal.find({_id: req.params.profileId})
-        const userPayment  = await paymentModal.find({userId: req.params.profileId})
-        const userBuyed  = await buyerPackageModal.find({userId: req.params.profileId})
-        newdata = [...userPayment, ...userBuyed]
-        newdata = newdata.map(value => {
-            if (value.key) {
-                value.createdAt = value.time_start
-            }
-            return value
-        }).sort((a, b) => {
-            const timeA = new Date(a.createdAt).getTime();
-            const timeB = new Date(b.createdAt).getTime();
-            return timeB - timeA;
-        });
+      const userProfile = await userModal.find({ _id: req.params.profileId })
+      const userPayment = await paymentModal.find({ userId: req.params.profileId })
+      const userBuyed = await buyerPackageModal.find({ userId: req.params.profileId })
+      newdata = [...userPayment, ...userBuyed]
+      newdata = newdata.map(value => {
+        if (value.key) {
+          value.createdAt = value.time_start
+        }
+        return value
+      }).sort((a, b) => {
+        const timeA = new Date(a.createdAt).getTime();
+        const timeB = new Date(b.createdAt).getTime();
+        return timeB - timeA;
+      });
 
-        res.status(200).json({userProfile: userProfile[0],userPayment:newdata});
+      res.status(200).json({ userProfile: userProfile[0], userPayment: newdata });
     } catch (error) {
       res.status(500).json(error);
     }
@@ -200,18 +200,18 @@ const adminController = {
   searchAction: async (req, res) => {
     try {
       const data = await acctionModal.find();
-      const keyword = req.query.searchbyname.trim().toLowerCase(); 
+      const keyword = req.query.searchbyname.trim().toLowerCase();
       const results = data.filter((item) => {
         for (const key in item) {
           if (typeof item[key] === 'string' || typeof item[key] === 'number') {
-            const normalizedValue = String(item[key]).trim().toLowerCase(); 
+            const normalizedValue = String(item[key]).trim().toLowerCase();
             if (normalizedValue.includes(keyword)) {
               return true;
             }
           }
         }
         return false;
-      });  
+      });
       res.status(200).json(results);
     } catch (error) {
       console.error('Lỗi:', error);
@@ -220,39 +220,67 @@ const adminController = {
   },
   searchPayment: async (req, res) => {
     try {
-     
+
       const data = await paymentModal
-      .find()
-      .populate("userId");
+        .find()
+        .populate("userId");
       const outputData = data.map(payment => {
         const { _id, username } = payment.userId;
         return {
           _id,
           username,
           orderCode: payment.orderCode,
-          amount: payment.amount, 
-          signature:payment.signature,
-          createdAt:payment.createdAt
+          amount: payment.amount,
+          signature: payment.signature,
+          createdAt: payment.createdAt
         };
       });
-      const keyword = req.query.searchbyname.trim().toLowerCase(); 
+      const keyword = req.query.searchbyname.trim().toLowerCase();
       const results = outputData.filter((item) => {
         for (const key in item) {
           if (typeof item[key] === 'string' || typeof item[key] === 'number') {
-            const normalizedValue = String(item[key]).trim().toLowerCase(); 
+            const normalizedValue = String(item[key]).trim().toLowerCase();
             if (normalizedValue.includes(keyword)) {
               return true;
             }
           }
         }
         return false;
-      });  
+      });
       res.status(200).json(results);
     } catch (error) {
       console.error('Lỗi:', error);
       res.status(500).json(error);
     }
   },
+  updateoneuser: async (req, res) => {
+    try {
+      const username = req.body.username
+      const email = req.body.email
+      const phone = req.body.phone
+      const role = req.body.role
+      const totleMoney = req.body.totleMoney
+      const action = req.body.action
+     const datauser = userModal.find({username:username})
+     const datauseraction = datauser.action
+      const dataaction = action.map((value,index)=>{
+        const date = new Date
+       return {key:value,time_end: date.setFullYear(date.getFullYear() + 100)}
+      })
+      const update = await userModal.updateOne({ _id: req.params.id }, {
+        username :username,
+        phone:phone,
+        email:email,
+        role:role,
+        totleMoney:totleMoney,
+        action:dataaction
+      })
+      let data = await userModal.find()
+      res.status(200).json({ message: 'sucsess', data })
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
 }
 
 module.exports = adminController;

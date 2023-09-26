@@ -12,7 +12,7 @@ router.get('/searchProduct', middleware.verifyTokenAndAdmin,adminController.sear
 router.get('/getuserbuyid/:profileId',middleware.verifyTokenAndAdmin, adminController.getUserBuyId);
 router.get('/searchAction', middleware.verifyTokenAndAdmin,adminController.searchAction);
 router.get('/searchPayment', middleware.verifyTokenAndAdmin,adminController.searchPayment);
-
+router.patch('/updateoneuser/:id', middleware.verifyTokenAndAdmin,adminController.updateoneuser);
 
 // router.get('/serachuser',middleware.verifyTokenAndAdmin, adminController.serachuser);
 module.exports = router;

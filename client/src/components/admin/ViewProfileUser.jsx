@@ -18,7 +18,6 @@ function ViewProfileUser() {
 
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const newDatatoken = await RefreshToken(dataToken);

@@ -27,7 +27,7 @@ const authController = {
           language: req.body.language,
         });
         const userdata = await userModal.find();
-        io.emit('userRegistered', { message: 'Người dùng mới đã đăng ký', userData: userdata });
+        // io.emit('userRegistered', { message: 'Người dùng mới đã đăng ký', userData: userdata });
         res.status(200).json({ message: "Đăng ký thành công", userdata });
       } catch (error) {
         res.status(500).json({ message: "Đăng ký error", error });
