@@ -196,7 +196,7 @@ function HomeHeader() {
           <h1 className="text-base text-white opacity-80 font-medium ml-8 cursor-pointer">
             <a href="/extention"> Go to Extention</a>
           </h1>
-          {dataToken && user ? <button
+          {dataToken ? <button
             className="text-base text-[#fffc53] opacity-80 font-medium ml-8 cursor-pointer relative hover:text-[rgb(124,255,130)]"
             onClick={showModal}
           >
@@ -207,8 +207,15 @@ function HomeHeader() {
           </button> : null}
         </div>
         <div className="flex justify-center items-center ">
-          {dataToken && user ? (
-              <div className="flex text-base text-white opacity-80 font-medium ">
+          {!dataToken ? (
+            <div className="text-base text-white opacity-80 font-medium">
+              <button className="mr-8" onClick={handleRedirectregister}>
+                {t("register")}
+              </button>
+              <button onClick={handleRedirectLogin}>{t("login")}</button>
+            </div>
+          ) : (
+            <div className="flex text-base text-white opacity-80 font-medium ">
               {user?.role === "admin" ? (
                 <h1
                   className="text-[#fff] cursor-pointer"
@@ -238,14 +245,6 @@ function HomeHeader() {
                 {t("logout")}
               </button>
             </div>
-            
-          ) : (
-            <div className="text-base text-white opacity-80 font-medium">
-            <button className="mr-8" onClick={handleRedirectregister}>
-              {t("register")}
-            </button>
-            <button onClick={handleRedirectLogin}>{t("login")}</button>
-          </div>
           )}
           <div onClick={() => { setDropvalue(!dropvalue) }} className="text-[#fff] flex items-center justify-center ml-8 relative group/item  p-2 cursor-pointer">
           <img className="rounded-full w-4 h-4 mr-2 mt-0.5" src={`./${lng}.png`} alt="" />
