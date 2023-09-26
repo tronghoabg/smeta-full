@@ -44,12 +44,15 @@ function HomeHeader() {
 
   const changeLanguage = async (lng) => {
     setLoading(true)
-    const newDatatoken = await RefreshToken(dataToken);
-    dispatch(setDataToken(newDatatoken));
-    const headers = {
-      Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
-    };
-    const data = await instace.patch("/auth/updatelang", { language: lng }, { headers });
+    if(dataToken){
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+      const headers = {
+        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+      };
+      const data = await instace.patch("/auth/updatelang", { language: lng }, { headers });
+    }
+    
     setLoading(false)
     i18n.changeLanguage(lng);
     setLng(lng);

@@ -76,7 +76,6 @@ console.log(checkAll);
                     <div className='icon'><i className="fa-solid fa-house"></i></div>
                     <div className='link-text'>{t('home')}</div>
                     </div>
-                    <CiUnlock className="text-xl "/>
                 </NavLink>
                 <NavLink to='/sharepixel' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
                     <div className='flex'>
