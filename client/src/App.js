@@ -27,6 +27,7 @@ import MiddleWare from "./middleware/MiddleWare";
 import MiddleWareAdmin from "./middleware/MiddlewareAdmin";
 import Payment from "./pages/payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import Newpaymentpackage from "./pages/newpaymentpackage";
 
 function App() {
   const [disable, setdisable] = useState(true);
@@ -117,7 +118,16 @@ function App() {
             </MiddleWare>
           }
         />
+         {/* <Route
+          path="/paymentoption"
+          element={
+            <MiddleWare>
+              <Newpaymentpackage setdisable={setdisable} />
+            </MiddleWare>
+          }
+        /> */}
       </Routes>
+
       {disable ? (
         <div className="app-container">
           <Header />

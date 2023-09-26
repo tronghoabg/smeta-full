@@ -119,6 +119,7 @@ const buypackageControllers = {
       return res.status(500).json({ message: "Internal Server Error" });
     }
   },
+  
   updatePackage: async (req, res) => {
     try {
       const currentDate = new Date();
