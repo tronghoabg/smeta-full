@@ -7,5 +7,7 @@ router.post("/login",authController.loginUser)
 router.post("/refresh",authController.posttoken)
 router.patch("/logout",verifyToken.verifyToken ,authController.logout)
 router.get("/profile",verifyToken.verifyToken , authController.test_verifyToken)
+router.patch("/updatelang",verifyToken.verifyToken , authController.updateLanguage)
+
 
 module.exports = router

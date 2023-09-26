@@ -7,6 +7,8 @@ import RefreshToken from "../pages/RefreshToken";
 import instace from '../pages/customer_axios';
 import Cookies from "js-cookie";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { CiUnlock, CiLock } from "react-icons/ci";
+
 
 
 const Sidebar = ({ active }) => {
@@ -57,7 +59,8 @@ const Sidebar = ({ active }) => {
         dispatch(setbuyaction(true))
         nav("/")
     }
-
+    const checkAll = user?.action.find(value=> value.key === "All")
+console.log(checkAll);
     return (
         <div className='sidebar' >
             <div className='top'>
@@ -68,30 +71,47 @@ const Sidebar = ({ active }) => {
                 </div>
             </div>
             <div className='mid'>
-                <NavLink to='/extention' className='side-link' onClick={closeSidebar}>
+                <NavLink to='/extention' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
+                    <div className='flex'>
                     <div className='icon'><i className="fa-solid fa-house"></i></div>
                     <div className='link-text'>{t('home')}</div>
+                    </div>
+                    <CiUnlock className="text-xl "/>
                 </NavLink>
-                <NavLink to='/sharepixel' className='side-link' onClick={closeSidebar}>
+                <NavLink to='/sharepixel' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
+                    <div className='flex'>
                     <div className='icon'><i className="fa-solid fa-shapes"></i></div>
                     <div className='link-text'>{t('sharepixel')}</div>
+                    </div>
+                    <CiUnlock className="text-xl "/>
                 </NavLink>
-                <NavLink to='/shareadaccount' className='side-link' onClick={closeSidebar}>
+                <NavLink to='/shareadaccount' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
+                    <div className='flex'>
                     <div className='icon'><i className="fa-solid fa-vector-square"></i></div>
                     <div className='link-text'>{t('shareAdAccount')}</div>
+                    </div>
+                    {user?.action.find(value=> value.key === "Share TKQC") || checkAll ? <CiUnlock className="text-xl "/> : <CiLock className='text-xl text-yellow-400 '/>}
                 </NavLink>
-                <NavLink to='/createadaccount' className='side-link' onClick={closeSidebar}>
+                <NavLink to='/createadaccount' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
+                    <div className='flex'>
                     <div className='icon'><i className="fa-solid fa-plus"></i></div>
                     <div className='link-text'>{t('createAdAccount')}</div>
+                    </div>
+                    {user?.action.find(value=> value.key === "Create Ad Account") || checkAll ? <CiUnlock className="text-xl "/> : <CiLock className='text-xl text-yellow-400 '/>}
+
                 </NavLink>
-                <NavLink to='/setcamp' className='side-link' onClick={closeSidebar}>
+                <NavLink to='/setcamp' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
+                    <div className='flex'>
                     <div className='icon'><i className="fa-solid fa-bullhorn"></i></div>
                     <div className='link-text'>{t('setCamp')}</div>
+                    </div>
+                    {user?.action.find(value=> value.key === "Create Campaign") || checkAll ? <CiUnlock className="text-xl "/> : <CiLock className='text-xl text-yellow-400 '/>}
+
                 </NavLink>
             </div>
             
             <div className='bottom '>
-                <div className='mb-8'>
+                {/* <div className='mb-8'>
                 {planData.map(value=>{
                     let checked = false
                     const allcheck=user?.action.find(value=>value.key==="All")
@@ -117,7 +137,7 @@ const Sidebar = ({ active }) => {
                     )
                 })}
                 <button onClick={handlebuyaction} className='text-base text-center bg-[#3ef15e] hover:text-white px-8 hover:scale-110 duration-300 py-2 rounded-lg mt-8'>Mua thêm</button>
-            </div>
+            </div> */}
 
                 <div className='Profile'>
                     <div className='avatar'>

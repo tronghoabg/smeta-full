@@ -170,5 +170,17 @@ const authController = {
   test_verifyToken: async (req, res) => {
     res.status(200).json(req.user);
   },
+  updateLanguage: async (req, res) =>{
+    try {
+      console.log(req.body.language);
+      const data = await userModal.updateOne( 
+        { username: req.user.username },
+        { language: req.body.language})
+        return res.status(200).json({ message: " thành công" });
+          
+    } catch (error) {
+      res.status(500).json({ message: "Lỗi ", error });
+    }
+  }
 };
 module.exports = authController;
