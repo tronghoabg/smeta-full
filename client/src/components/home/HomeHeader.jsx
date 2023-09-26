@@ -96,7 +96,7 @@ function HomeHeader() {
       marginLeft: "10px",
     },
   };
-  const percent_number = process.env.PERCENT_NUMBER || 1000;
+  const percent_number = process.env.PERCENT_NUMBER || 1;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen1, setIsModalOpen1] = useState(false);
 
@@ -126,7 +126,7 @@ function HomeHeader() {
   ]
 
   const [dropvalue, setDropvalue] = useState(false)
-
+console.log(lng);
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
       {loading ? <Loading /> : null}
@@ -234,14 +234,14 @@ function HomeHeader() {
                 setIsModalOpen1(true)
                 setIsModalOpen(false)
               }} className={`text-[#56ff47] mx-5 cursor-pointer ${payFocus ? "payFocus_animation" : ""}`}>
-                {priceFormat(user?.totleMoney / Number(percent_number))} C
+                {priceFormat(user?.totleMoney)} C
               </p>
               <button className="" onClick={handleLogout}>
                 {t("logout")}
               </button>
             </div>
           )}
-          <div onClick={() => { setDropvalue(true) }} className="text-[#fff] flex items-center justify-center ml-8 relative group/item  p-2 cursor-pointer">
+          <div onClick={() => { setDropvalue(!dropvalue) }} className="text-[#fff] flex items-center justify-center ml-8 relative group/item  p-2 cursor-pointer">
           <img className="rounded-full w-4 h-4 mr-2 mt-0.5" src={`./${lng}.png`} alt="" />
             <p className="mr-3 text-base">{lng.toLocaleUpperCase()}</p>
             <IoIosArrowDown />
@@ -249,7 +249,7 @@ function HomeHeader() {
               {datalang.map(value => {
                 return (
                   <div onClick={() => {
-                    setDropvalue(false)
+                    // setDropvalue(false)
                     changeLanguage(value.value)
                   }} className="flex items-center text-[#000] my-3 hover:text-blue-400">
                     <img className="rounded-full w-4 h-4" src={value.img} alt="" />

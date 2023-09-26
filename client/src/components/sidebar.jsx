@@ -141,7 +141,7 @@ console.log(checkAll);
 
                 <div className='Profile'>
                     <div className='avatar'>
-                        <img src='/avatar.png' alt='avatar'></img>
+                        <img onClick={()=>{nav('/')}} className=' cursor-pointer' src='/avatar.png' alt='avatar'></img>
                     </div>
                     <div className='controller'>
                         <div className='name  cursor-pointer'>{user ? user.username : <p  onClick={handleGotoLogin}>Đăng Nhập</p>}</div>

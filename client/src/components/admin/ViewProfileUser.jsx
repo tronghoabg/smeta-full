@@ -18,7 +18,6 @@ function ViewProfileUser() {
 
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const newDatatoken = await RefreshToken(dataToken);
@@ -50,7 +49,7 @@ function ViewProfileUser() {
     day: 'numeric',
     timeZoneName: 'short'
   };
-  const percent_number = process.env.PERCENT_NUMBER || 1000
+  const percent_number = process.env.PERCENT_NUMBER || 1
 
   const dataProfile = [
     { title: "Tên tài khoản", value: data.userProfile?.username },

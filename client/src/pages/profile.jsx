@@ -36,7 +36,7 @@ const Profile = ({ setdisable }) => {
     useEffect(() => {
         setdisable(false)
     }, [])
-    const percent_number = process.env.PERCENT_NUMBER || 1000
+    const percent_number = process.env.PERCENT_NUMBER || 1
     const options = {
         hour: 'numeric',
         minute: 'numeric',

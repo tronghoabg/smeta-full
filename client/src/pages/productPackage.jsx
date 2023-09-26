@@ -22,8 +22,7 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
         instace.get('/buypackage/getallprouct')
             .then(value => {
                 const data = value.data
-                // const productName = data.filter((item, index) => data.indexOf(item.product_name) === index)
-                // console.log(productName);
+             
                 let uniqueProducts = data.reduce((acc, current) => {
                     const existingProduct = acc.find(item => item.product_name === current.product_name);
 
@@ -75,7 +74,7 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
             }
         }
     }
-    const percent_number = process.env.PERCENT_NUMBER || 1000
+    const percent_number = process.env.PERCENT_NUMBER || 1
 
 
 

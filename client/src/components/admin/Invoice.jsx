@@ -142,6 +142,16 @@ function Invoice() {
           console.error("Lỗi xảy ra khi gọi API:", error);
         }
       };
+
+      // useEffect(() => {
+      //   search_btn();
+      // }, [searchKeyword]);
+    
+      const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+          search_btn();
+        }
+      }
   return (
     <div className="w-full">
     <Header />
@@ -150,7 +160,7 @@ function Invoice() {
       </p>
         <div id="searchbox">
         <input  type="text" size="15" placeholder="Enter keywords here..."  onChange={handleSearchChange}
-              value={searchKeyword}/>
+              value={searchKeyword} onKeyPress={handleKeyPress}/>
         <input id="button-submit" type="submit" value=" "  onClick={search_btn}/>
         </div>
 

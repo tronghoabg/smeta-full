@@ -26,10 +26,10 @@ const sendTask = async (message) => {
         if (response) {
             return response;
         } else {
-            return '{ "error": "101" }';
+            return 'not install';
         }
     } catch (error) {
-        return '{ "error": "101" }';
+        return 'not install';
     }
 }
 

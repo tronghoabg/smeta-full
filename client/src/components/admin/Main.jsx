@@ -126,7 +126,7 @@ function Main() {
                 {value.label == "Sales Obtained"
                   ? `${value.amount
                     .toLocaleString("en-US")
-                    .replace(".00", "")} đ`
+                    .replace(".00", "")} c`
                   : value.amount.toLocaleString("en-US").replace(".00", "")}
               </p>
               <p className="text-dashboard">{value.label}</p>
@@ -146,7 +146,7 @@ function Main() {
             Revenue Generated
           </h1>
           <p className="text-2xl font-bold text-dashboard">
-            {chartData.totleMoneydata.toLocaleString("en-US").replace(".00", "")} đ
+            {chartData.totleMoneydata.toLocaleString("en-US").replace(".00", "")} c
           </p>
           <div
             className={`w-full min-h-[380px] flex justify-center items-center   ${darkmode ? "dark_mode_bg" : ""
@@ -189,7 +189,7 @@ function Main() {
                     <p className="px-3 py-1 rounded-sm bg-[#4CCEAC] ">
                       {Number(value.amount)
                         .toLocaleString("en-US")
-                        .replace(".00", "")} đ
+                        .replace(".00", "")} c
                     </p>
                   </div>
                 </div>

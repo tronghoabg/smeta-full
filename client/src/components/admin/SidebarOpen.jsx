@@ -13,7 +13,6 @@ const SidebarOpen = (props) => {
   const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
 
   const handleTabChange = (event, newValue) => {
-    console.log(newValue,'1111111');
     dispatch(setSelectedDashboard(newValue));
   };
 
@@ -40,7 +39,7 @@ const SidebarOpen = (props) => {
         value={selectedDashboard}
         onChange={handleTabChange}
         orientation="vertical"
-        scrollButtons="off"
+        scrollButtons="auto"
         variant="scrollable"
         textColor="primary"
         indicatorColor="primary"

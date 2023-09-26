@@ -29,7 +29,7 @@ function PaymentSuccess() {
                 const createPayment = await instace.post('/payment/postpayment', {
                     orderCode: orderCode,
                     createdAt: data.data.data.createdAt,
-                    amount: data.data.data.amount,
+                    amount: data.data.data.amount/1000,
                     status: data.data.data.status,
                     signature: data.data.signature,
                 }, {
