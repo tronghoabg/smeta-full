@@ -78,7 +78,7 @@ const Login = ({ setdisable }) => {
                         }
 
                     } else {
-                        setError("Username từ 6 đến 12 ki tự: chữ, số")
+                        setError("Username từ 6 đến 24 ki tự: chữ, số")
                     }
 
                 }
