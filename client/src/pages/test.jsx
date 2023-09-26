@@ -16,6 +16,7 @@ const contentStyle = {
   // background: '#364d79',
 };
 
+
 const settings = {
   dots: true, 
   dotPosition: 'bottom', 

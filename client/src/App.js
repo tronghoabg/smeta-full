@@ -9,9 +9,6 @@ import Register from "./pages/register";
 import SetCamp from "./pages/setcamp";
 import ShareAccount from "./pages/shareAccount";
 import SharePixel from "./pages/sharePixel";
-import Install from "./pages/install";
-import InToLogin from "./pages/intologin";
-import chromeTask from "./services/chrome";
 import { useEffect, useState } from "react";
 import Test from "./pages/test";
 import axios from "axios";
@@ -31,8 +28,6 @@ import Newpaymentpackage from "./pages/newpaymentpackage";
 
 function App() {
   const [disable, setdisable] = useState(true);
-  const [isInstall, setInstall] = useState(true);
-  const [isLoginFb, setIsLoginFb] = useState(true);
   let token = Cookies.get("datatoken");
   const checked = token ? JSON.parse(token).accessToken : null;
   const counter = useSelector((state) => state.counter);
@@ -70,22 +65,6 @@ function App() {
     fetch();
   }, []);
 
-
-  useEffect(() => {
-    async function fetchData() {
-      let checkInstall = await chromeTask.sendTask("checkinstall");
-      if (checkInstall.error === "101") {
-        setInstall(false);
-        return;
-      }
-    }
-    fetchData();
-  }, []);
-
-  const isNotLogin = () => {
-    setIsLoginFb(false);
-    console.log("not login");
-  };
 
   return (
     <>
@@ -132,26 +111,16 @@ function App() {
         <div className="app-container">
           <Header />
           <div className="containers">
-            {isInstall ? (
-              isLoginFb ? (
                 <Routes>
                   <Route
                     path="/extention"
-                    element={<Home isNotLogin={isNotLogin} />}
+                    element={<Home />}
                   />
                   <Route path="/createadaccount" element={<CreateAccount />} />
                   <Route path="/setcamp" element={<SetCamp />} />
                   <Route path="/shareadaccount" element={<ShareAccount />} />
                   <Route path="/sharepixel" element={<SharePixel />} />
-                  <Route path="/install" element={<Install />} />
-                  <Route path="/intologin" element={<InToLogin />} />
                 </Routes>
-              ) : (
-                <InToLogin />
-              )
-            ) : (
-              <Install />
-            )}
           </div>
           <Footer />
         </div>
