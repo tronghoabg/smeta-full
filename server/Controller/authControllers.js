@@ -123,7 +123,6 @@ const authController = {
     const refreshToken = req.body.refreshToken;
     if (!refreshToken) res.status(401);
     const user = await userModal.findOne({ refreshToken: refreshToken });
-    console.log(user);
     if (!user) {
       return res.status(403);
     }
@@ -171,7 +170,6 @@ const authController = {
   },
   updateLanguage: async (req, res) =>{
     try {
-      console.log(req.body.language);
       const data = await userModal.updateOne( 
         { username: req.user.username },
         { language: req.body.language})

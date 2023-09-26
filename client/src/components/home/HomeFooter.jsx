@@ -40,7 +40,7 @@ function HomeFooter() {
             <p className="text-[#EEEEEE] text-[15px] mb-10">
              {t('Theo dõi và đóng góp ý kiến với chúng tôi qua các kênh mạng xã hội')}
             </p>
-            <p className="text-[#EEEEEE] text-[14px] mt-2 flex">
+            <div className="text-[#EEEEEE] text-[14px] mt-2 flex">
               <div className="p-2 bg-[#007bff] rounded-full mr-3  hover:bg-[#3f79b8] cursor-pointer flex justify-center items-center">
                 <div className=" bg-[#fff] rounded-full p-1  cursor-pointer z-[99999] text-[#3f79b8]">
                   <AiFillFacebook></AiFillFacebook>
@@ -51,7 +51,7 @@ function HomeFooter() {
                   <AiOutlineSend></AiOutlineSend>
                 </div>
               </div>
-            </p>
+            </div>
           </div>
         </div>
       </div>

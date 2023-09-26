@@ -60,7 +60,6 @@ const Sidebar = ({ active }) => {
         nav("/")
     }
     const checkAll = user?.action.find(value=> value.key === "All")
-console.log(checkAll);
     return (
         <div className='sidebar' >
             <div className='top'>

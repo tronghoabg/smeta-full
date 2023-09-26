@@ -102,7 +102,7 @@ function ProductPackage({ setError, setOpen, cla, center_btn }) {
                             </div> : <div className='h-[280px] text-center flex justify-start items-start mt-[20px]  ml-3 flex-col'>
                                 {value.option[0].product_desc.split(",").map(value => {
                                     return (
-                                        <div className='flex items-center mt-4 italic text-[#687a8f]'>
+                                        <div key={value} className='flex items-center mt-4 italic text-[#687a8f]'>
                                             <span><BsFillCheckCircleFill className='text-green-500 mr-1 ' /></span>
                                             {value}
                                         </div>

@@ -36,7 +36,7 @@ const Login = ({ setdisable }) => {
     // t('account')
     // t('password')
     // t('register')
-    const [valueRegister, setValueRegister] = useState({ email: "", username: "", password: "", phone: "", language: "vi" })
+    const [valueRegister, setValueRegister] = useState({ email: "", username: "", password: "", phone: "", language: "vi", re_password:"" })
     const [error, setError] = useState("");
     const [open, setOpen] = useState(false);
 
@@ -54,6 +54,10 @@ const Login = ({ setdisable }) => {
 
     const handleRegister = async () => {
         setOpen(true)
+
+        if(valueRegister.re_password !== valueRegister.password){
+            return setError("Mật khẩu chưa khớp")
+        }
         if (valueRegister.email && valueRegister.phone && valueRegister.password && valueRegister.username) {
             if (validateEmail(valueRegister.email)) {
                 if (!validatePhoneNumber(valueRegister.phone)) {
@@ -149,7 +153,11 @@ const Login = ({ setdisable }) => {
                             <p className='text-base mb-2 mt-6 '>{t('password')}: </p>
                             <input type="password" className='w-full p-2 placeholder:text-base' value={valueRegister.password} onChange={(e) => { handleChangeValue(e, "password") }} placeholder='Password' />
                         </div>
-                        <div className="flex items-center mb-2 mt-6">
+                        <div>
+                            <p className='text-base mb-2 mt-6 '>{'Nhập lại mật khẩu'}: </p>
+                            <input type="password" className='w-full p-2 placeholder:text-base' value={valueRegister.re_password} onChange={(e) => { handleChangeValue(e, "re_password") }} placeholder='Re-pasword' />
+                        </div>
+                        {/* <div className="flex items-center mb-2 mt-6">
                             <p className='text-base  '>Ngôn ngữ:</p>
                             <div className="flex ">
                                 <div className="language !ml-8" style={languageStyles.language}>
@@ -168,15 +176,8 @@ const Login = ({ setdisable }) => {
                                         <img src="/en.png" alt="EN" style={languageStyles.img} />
                                     </span>
                                 </div>
-                                {/* {language.map(value => {
-                                    return (
-                                        <div onClick={() => { setValueRegister({ ...valueRegister, language: value.value }) }} key={value.value} className={`!border-2 relative w-fit mx-2 px-2 py-1 ${valueRegister.language == value.value ? "border-[#004a99f5]" : ""} rounded-md cursor-pointer`}>
-                                            {value.label}
-                                        </div>
-                                    )
-                                })} */}
                             </div>
-                        </div>
+                        </div> */}
                         <div className='flex justify-center items-center'>
                             <button className='bg-[#064262] p-2 px-4 rounded-lg text-white text-xl mt-8' onClick={handleRegister}>Đăng ký</button>
                         </div>

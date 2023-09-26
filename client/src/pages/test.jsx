@@ -159,7 +159,7 @@ function Test({setdisable}) {
           <div className="flex justify-evenly items-center mt-[70px] ">
             {countwhy.map(value => {
               return (
-                <div className="text-center">
+                <div key={value.title} className="text-center">
                   <h1 className="text-[#191e30] text-[48px] font-bold tracking-[0.2px]">{value.count}</h1>
                   <p className="text-[#212121] text-[14px] tracking-[0.2px]">{value.title}</p>
                 </div>

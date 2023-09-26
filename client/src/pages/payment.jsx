@@ -105,9 +105,9 @@ function Payment({ setError }) {
         }} />
 
       <div className='grid grid-cols-5 w-full gap-4'>
-        {dataCard.map(value => {
+        {dataCard.map((value,index) => {
           return (
-            <div onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount == value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
+            <div key={index} onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount == value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
               <p className=' px-4 pb-2  pt-4'> {value.value / Number(percent_number)} C</p>
             </div>

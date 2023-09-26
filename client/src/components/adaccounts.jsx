@@ -29,7 +29,6 @@ const TableAdacounts = (props) => {
     setselectRemove([]);
     try {
       const res = await chromeTask.getAdminADhire(data.ID, data.bm);
-      console.log({ ID: data.ID, array: res, bm: data.bm }, 3000);
       setdatamodal({ ID: data.ID, array: res, bm: data.bm });
       setloading(false);
     } catch (error) {
@@ -43,7 +42,6 @@ const TableAdacounts = (props) => {
   });
 
   const handleRemoveAdminAD = async (userID) => {
-    console.log(userID , selectRemove, "userID");
     setloading(true);
     if (selectRemove.length <= 1) {
       try {
@@ -87,7 +85,6 @@ const TableAdacounts = (props) => {
       return await Promise.all(datas);
     };
     let checked = await deletesarray();
-    console.log(checked, "handleRemoveAdminAD");
     if (!checked[0].error) {
       setloading(false);
       setmessagestatus({ type: "success", mess: "Xoa thanh cong" });

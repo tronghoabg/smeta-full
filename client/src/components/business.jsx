@@ -452,7 +452,6 @@ const TableBusiness = (props) => {
                     {item.admin}{" "}
                     <FaUserEdit
                       onClick={() => {
-                        console.log(item);
                         handleOpen({
                           ID: item.id,
                           array: item.adminarray,

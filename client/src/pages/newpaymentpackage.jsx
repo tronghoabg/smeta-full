@@ -135,7 +135,6 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
         }
         setValue(timezone)
     }
-    console.log(valueOption, "valueOption");
     let curenttotal = 0
     let totalbuy = 0
 
@@ -160,7 +159,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
                         <div className='grid grid-cols-4 gap-4'>
                             {data.length > 0 ? data[0].option.map(values => {
                                 return (
-                                    <div onClick={() => { handleChangeMonth(values.product_timezone) }}
+                                    <div key={values.product_timezone} onClick={() => { handleChangeMonth(values.product_timezone) }}
                                         className={`p-4 cursor-pointer  bg-[#c3f5d0d0] hover:scale-105 duration-300 border col-span-1  
                             ${values.product_timezone === valueTimezone ? "!border-[#478bfb]" : "!border-[#c3f5d0d0]"} flex items-center shadow-lg justify-between`}>
                                         <div key={values.product_timezone} className='' >
@@ -196,7 +195,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
                                             {value.option.map(values => {
                                                 if (values.product_timezone === valueTimezone) {
                                                     return (
-                                                        <div><span className={`font-medium text-base ${value.key === "All" ? "text-yellow-400" : ""}`}>{priceFormat(values.product_price / percent_number)}C</span>
+                                                        <div key={values.product_timezone}><span className={`font-medium text-base ${value.key === "All" ? "text-yellow-400" : ""}`}>{priceFormat(values.product_price / percent_number)}C</span>
                                                             <span className='text-[#95AAC9] italic text-sm'> /{values.product_timezone / 30} monthly</span></div>
                                                     )
                                                 }
@@ -223,7 +222,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
                             </div>
                             {valueOption.map(value => {
                                 return (
-                                    <div className='flex justify-start items-center w-full mb-3'>
+                                    <div key={value.product_name} className='flex justify-start items-center w-full mb-3'>
                                         <p><PiMedalFill className="text-[#ff9735] text-base" /></p>
                                         <p className='ml-4 text-base font-normal'>{value.product_name}</p>
                                     </div>

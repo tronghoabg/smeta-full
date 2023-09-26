@@ -63,6 +63,8 @@ function HomeHeader() {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
+    Cookies.remove("datatoken");
+    nav('/')
     try {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
@@ -80,6 +82,7 @@ function HomeHeader() {
       console.log(error);
     }
   };
+
 
   const languageStyles = {
     language: {
@@ -129,7 +132,6 @@ function HomeHeader() {
   ]
 
   const [dropvalue, setDropvalue] = useState(false)
-console.log(lng);
   return (
     <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
       {loading ? <Loading /> : null}
@@ -251,7 +253,7 @@ console.log(lng);
             <div className={`w-[180px] px-4 py-1 bg-[#fff] ${dropvalue ? "!opacity-100" : "!opacity-0"}  duration-300  !absolute top-[40px] -right-[18px] rounded-lg shadow-lg`}>
               {datalang.map(value => {
                 return (
-                  <div onClick={() => {
+                  <div key={value.value} onClick={() => {
                     // setDropvalue(false)
                     changeLanguage(value.value)
                   }} className="flex items-center text-[#000] my-3 hover:text-blue-400">

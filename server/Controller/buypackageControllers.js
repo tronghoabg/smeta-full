@@ -169,7 +169,6 @@ const buypackageControllers = {
         // console.log(checked[0].time_end, currentDate, "checked.timeEnd > currentDate");
 
         if (new Date(checked[0].time_end).getTime() > currentDate.getTime()) {
-          console.log(req.user.username, packagedata.product_name);
           const data_action = await acctionModal.create({
             name: req.user.username,
             acction: packagedata.product_name,
