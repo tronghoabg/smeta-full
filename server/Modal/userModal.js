@@ -36,9 +36,9 @@ const userSchema = mongoose.Schema({
         type:String,
         default:null
     },
-    language:{
+    userLanguage:{
         type:String,
-        default:'vi'
+        default:null
     },
     phone :{
         type:Number

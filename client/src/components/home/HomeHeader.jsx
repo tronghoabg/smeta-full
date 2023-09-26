@@ -36,8 +36,8 @@ function HomeHeader() {
 
   useEffect(() => {
     if (user) {
-      i18n.changeLanguage(user?.language);
-      setLng(user?.language)
+      i18n.changeLanguage(user?.userLanguage);
+      setLng(user?.userLanguage)
     }
   }, [user])
   const [loading, setLoading] = useState(false)
@@ -248,7 +248,7 @@ function HomeHeader() {
           )}
           <div onClick={() => { setDropvalue(!dropvalue) }} className="text-[#fff] flex items-center justify-center ml-8 relative group/item  p-2 cursor-pointer">
           <img className="rounded-full w-4 h-4 mr-2 mt-0.5" src={`./${lng}.png`} alt="" />
-            <p className="mr-3 text-base">{lng.toLocaleUpperCase()}</p>
+            <p className="mr-3 text-base">{lng?.toLocaleUpperCase()}</p>
             <IoIosArrowDown />
             <div className={`w-[180px] px-4 py-1 bg-[#fff] ${dropvalue ? "!opacity-100" : "!opacity-0"}  duration-300  !absolute top-[40px] -right-[18px] rounded-lg shadow-lg`}>
               {datalang.map(value => {
@@ -264,18 +264,18 @@ function HomeHeader() {
               })}
             </div>
           </div>
-          {/* <div className="language !ml-8" style={languageStyles.language}>
+          {/* <div className="language !ml-8" style={languageStyles.userLanguage}>
             <span
               className="cursor-pointer mr-1"
               onClick={() => changeLanguage("vi")}
-              style={lng === "vi" ? { ...languageStyles.active } : {}}
+              style={lng === "vi" ? { ...userLanguageStyles.active } : {}}
             >
               <img src="/vi.png" alt="VI" style={languageStyles.img} />
             </span>
             <span
               className="cursor-pointer"
               onClick={() => changeLanguage("en")}
-              style={lng === "en" ? { ...languageStyles.active } : {}}
+              style={lng === "en" ? { ...userLanguageStyles.active } : {}}
             >
               <img src="/en.png" alt="EN" style={languageStyles.img} />
             </span>
