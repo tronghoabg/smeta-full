@@ -13,6 +13,7 @@ import priceFormat from "../../config/priceFormat";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Payment from "../../pages/payment";
+import Newpaymentpackage from "../../pages/newpaymentpackage";
 
 function HomeHeader() {
   const nav = useNavigate();
@@ -118,11 +119,12 @@ function HomeHeader() {
         width={990}
         closable={false}
       >
-        <h1 className="text-2xl relative font-medium text-center p-2 text-yellow-400">
-          Update plan
-          <span onClick={handleCancel} className="!absolute right-[16px] cursor-pointer top-[16px] text-blue-500 text-sm px-2 py-1 rounded-md hover:scale-110 duration-300 font-normal bg-slate-200">Skip for now</span>
+        <h1 className="text-2xl relative font-medium text-center p-4 text-yellow-400">
+          {/* Update plan
+          <span onClick={handleCancel} className="!absolute right-[16px] cursor-pointer top-[16px] text-blue-500 text-sm px-2 py-1 rounded-md hover:scale-110 duration-300 font-normal bg-slate-200">Skip for now</span> */}
         </h1>
-        <ProductPackage cla="!gap-2" setError={setError} center_btn="flex w-full justify-center items-center" setOpen={setOpen} />
+        {/* <ProductPackage cla="!gap-2" setError={setError} center_btn="flex w-full justify-center items-center" setOpen={setOpen} /> */}
+        <Newpaymentpackage setError={setError} setOpen={setOpen}/>
       </Modal>
 
       <Modal

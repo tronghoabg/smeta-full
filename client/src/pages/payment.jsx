@@ -30,8 +30,8 @@ function Payment({ setError }) {
     //       price: 500000,
     //     },
     //   ],
-    cancelUrl: 'http://localhost:3000',
-    returnUrl: 'http://localhost:3000/paymentsuccess',
+    cancelUrl: 'https://havensavvy.com',
+    returnUrl: 'https://havensavvy.com/paymentsuccess',
     //   signature: '',
   });
 

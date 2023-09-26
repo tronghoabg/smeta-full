@@ -15,6 +15,7 @@ import ProductPackage from "./productPackage";
 import PaymentInfo from "./paymentInfo";
 import priceFormat from "../config/priceFormat";
 import { useTranslation } from "react-i18next";
+import Newpaymentpackage from "./newpaymentpackage";
 
 const Profile = ({ setdisable }) => {
     const counter = useSelector((state) => state.counter);
@@ -159,7 +160,8 @@ const Profile = ({ setdisable }) => {
                     </div>
                     <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">{t('Mua Gói')}</h1>
                     <div className=" h-fit mb-5 border !border-[#f0f0f0]">
-                        <ProductPackage setError={setError} setOpen={setOpen} />
+                        {/* <ProductPackage setError={setError} setOpen={setOpen} /> */}
+                        <Newpaymentpackage setError={setError} setOpen={setOpen}/>
                     </div>
                     <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">{t('Thông tin thanh toán')}</h1>
                     <div className=" h-[480px] mb-5 border !border-[#f0f0f0]  overflow-hidden overflow-y-auto p-0.5">
