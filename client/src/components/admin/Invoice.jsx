@@ -11,7 +11,6 @@ import Loading from "../Loading";
 import { Button } from "antd";
 import { TablePagination,} from "@mui/material";
 import './Invoice.css'
-import { AiOutlineSearch } from "react-icons/ai";
 function Invoice() {
     const counter = useSelector(
         (state) => state.counter
