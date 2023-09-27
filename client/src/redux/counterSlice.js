@@ -10,6 +10,7 @@ const counterSlice = createSlice({
     test: true,
     profileId: "",
     user: null,
+    darkmode: false,
     loading: false,
     payment: false,
     isSidebar:true,

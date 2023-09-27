@@ -50,7 +50,7 @@ const SidebarOpen = (props) => {
         textColor="primary"
         indicatorColor="primary"
         className={` ${isSidebar ? "": ""} ${isSidebar ? '' : ''
-          } pr-18 ${darkmode ? 'bg-[#1f2a40] !text-white' : 'bg-[#fff]'}`}
+          } pr-18 ${darkmode ? 'bg-[#1f2a40] !text-[#fff]' : 'bg-[#fff]'}`}
       >
         <Tab
           label={isSidebar ? "Dashboard" : ""}
@@ -58,7 +58,7 @@ const SidebarOpen = (props) => {
           icon={
             <HiOutlineHome
               className={`text-xl  ${isSidebar ? '' : '!m-0'
-                } ${darkmode ? '!text-white' : ''}`}
+                } ${darkmode ? '!text-[#fff]' : ''}`}
             />
           }
         />
@@ -69,7 +69,7 @@ const SidebarOpen = (props) => {
           icon={
             <LuUsers
               className={`text-xl  ${isSidebar ? '' : '!m-0'
-                } ${darkmode ? '!text-white' : ''}`}
+                } ${darkmode ? '!text-[#fff]' : ''}`}
             />
           }
         />
@@ -79,18 +79,18 @@ const SidebarOpen = (props) => {
           icon={
             <MdOutlineContacts
               className={`text-xl  ${isSidebar ? '' : '!m-0'
-                } ${darkmode ? '!text-white' : ''}`}
+                } ${darkmode ? '!text-[#fff]' : ''}`}
             />
           }
         />
         <Tab
           label={isSidebar ? "Invoices Balances" : ""}
-
+          // className={`${darkmode ? "!text-[#fff]" : ""}`}
           value="invoices"
           icon={
             <BsCardChecklist
               className={`text-xl  ${isSidebar ? '' : '!m-0'
-                } ${darkmode ? '!text-white' : ''}`}
+                } ${darkmode ? '!text-[#fff]' : ''}`}
             />
           }
         />
@@ -101,7 +101,7 @@ const SidebarOpen = (props) => {
           icon={
             <BiSolidColor
               className={`text-xl  ${isSidebar ? '' : '!m-0'
-                } ${darkmode ? '!text-white' : ''}`}
+                } ${darkmode ? '!text-[#fff]' : ''}`}
             />
           }
         />

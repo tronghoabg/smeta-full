@@ -49,7 +49,7 @@ function Package() {
     }
 
     const counter = useSelector((state) => state.counter);
-    let { dataToken, user } = counter
+    let { dataToken, user, darkmode } = counter
 
     const handleSaveDiscount = async () => {
         if (openEditDiscount.value) {
@@ -112,12 +112,11 @@ function Package() {
             setOpenEditPrice({ id: item._id, value: e.target.value })
         }
     }
-    console.log(datapackage);
     return (
         <div>
 
             <div>
-                <h1 className='text-xl  mb-[12px] mt-[40px]  font-medium'>Discount </h1>
+                <h1 className={`text-xl  mb-[12px] mt-[40px]  font-medium ${darkmode ? "text-[#fff]": ""}`}>Discount </h1>
                 <div className='w-[380px]'>
                     {datapackage[0]?.option.map(value => {
                         return (
@@ -152,7 +151,7 @@ function Package() {
                     datapackage.map((value, index) => {
                         return (
                             <div key={index} className='w-1/3'>
-                                <h1 className='text-xl  mb-[12px] mt-[40px]  font-medium'>{value.key}</h1>
+                                <h1 className={`text-xl  mb-[12px] mt-[40px]  font-medium ${darkmode ? "text-[#fff]": ""}`}>{value.key}</h1>
                                 <div className=' w-full '>
                                     {value.option.map(item => {
                                         return (
