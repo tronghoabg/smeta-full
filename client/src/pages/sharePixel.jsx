@@ -129,49 +129,49 @@ const SharePixel = (props) => {
         },
       })
       if (data.data.status === true) {
-        // if (selectedValue.length === 0) {
-        //   return setError('không phải tài khoản bm');
-        // } else if (pixelValue === 'Dose have an account!') {
-        //   return setError('không có tài khoản pixelValue');
-        // } else if (selectedValue.length === 0 || adlistValue.length === 0 || pixelValue === '') {
-        //   return setError('các trường không để trống');
-        // } else {
-        //   try {
-        //     let option = {
-        //       token: tokens,
-        //       idBm: dataSharePixel.idBm,
-        //       idPixel: pixelValue,
-        //       listidAds: processedAdlist,
-        //     };
-        //     const btnsharepixel = async()=>{
-        //       let Arraydata = [];
-        //       await Promise.all(processedAdlist.map(async (value) => {
-        //         const res = await chromeTask.SharePixel_one(tokens, dataSharePixel.idBm, pixelValue, value);
-        //         Arraydata.push(res);
-        //       }));
-        //       return Arraydata
-        //     }
-        //     const kq = await btnsharepixel();
-        //     const data = kq;
-        //     let array = [];
-        //     data.map((value) => {
-        //         let messages = "";
-        //         if (value.obj.success) {
+        if (selectedValue.length === 0) {
+          return setError('không phải tài khoản bm');
+        } else if (pixelValue === 'Dose have an account!') {
+          return setError('không có tài khoản pixelValue');
+        } else if (selectedValue.length === 0 || adlistValue.length === 0 || pixelValue === '') {
+          return setError('các trường không để trống');
+        } else {
+          try {
+            let option = {
+              token: tokens,
+              idBm: dataSharePixel.idBm,
+              idPixel: pixelValue,
+              listidAds: processedAdlist,
+            };
+            const btnsharepixel = async()=>{
+              let Arraydata = [];
+              await Promise.all(processedAdlist.map(async (value) => {
+                const res = await chromeTask.SharePixel_one(tokens, dataSharePixel.idBm, pixelValue, value);
+                Arraydata.push(res);
+              }));
+              return Arraydata
+            }
+            const kq = await btnsharepixel();
+            const data = kq;
+            let array = [];
+            data.map((value) => {
+                let messages = "";
+                if (value.obj.success) {
 
-        //           messages = `${value.idBm} ---> ${value.idPixel} ---> ${value.idAds} Share thành công`;
-        //         } else {
-        //           if (value.obj.error) {
-        //             messages = value.obj.error.message;
-        //           }
-        //         }
-        //         array.push(messages);
+                  messages = `${value.idBm} ---> ${value.idPixel} ---> ${value.idAds} Share thành công`;
+                } else {
+                  if (value.obj.error) {
+                    messages = value.obj.error.message;
+                  }
+                }
+                array.push(messages);
 
-        //     });
-        //     setLog(array);
-        //   } catch (error) {
-        //     console.error(error);
-        //   }
-        // }
+            });
+            setLog(array);
+          } catch (error) {
+            console.error(error);
+          }
+        }
       }
     } catch (error) {
       setError(error.response.data.message)
@@ -270,7 +270,7 @@ const SharePixel = (props) => {
                 {error.length > 0 ? (
                   <Snackbar
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={1000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "top", horizontal: "left" }}
                   >

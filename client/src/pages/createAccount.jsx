@@ -18,7 +18,7 @@ const CreateAccount = (props) => {
 
   const counter = useSelector((state) => state.counter);
   let { dataToken } = counter
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [bmSelected, setBmSelected] = useState(null);
@@ -78,16 +78,16 @@ const CreateAccount = (props) => {
     dispatch(setDataToken(newDatatoken));
     setOpen(true)
     try {
-      const data  = await instace.post('/buypackage/checkedaction', {
+      const data = await instace.post('/buypackage/checkedaction', {
         product_name: "Create Ad Account"
       }, {
         headers: {
           Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
-              }`,
-      },
+            }`,
+        },
       }
       )
-      if(data.data.status === true){
+      if (data.data.status === true) {
 
       }
       setLog([])
@@ -95,7 +95,7 @@ const CreateAccount = (props) => {
         alert("Vui lòng nhập đầy đủ thông tin");
         return;
       }
-  
+
       for (var i = 1; i <= qty; i++) {
         let create = await chromeTask.create_ad_account(
           bmSelected.id,
@@ -107,13 +107,13 @@ const CreateAccount = (props) => {
         const newLog = (log) => {
           return [...log, create]
         }
-  
+
         setLog(newLog)
         await fDelay(delay * 1000);
       }
-  } catch (error) {
-    setError(error.response.data.message)
-  }
+    } catch (error) {
+      setError(error.response.data.message)
+    }
   };
 
   return (
@@ -213,23 +213,23 @@ const CreateAccount = (props) => {
                 </Button>
               </div>
               {error.length > 0 ? (
-                  <Snackbar
-                    open={open}
-                    autoHideDuration={6000}
+                <Snackbar
+                  open={open}
+                  autoHideDuration={1000}
+                  onClose={handleClose}
+                  anchorOrigin={{ vertical: "top", horizontal: "left" }}
+                >
+                  <Alert
                     onClose={handleClose}
-                    anchorOrigin={{ vertical: "top", horizontal: "left" }}
+                    severity="error"
+                    sx={{ width: "100%" }}
                   >
-                    <Alert
-                      onClose={handleClose}
-                      severity="error"
-                      sx={{ width: "100%" }}
-                    >
-                      {error}
-                    </Alert>
-                  </Snackbar>
-                ) : (
-                  <p>{null}</p>
-                )}
+                    {error}
+                  </Alert>
+                </Snackbar>
+              ) : (
+                <p>{null}</p>
+              )}
             </div>
           </div>
           <div className="screen">

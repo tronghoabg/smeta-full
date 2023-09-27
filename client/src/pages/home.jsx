@@ -5,7 +5,7 @@ import InToLogin from "./intologin";
 import chromeTask from "../services/chrome";
 
 const Home = (props) => {
-  const [isInstall, setInstall] = useState(false);
+  const [isInstall, setInstall] = useState(true);
   const [isLoginFb, setIsLoginFb] = useState(true);
 
 

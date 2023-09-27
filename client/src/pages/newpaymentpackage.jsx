@@ -14,7 +14,7 @@ import { PiMedalFill } from "react-icons/pi";
 
 
 
-function Newpaymentpackage({ setError, setOpen, setdisable }) {
+function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
     useEffect(() => {
         if (setdisable) {
             setdisable(false)
@@ -52,12 +52,22 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
                     })
                     return newvalue
                 })
-                setdata(uniqueProducts)
+                let datasss = daoViTri(uniqueProducts)
+                setdata(datasss)
             })
     }, [])
 
 
+    function daoViTri(arr) {
+        if (arr.length >= 5) {  // Đảm bảo mảng có ít nhất 5 phần tử
+          [arr[2], arr[4]] = [arr[4], arr[2]]
+        }
+        return arr;
+      }
+
+
     const buypackage = async () => {
+        setError({ type: "error", error: "" })
         setOpen(true)
 
         if (valueOption?.length ==0) {
@@ -72,6 +82,9 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
                                 }`,
                         },
                     })
+                    if(handleCancel){
+                        handleCancel()
+                    }
                     setError({ type: "success", error: data.data.message })
                     dispatch(setUser(data.data.user))
                 } catch (error) {
@@ -237,7 +250,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable }) {
                             </div>
 
                             <div className='flex justify-between items-center w-full mb-3 text-base font-medium'>
-                                <p><span>Giảm giá thời hạn mua</span></p>
+                                <p><span>Giảm giá</span></p>
                                 <p className='font-normal'> - {priceFormat((curenttotal - totalbuy)/percent_number )}c</p>
                             </div>
                             <div className='w-full border-t border-dashed mt-4	!border-blue-600 h-[1px]'>

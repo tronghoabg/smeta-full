@@ -9,15 +9,21 @@ import Box from "@mui/material/Box";
 import Loading from "./Loading";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { setUser, setDataToken } from "../redux/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import instace from "../pages/customer_axios";
+import RefreshToken from "../pages/RefreshToken";
 
 const TableBusiness = (props) => {
+  const dispatch = useDispatch()
   const { listBm } = props;
   const { t } = useTranslation();
   const listAdclone = listBm ? listBm : [];
   const [dataAD, setDataAD] = useState([]);
   const [selectsort, setSelectsort] = useState({ key: "", count: 0 });
   const [loading, setloading] = useState(false);
-
+  const counter = useSelector((state) => state.counter);
+  let { dataToken, user } = counter
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     setloading(true);
@@ -282,21 +288,41 @@ const TableBusiness = (props) => {
     setmodalConfirm(false);
   };
 
-  const handleClosemodalConfirm_delete = () => {
-    if (deleteone) {
-      setmodalConfirm(false);
-      handleRemoveAdminAD(deleteone);
-    } else {
-      setmodalConfirm(false);
-      handleRemoveAdminADarray();
+  const handleClosemodalConfirm_delete = async () => {
+    setmessagestatus({ type: "success", mess: "" });
+    setOpen(true)
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken)); 
+    try {
+      const data = await instace.post('/buypackage/checkedaction', {
+        product_name: "remove admin hidden"
+      }, {
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+        },
+      })
+      if(data.data.status === true){
+        if (deleteone) {
+          setmodalConfirm(false);
+          handleRemoveAdminAD(deleteone);
+        } else {
+          setmodalConfirm(false);
+          handleRemoveAdminADarray();
+        }
+      }
+    } catch (error) {
+      setmessagestatus({ type: "error", mess: error.response.data.message });
+
     }
+   
   };
 
   return (
     <table>
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={1000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
       >
@@ -437,7 +463,6 @@ const TableBusiness = (props) => {
                 <td>{item.levelBm}</td>
                 <td>{item.limit}</td>
                 <td>
-                  {" "}
                   {
                     <i
                       className="fa-solid fa-circle-check"

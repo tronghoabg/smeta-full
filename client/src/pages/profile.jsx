@@ -81,7 +81,8 @@ const Profile = ({ setdisable }) => {
                         setError({ type: "success", error: data.data.message })
                         setOpenChange(false)
                     } catch (error) {
-                        setError(error.response.data)
+                        console.log(error.response.data.message);
+                        setError({ type: "error", error: error.response.data.message })
                     }
                 } else {
                     setError({ type: "error", error: "Mật khẩu không trùng khớp" })
@@ -97,11 +98,11 @@ const Profile = ({ setdisable }) => {
         <>
             <HomeHeader />
             <div className="w-full min-h-screen bg-[#fff] pt-[100px] flex justify-center items-center" >
-                {error.error?.length > 0 ? (
+                {error?.error?.length > 0 ? (
                     <Snackbar
                         className='!z-[999999]'
                         open={open}
-                        autoHideDuration={6000}
+                        autoHideDuration={1000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "left" }}
                     >
@@ -127,7 +128,7 @@ const Profile = ({ setdisable }) => {
                                     return (
                                         <div key={value.title} className="flex border-b border-b-[#c2c1c1] py-3">
                                             <div className="w-[200px] mr-[50px]">{t(value.title)}</div>
-                                            <div className="w-full text-[#212529BF]">{value.title === "Số dư" || value.title === "Số tiền đã xử dụng" ?`${ priceFormat(value.value / Number(percent_number))} C` : priceFormat(value.value)}</div>
+                                            <div className="w-full text-[#212529BF]">{value.title === "Số dư" || value.title === "Số tiền đã xử dụng" ? `${priceFormat(value.value / Number(percent_number))} C` : priceFormat(value.value)}</div>
                                         </div>
                                     )
                                 })}
@@ -161,7 +162,7 @@ const Profile = ({ setdisable }) => {
                     <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">{t('Mua Gói')}</h1>
                     <div className=" h-fit mb-5 border !border-[#f0f0f0]">
                         {/* <ProductPackage setError={setError} setOpen={setOpen} /> */}
-                        <Newpaymentpackage setError={setError} setOpen={setOpen}/>
+                        <Newpaymentpackage setError={setError} setOpen={setOpen} />
                     </div>
                     <h1 className="text-xl text-[#000] font-medium mt-[100px] mb-3">{t('Thông tin thanh toán')}</h1>
                     <div className=" h-[480px] mb-5 border !border-[#f0f0f0]  overflow-hidden overflow-y-auto p-0.5">

@@ -7,6 +7,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import ConfirmEmail from '../components/ConfirmEmail'
 import Loading from "../components/Loading"
+import instace from './customer_axios'
 
 function Verifypassword({ setdisable }) {
     useEffect(() => {
@@ -35,11 +36,12 @@ function Verifypassword({ setdisable }) {
     }
 
     const handleSendEmail = async () => {
+        setError("")
         setloading(true)
         setOpen(true)
         if (valueVerify.email && valueVerify.username) {
             try {
-                const data = await axios.post("http://localhost:5000/pass/sendcode", { email: valueVerify.email, username: valueVerify.username })
+                const data = await instace.post("/pass/sendcode", { email: valueVerify.email, username: valueVerify.username })
                 console.log(data);
                 if (data) {
                     setloading(false)
@@ -59,11 +61,11 @@ function Verifypassword({ setdisable }) {
         <div >
             {loading ? <Loading loadingoption=" !w-full mt-[120px] !h-screen" /> : null}
 
-            {error.length > 0 ? (
+            {error?.length > 0 ? (
                 <Snackbar
                     className='!z-[999999]'
                     open={open}
-                    autoHideDuration={6000}
+                    autoHideDuration={1000}
                     onClose={handleClose}
                     anchorOrigin={{ vertical: "top", horizontal: "left" }}
                 >

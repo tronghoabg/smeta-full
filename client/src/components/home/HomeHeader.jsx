@@ -149,7 +149,7 @@ function HomeHeader() {
           <span onClick={handleCancel} className="!absolute right-[16px] cursor-pointer top-[16px] text-blue-500 text-sm px-2 py-1 rounded-md hover:scale-110 duration-300 font-normal bg-slate-200">Skip for now</span> */}
         </h1>
         {/* <ProductPackage cla="!gap-2" setError={setError} center_btn="flex w-full justify-center items-center" setOpen={setOpen} /> */}
-        <Newpaymentpackage setError={setError} setOpen={setOpen} />
+        <Newpaymentpackage handleCancel={handleCancel} setError={setError} setOpen={setOpen} />
       </Modal>
 
       <Modal
@@ -168,7 +168,7 @@ function HomeHeader() {
         <Snackbar
           className="!z-[999999]"
           open={open}
-          autoHideDuration={6000}
+          autoHideDuration={1000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "left" }}
         >

@@ -79,7 +79,7 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
                     <Snackbar
                         className='!z-[999999]'
                         open={open}
-                        autoHideDuration={6000}
+                        autoHideDuration={1000}
                         onClose={handleClose}
                         anchorOrigin={{ vertical: "top", horizontal: "left" }}
                     >

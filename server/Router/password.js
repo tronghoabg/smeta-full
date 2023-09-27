@@ -6,4 +6,7 @@ const router = express.Router();
 router.post('/sendcode', passwordcode.sendAuthCode);
 router.post('/passwordretrieval', passwordcode.passwordretrieval);
 router.post('/changePassword',middleware.verifyToken, passwordcode.changePassword)
+router.post('/updatepassword', passwordcode.updatepassword);
+
+
 module.exports = router;

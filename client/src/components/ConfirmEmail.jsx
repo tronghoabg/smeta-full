@@ -9,17 +9,18 @@ function ConfirmEmail({ valueVerify, setOpen, setloading, setError }) {
     const [updatePassWord, setUpdatePassWord] = useState(false)
     const [newPassword, setNewPassword] = useState({ password: null, repassword: null })
     const [pass, setPass] = useState(null)
-
+    const nav = useNavigate()
 
     const handleChangeValue = (e) => {
         setCode(e.target.value)
     }
 
     const handleConfirm = async () => {
+        setError("")
         setloading(true)
         setOpen(true)
         try {
-            const data = await instace.post("/pass/passwordretrieval", { email: valueVerify.email, code: code })
+            const data = await instace.post("/pass/passwordretrieval", { username: valueVerify.username, code: code })
             if (data) {
                 setPass(data.data.pass)
                 setloading(false)
@@ -33,11 +34,14 @@ function ConfirmEmail({ valueVerify, setOpen, setloading, setError }) {
     }
 
     const handleRefCodeEmail = async () => {
+        setError("")
         setloading(true)
         setOpen(true)
         try {
             const data = await instace.post("/pass/sendcode", { email: valueVerify.email, username: valueVerify.username })
             if (data) {
+                const newdata = { ...newPassword, password: ""}
+                setNewPassword(newdata)
                 setloading(false)
             }
         } catch (error) {
@@ -46,7 +50,6 @@ function ConfirmEmail({ valueVerify, setOpen, setloading, setError }) {
         }
     }
 
-    const nav = useNavigate()
 
     const handleChangeValuePassword = (e, key) => {
         const newdata = { ...newPassword, [`${key}`]: e.target.value }

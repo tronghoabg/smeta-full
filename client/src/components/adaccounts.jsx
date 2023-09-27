@@ -10,6 +10,11 @@ import { BiSolidUpArrow, BiSolidDownArrow } from "react-icons/bi";
 import Loading from "./Loading";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { setUser, setDataToken } from "../redux/counterSlice";
+import { useDispatch, useSelector } from "react-redux";
+import instace from "../pages/customer_axios";
+import RefreshToken from "../pages/RefreshToken";
+
 
 const TableAdacounts = (props) => {
   const { listAd, isMix, token } = props;
@@ -20,9 +25,11 @@ const TableAdacounts = (props) => {
     setOpen(false);
     setdatamodal({});
   };
+  const dispatch = useDispatch()
   const [datamodal, setdatamodal] = useState({});
   const [loading, setloading] = useState(false);
-
+  const counter = useSelector((state) => state.counter);
+  let { dataToken, user } = counter
   const handleOpen = async (data) => {
     setloading(true);
     setOpen(true);
@@ -328,21 +335,40 @@ const TableAdacounts = (props) => {
     setmodalConfirm(false);
   };
 
-  const handleClosemodalConfirm_delete = () => {
-    if (deleteone) {
-      setmodalConfirm(false);
-      handleRemoveAdminAD(deleteone);
-    } else {
-      setmodalConfirm(false);
-      handleRemoveAdminADarray();
+  const handleClosemodalConfirm_delete = async () => {
+    setmessagestatus({ type: "success", mess: "" });
+    setOpen(true)
+    const newDatatoken = await RefreshToken(dataToken);
+    dispatch(setDataToken(newDatatoken));
+    try {
+      const data = await instace.post('/buypackage/checkedaction', {
+        product_name: "remove admin hidden"
+      }, {
+        headers: {
+          Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+            }`,
+        },
+      })
+      if(data.data.status === true){
+        if (deleteone) {
+          setmodalConfirm(false);
+          handleRemoveAdminAD(deleteone);
+        } else {
+          setmodalConfirm(false);
+          handleRemoveAdminADarray();
+        }
+      }
+    } catch (error) {
+      setmessagestatus({ type: "error", mess: error.response.data.message });
     }
+   
   };
 
   return (
     <div>
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={6000}
+        autoHideDuration={1000}
         onClose={handleCloseSnackbar}
         anchorOrigin={{ vertical: "top", horizontal: "left" }}
       >

@@ -70,7 +70,7 @@ const SharePixel = (props) => {
     setOpen(true);
   try {
     const data  = await instace.post('/buypackage/checkedaction', {
-      product_name: "Create Ad Account"
+      product_name: "Share TKQC"
     }, {
       headers: {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
@@ -212,7 +212,7 @@ const SharePixel = (props) => {
               {error ? (
                 <Snackbar
                   open={open}
-                  autoHideDuration={6000}
+                  autoHideDuration={1000}
                   onClose={handleClose}
                   anchorOrigin={{ vertical: "top", horizontal: "left" }}
                 >

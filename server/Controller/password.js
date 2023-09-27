@@ -10,8 +10,9 @@ function generateAuthCode() {
 async function sendAuthCode(req, res) {
   const { email } = req.body;
   const code = generateAuthCode();
-  const usercode = await user.updateOne({email:req.body.email},{code:code})
+  const usercode = await user.updateOne({username:req.body.username},{code:code})
   const usernamecode = await user.findOne({username:req.body.username})
+
 
   if(usercode.modifiedCount=== 1 && usernamecode){
     const transporter = nodemailer.createTransport({
@@ -43,16 +44,17 @@ async function sendAuthCode(req, res) {
 }
 
 async function passwordretrieval(req, res) {
-    const { email, code } = req.body;
+    const { username, code } = req.body;
     try {
-      const users = await user.findOne({ email:req.body.email, code: req.body.code }); 
+      const users = await user.findOne({ username:username, code: req.body.code }); 
       if (!users) {
         return res.status(404).json({ error: 'Mã xác thực không chính xác' });
       }
-      const data = await user.updateOne({email:req.body.email},{code:null})
-      const bta = await user.findOne({email:req.body.email})
+      const data = await user.updateOne({username:username},{code:null})
+      const bta = await user.findOne({username:username})
       const pass = bta.password
       // const passwordMatch = await bcrypt.compare(password,pass);
+      console.log(pass);
       res.status(200).json({ message: 'Thành công',pass });
     } catch (error) {
       console.error(error);
@@ -90,7 +92,44 @@ async function passwordretrieval(req, res) {
       console.error(error);
       return res.status(500).json({ message: 'Lỗi máy chủ' });
     }
+
+
+    
+    updatepassword
+  }
+
+  async function updatepassword(req, res) {
+    try {
+      const { username, pass, newpassword } = req.body;
+      const userToUpdate = await user.findOne({ username: username, password:pass });
+      console.log(userToUpdate, "userToUpdate");
+      if (!userToUpdate) {
+        return res.status(404).json({ message: 'Không tìm thấy người dùng' });
+      }
+
+      // if(passwords !== password_change){
+      //   return res.status(401).json({ message: 'Mật khẩu không trùng khớp' });
+      // }else{
+       
+      // }
+      const saltRounds = 10;
+      const newPasswordHash = await bcrypt.hash(newpassword, saltRounds);
+  
+      await user.findOneAndUpdate(
+        { username: username },
+        { password: newPasswordHash }
+      );
+  
+      return res.status(200).json({ message: 'Cập nhật mật khẩu thành công' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Lỗi máy chủ' });
+    }
+
+
+    
+    
   }
   
   
-module.exports = { sendAuthCode ,passwordretrieval,changePassword};
+module.exports = { sendAuthCode ,passwordretrieval,changePassword, updatepassword};
