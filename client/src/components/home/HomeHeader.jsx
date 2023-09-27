@@ -18,6 +18,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import Loading from "../Loading"
 
 function HomeHeader() {
+  let token = Cookies.get("datatoken");
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
   let { dataToken, user, payFocus, buyaction } = counter;
@@ -29,6 +30,30 @@ function HomeHeader() {
   const { t } = useTranslation();
 
   useEffect(() => {
+    const fetch = async () => {
+      try {
+        if (token) {
+          const newDatatoken = await RefreshToken(dataToken);
+          dispatch(setDataToken(newDatatoken));
+
+          const datauser = await instace.get("/auth/profile", {
+            headers: {
+              Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
+                }`,
+            },
+          });
+          dispatch(setUser(datauser.data));
+        } else {
+          dispatch(setUser(null));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
     if (buyaction) {
       setIsModalOpen(true)
     }
@@ -36,26 +61,32 @@ function HomeHeader() {
 
   useEffect(() => {
     if (user) {
-      i18n.changeLanguage(user?.language);
-      setLng(user?.language)
+      i18n.changeLanguage(user?.userLanguage);
+      setLng(user?.userLanguage)
     }
   }, [user])
+
   const [loading, setLoading] = useState(false)
 
   const changeLanguage = async (lng) => {
     setLoading(true)
-    if(dataToken){
+    if (dataToken) {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
       const headers = {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
       };
       const data = await instace.patch("/auth/updatelang", { language: lng }, { headers });
+      setLoading(false)
+      i18n.changeLanguage(lng);
+      setLng(lng);
+    } else {
+      setLoading(false)
+      i18n.changeLanguage(lng);
+      setLng(lng);
     }
-    
-    setLoading(false)
-    i18n.changeLanguage(lng);
-    setLng(lng);
+
+
   };
   const handleRedirectregister = () => {
     nav("/register");
@@ -63,8 +94,9 @@ function HomeHeader() {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    Cookies.remove("datatoken");
-    nav('/')
+    // Cookies.remove("datatoken");
+    // dispatch(setUser(null));
+    // dispatch(setDataToken(null));
     try {
       const newDatatoken = await RefreshToken(dataToken);
       dispatch(setDataToken(newDatatoken));
@@ -76,9 +108,15 @@ function HomeHeader() {
         Cookies.remove("datatoken");
         dispatch(setUser(null));
         dispatch(setDataToken(null));
+        window.location.href = "/";
+
       }
       // Rest of your code
     } catch (error) {
+      Cookies.remove("datatoken");
+      dispatch(setUser(null));
+      dispatch(setDataToken(null));
+      window.location.href = "/";
       console.log(error);
     }
   };
@@ -125,7 +163,6 @@ function HomeHeader() {
     }
     setOpen(false);
   };
-
   const datalang = [
     { value: "vi", name: "Tiếng viêt", img: "./vi.png" },
     { value: "en", name: "English", img: "./en.png" },
@@ -133,7 +170,7 @@ function HomeHeader() {
 
   const [dropvalue, setDropvalue] = useState(false)
   return (
-    <div className="w-full fixed z-[9999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
+    <div className="w-full fixed z-[999999] bg-[#004a99f5] flex justify-center items-center py-1 px-4">
       {loading ? <Loading /> : null}
       <Modal
         open={isModalOpen}
@@ -166,7 +203,7 @@ function HomeHeader() {
       </Modal>
       {error.error?.length > 0 ? (
         <Snackbar
-          className="!z-[999999]"
+          className="!z-[9999999]"
           open={open}
           autoHideDuration={1000}
           onClose={handleClose}
@@ -247,8 +284,8 @@ function HomeHeader() {
             </div>
           )}
           <div onClick={() => { setDropvalue(!dropvalue) }} className="text-[#fff] flex items-center justify-center ml-8 relative group/item  p-2 cursor-pointer">
-          <img className="rounded-full w-4 h-4 mr-2 mt-0.5" src={`./${lng}.png`} alt="" />
-            <p className="mr-3 text-base">{lng.toLocaleUpperCase()}</p>
+            <img className="rounded-full w-4 h-4 mr-2 mt-0.5" src={`./${lng}.png`} alt="" />
+            <p className="mr-3 text-base">{lng?.toLocaleUpperCase()}</p>
             <IoIosArrowDown />
             <div className={`w-[180px] px-4 py-1 bg-[#fff] ${dropvalue ? "!opacity-100" : "!opacity-0"}  duration-300  !absolute top-[40px] -right-[18px] rounded-lg shadow-lg`}>
               {datalang.map(value => {
@@ -264,18 +301,18 @@ function HomeHeader() {
               })}
             </div>
           </div>
-          {/* <div className="language !ml-8" style={languageStyles.language}>
+          {/* <div className="language !ml-8" style={languageStyles.userLanguage}>
             <span
               className="cursor-pointer mr-1"
               onClick={() => changeLanguage("vi")}
-              style={lng === "vi" ? { ...languageStyles.active } : {}}
+              style={lng === "vi" ? { ...userLanguageStyles.active } : {}}
             >
               <img src="/vi.png" alt="VI" style={languageStyles.img} />
             </span>
             <span
               className="cursor-pointer"
               onClick={() => changeLanguage("en")}
-              style={lng === "en" ? { ...languageStyles.active } : {}}
+              style={lng === "en" ? { ...userLanguageStyles.active } : {}}
             >
               <img src="/en.png" alt="EN" style={languageStyles.img} />
             </span>

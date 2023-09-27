@@ -54,6 +54,7 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
 
     const handlelogin = async () => {
         setOpen(true)
+        setError('')
         if(valueLogin.password && valueLogin.username){
             try {
                 const data = await instace.post('/auth/login', valueLogin)
@@ -77,7 +78,7 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
             <div className='w-full h-screen bg-[#fff] flex justify-center items-center pt-[120px]'>
                 {error?.length > 0 ? (
                     <Snackbar
-                        className='!z-[999999]'
+                        className='!z-[9999999]'
                         open={open}
                         autoHideDuration={1000}
                         onClose={handleClose}
@@ -120,36 +121,6 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
                 </div>
             </div>
             <HomeFooter />
-            {/* <div className="tool-bar">
-                <div className='icon'><i class="fa-solid fa-circle-user"></i></div>
-                <div className='link-text'>{t('login')}</div>
-            </div>
-            <div className="tab-content">
-                <div className='login'>
-                    <div className="title">{t('login')}</div>
-                    <div className="text"> {t('account')}</div>
-                    <input type="text" placeholder="ID" value={email} onChange={(event) => setEmail(event.target.value)} />
-                    <div className="text"> {t('password')}</div>
-                    <div className='input-password'>
-                        <input type={isShowPassword === true ? "text" : "password"} placeholder={t('password')} value={password} onChange={(event) => setPassword(event.target.value)} />
-                        <i className={isShowPassword === true ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"}
-                            onClick={() => setShowPassword(!isShowPassword)}
-                        ></i>
-                    </div>
-                    <div className='link'>
-                        <NavLink to='/register'>{t('register')}</NavLink>
-                    </div>
-
-                    <button
-                        className={email && password ? 'active' : ''}
-                        disabled={email && password ? false : true}
-                        onClick={() => handleLogin()}
-                    >
-                        {loadingApi === true ? <i className="fas fa-spinner fa-spin"></i> : ''}
-                        &nbsp;{t('login')}
-                    </button>
-                </div>
-            </div> */}
         </>
     )
 }

@@ -86,40 +86,11 @@ const SharePixel = (props) => {
 
 
   const handleSharePixel = async () => {
-    const newDatatoken = await RefreshToken(dataToken);
-    dispatch(setDataToken(newDatatoken));
-    // setOpen(true);
-    // if (selectedValue.length === 0) {
-    //   return setError('không phải tài khoản bm');
-    // } else if (pixelValue === 'Dose have an account!') {
-    //   return setError('không có tài khoản pixelValue');
-    // } else if (selectedValue.length === 0 || adlistValue.length === 0 || pixelValue === '') {
-    //   return setError('các trường không để trống');
-    // } else {
-    //   try {
-    //     let option = {
-    //       token: tokens,
-    //       idBm: dataSharePixel.idBm,
-    //       idPixel: pixelValue,
-    //       listidAds: processedAdlist,
-    //     };
-    //     const btnsharepixel = async()=>{
-    //       let Arraydata = [];
-    //       await Promise.all(processedAdlist.map(async (value) => {
-    //         const res = await chromeTask.SharePixel_one(tokens, dataSharePixel.idBm, pixelValue, value);
-    //         Arraydata.push(res);
-    //       }));
-    //       return Arraydata
-    //     }
-    //     const kq = await btnsharepixel();
-    //     const data = kq;
-    //     let array = [];
-    //     data.map((value) => {
-    //         let messages = "";
-    //         if (value.obj.success) {
+    setError('')
     setOpen(true);
-
     try {
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
       const data = await instace.post('/buypackage/checkedaction', {
         product_name: "share pixel"
       }, {

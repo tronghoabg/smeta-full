@@ -35,6 +35,7 @@ function App() {
 
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -51,12 +52,14 @@ function App() {
           });
           dispatch(setUser(datauser.data));
         } else {
-          const datauser = await instace.get("/auth/profile", {
-            headers: {
-              Authorization: `Bearer ${checked ? checked.accessToken : ""}`,
-            },
-          });
-          dispatch(setUser(datauser.data));
+          // const datauser = await instace.get("/auth/profile", {
+          //   headers: {
+          //     Authorization: `Bearer ${checked ? checked.accessToken : ""}`,
+          //   },
+          // });
+          // dispatch(setUser(datauser.data));
+          dispatch(setUser(null));
+
         }
       } catch (error) {
         console.log(error);

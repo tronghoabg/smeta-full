@@ -36,12 +36,11 @@ const userSchema = mongoose.Schema({
         type:String,
         default:null
     },
-    language:{
+    userLanguage:{
         type:String,
-        default:'vi'
     },
     phone :{
-        type:Number
+        type:String
     },
     totleMoney:{
         type:Number,

@@ -74,6 +74,11 @@ const CreateAccount = (props) => {
     setOpen(false);
   };
   const handlerCreate = async () => {
+    setLog([])
+    if (!bmSelected || !accountName || !qty) {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
     setOpen(true)
@@ -87,29 +92,22 @@ const CreateAccount = (props) => {
         },
       }
       )
-      if (data.data.status === true) {
-
-      }
-      setLog([])
-      if (!bmSelected || !accountName || !qty) {
-        alert("Vui lòng nhập đầy đủ thông tin");
-        return;
-      }
-
-      for (var i = 1; i <= qty; i++) {
-        let create = await chromeTask.create_ad_account(
-          bmSelected.id,
-          `${accountName}_${i}`,
-          bmSelected.currency,
-          bmSelected.timezone
-        )
-        create = `${i}: ${create}`
-        const newLog = (log) => {
-          return [...log, create]
+      if(data.data.status === true){
+        for (var i = 1; i <= qty; i++) {
+          let create = await chromeTask.create_ad_account(
+            bmSelected.id,
+            `${accountName}_${i}`,
+            bmSelected.currency,
+            bmSelected.timezone
+          )
+          create = `${i}: ${create}`
+          const newLog = (log) => {
+            return [...log, create]
+          }
+    
+          setLog(newLog)
+          await fDelay(delay * 1000);
         }
-
-        setLog(newLog)
-        await fDelay(delay * 1000);
       }
     } catch (error) {
       setError(error.response.data.message)

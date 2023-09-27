@@ -6,7 +6,7 @@ async function RefreshToken(dataToken) {
   try {
     const decode = jwt_decode(dataToken.accessToken);
     const day = new Date();
-    if (decode.exp < day.getTime() / 1000) {
+    if (decode.exp < (day.getTime() / 1000)) {
       const response = await instace.post("/auth/refresh", {
         refreshToken: dataToken.refreshToken,
       });

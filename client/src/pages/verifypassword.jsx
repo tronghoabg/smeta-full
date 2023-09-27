@@ -63,7 +63,7 @@ function Verifypassword({ setdisable }) {
 
             {error?.length > 0 ? (
                 <Snackbar
-                    className='!z-[999999]'
+                    className='!z-[9999999]'
                     open={open}
                     autoHideDuration={1000}
                     onClose={handleClose}

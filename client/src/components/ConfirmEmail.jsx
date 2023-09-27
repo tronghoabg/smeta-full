@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 // import axios from 'axios'
-import { message } from 'antd'
 import instace from '../pages/customer_axios'
 import { useNavigate } from 'react-router-dom'
 
 function ConfirmEmail({ valueVerify, setOpen, setloading, setError }) {
     const [code, setCode] = useState("")
     const [updatePassWord, setUpdatePassWord] = useState(false)
-    const [newPassword, setNewPassword] = useState({ password: null, repassword: null })
+    const [newPassword, setNewPassword] = useState({ password: "", repassword: "" })
     const [pass, setPass] = useState(null)
     const nav = useNavigate()
 
@@ -25,11 +24,11 @@ function ConfirmEmail({ valueVerify, setOpen, setloading, setError }) {
                 setPass(data.data.pass)
                 setloading(false)
                 setUpdatePassWord(true)
-                setError("thanh cong")
+                // setError("thanh cong")
             }
         } catch (error) {
-            setloading(false)
             setError(error.response.data.error)
+            setloading(false)
         }
     }
 

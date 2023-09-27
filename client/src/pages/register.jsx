@@ -54,7 +54,7 @@ const Login = ({ setdisable }) => {
 
     const handleRegister = async () => {
         setOpen(true)
-
+        setError('')
         if(valueRegister.re_password !== valueRegister.password){
             return setError("Mật khẩu chưa khớp")
         }
@@ -121,7 +121,7 @@ const Login = ({ setdisable }) => {
             <div className='w-full h-fit pb-[100px] bg-[#fff] flex justify-center items-center pt-[120px]'>
                 {error.length > 0 ? (
                     <Snackbar
-                        className='!z-[999999]'
+                        className='!z-[9999999]'
                         open={open}
                         autoHideDuration={1000}
                         onClose={handleClose}

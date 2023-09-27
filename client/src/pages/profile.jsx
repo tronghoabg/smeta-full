@@ -65,6 +65,7 @@ const Profile = ({ setdisable }) => {
     }
     const dispatch = useDispatch()
     const handleChangePassword = async () => {
+        setError({ type: "success", error:"" })
         setOpen(true)
         if (dataPass.newPass && dataPass.oldpass && dataPass.renewPass) {
             if (validatePass(dataPass.newPass)) {
@@ -100,7 +101,7 @@ const Profile = ({ setdisable }) => {
             <div className="w-full min-h-screen bg-[#fff] pt-[100px] flex justify-center items-center" >
                 {error?.error?.length > 0 ? (
                     <Snackbar
-                        className='!z-[999999]'
+                        className='!z-[9999999]'
                         open={open}
                         autoHideDuration={1000}
                         onClose={handleClose}

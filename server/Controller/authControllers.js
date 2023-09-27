@@ -24,12 +24,13 @@ const authController = {
           password: password,
           email: req.body.email,
           phone: req.body.phone,
-          language: req.body.language,
+          userLanguage: req.body.language,
         });
         const userdata = await userModal.find();
         // io.emit('userRegistered', { message: 'Người dùng mới đã đăng ký', userData: userdata });
         res.status(200).json({ message: "Đăng ký thành công", userdata });
       } catch (error) {
+        console.log(error)
         res.status(500).json({ message: "Đăng ký error", error });
       }
     },
@@ -39,7 +40,7 @@ const authController = {
       username,
       email,
       role,
-      language,
+      userLanguage,
       phone,
       totleMoney,
       createAt,
@@ -52,7 +53,7 @@ const authController = {
         username,
         email,
         role,
-        language,
+        userLanguage,
         phone,
         totleMoney,
         createAt,
@@ -68,7 +69,7 @@ const authController = {
         username,
         email,
         role,
-        language,
+        userLanguage,
         phone,
         totleMoney,
         createAt,
@@ -100,7 +101,7 @@ const authController = {
         email: user.email,
         role: user.role,
         phone: user.phone,
-        language: user.language,
+        userLanguage: user.userLanguage,
         totleMoney: user.totleMoney,
         createAt: user.createAt,
         action: user.action,
@@ -134,14 +135,14 @@ const authController = {
         email: user.email,
         role: user.role,
         phone: user.phone,
-        language: user.language,
+        userLanguage: user.userLanguage,
         totleMoney: user.totleMoney,
         createAt: user.createAt,
         action: user.action,
         usedMonney: user.usedMonney,
       });
       const user_refreshToken = await userModal.updateOne(
-        { username: user.username },
+        { username: user?.username },
         { refreshToken: token.refreshToken }
       );
       res.status(200).json(token);
@@ -170,9 +171,10 @@ const authController = {
   },
   updateLanguage: async (req, res) =>{
     try {
+      console.log(req.body.language);
       const data = await userModal.updateOne( 
         { username: req.user.username },
-        { language: req.body.language})
+        { userLanguage: req.body.language})
         return res.status(200).json({ message: " thành công" });
           
     } catch (error) {
