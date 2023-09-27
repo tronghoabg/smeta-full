@@ -143,7 +143,7 @@ const buypackageControllers = {
             date: new Date(),
           });
           let data = await acctionModal.find().sort({ _id: -1 })
-          res.io.emit("action_socket", {data:data, key: "action_socket"});
+          // res.io.emit("action_socket", {data:data, key: "action_socket"});
 
           return res
             .status(200)
@@ -176,7 +176,7 @@ const buypackageControllers = {
             language: req.user.language,
             date: new Date(),
           });
-          res.io.emit("action_socket", {data:userdata, key: "action_socket"});
+          // res.io.emit("action_socket", {data:userdata, key: "action_socket"});
           res
             .status(200)
             .json({ status: true, data: checked, data_action: data_action });
@@ -203,11 +203,12 @@ const buypackageControllers = {
           status: false,
         });
       }
+      return
     } catch (error) {
-      console.error(error);
+      console.log(error);
       return res.status(500).json({ message: "Lỗi máy chủ nội bộ" });
     }
   },
 };
 
-module.exports = buypackageControllers;
+module.exports = buypackageControllers; 
