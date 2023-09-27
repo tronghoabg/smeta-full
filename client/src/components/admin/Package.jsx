@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import RefreshToken from "../../pages/RefreshToken";
 
 function Package() {
+    const counter = useSelector((state) => state.counter);
+    let { dataToken, user, darkmode } = counter
     const dispatch = useDispatch()
     const [datapackage, setdatapackage] = useState([]);
     const [openEditDiscount, setOpenEditDiscount] = useState({ key: "", value: "" })
     const [openEditPrice, setOpenEditPrice] = useState({ id: "", value: "" })
-
     const [refe, setrefe] = useState(true)
 
     useEffect(() => {
@@ -40,16 +41,12 @@ function Package() {
             })
     }, [refe])
 
-
     function daoViTri(arr) {
         if (arr.length >= 5) {  // Đảm bảo mảng có ít nhất 5 phần tử
             [arr[2], arr[4]] = [arr[4], arr[2]]
         }
         return arr;
     }
-
-    const counter = useSelector((state) => state.counter);
-    let { dataToken, user, darkmode } = counter
 
     const handleSaveDiscount = async () => {
         if (openEditDiscount.value) {
@@ -76,6 +73,7 @@ function Package() {
         }
 
     }
+
     const handleChangeDis = (e, value) => {
         if (e.target.value >= 0) {
             setOpenEditDiscount({ key: value.product_timezone, value: e.target.value })
@@ -116,7 +114,7 @@ function Package() {
         <div>
 
             <div>
-                <h1 className={`text-xl  mb-[12px] mt-[40px]  font-medium ${darkmode ? "text-[#fff]": ""}`}>Discount </h1>
+                <h1 className={`text-xl  mb-[12px] mt-[40px]  font-medium ${darkmode ? "text-[#fff]" : ""}`}>Discount </h1>
                 <div className='w-[380px]'>
                     {datapackage[0]?.option.map(value => {
                         return (
@@ -151,7 +149,7 @@ function Package() {
                     datapackage.map((value, index) => {
                         return (
                             <div key={index} className='w-1/3'>
-                                <h1 className={`text-xl  mb-[12px] mt-[40px]  font-medium ${darkmode ? "text-[#fff]": ""}`}>{value.key}</h1>
+                                <h1 className={`text-xl  mb-[12px] mt-[40px]  font-medium ${darkmode ? "text-[#fff]" : ""}`}>{value.key}</h1>
                                 <div className=' w-full '>
                                     {value.option.map(item => {
                                         return (

@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import CryptoJS from 'crypto-js';
 import getOrdercode from '../config/getOrdercode';
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import instace from './customer_axios';
 import { useTranslation } from "react-i18next";
+import priceFormat from "../config/priceFormat"
+import { BsArrowLeftRight } from "react-icons/bs";
 
 
 function Payment({ setError }) {
@@ -17,7 +18,7 @@ function Payment({ setError }) {
   const checksumKey = '1fdf589537cd65762241d2163a631d7f8f8ad6ad54bd01ad24f0d05122d53fe7';
   const [orderInfo, setOrderInfo] = useState({
     orderCode: 8,
-    amount: null,
+    amount: "",
     description: 'Payment for order #1231231',
     //   buyerName: 'Nguyen Van A',
     //   buyerEmail: 'buyer-email@gmail.com',
@@ -93,23 +94,28 @@ function Payment({ setError }) {
     { name: "500,000 đ", value: 500000 },
   ]
 
-  const percent_number = process.env.PERCENT_NUMBER || 1
+  const percent_number = process.env.PERCENT_NUMBER || 1000
   return (
     <div className='p-4'>
       <p>{t('Nhập số tiền:')}</p>
-      <input type="number" placeholder={t('Số tiền')} className='py-2 w-[200px] text-xl mb-6' value={orderInfo.amount}
+     <div className='flex items-center mb-6'>
+     <input type="number" placeholder={t('Số tiền')} className='py-2 w-[200px] text-xl ' 
+      value={orderInfo.amount}
         onChange={(e) => {
           if (e.target.value >= 0) {
             setOrderInfo({ ...orderInfo, amount: e.target.value * 1 })
           }
         }} />
+      <BsArrowLeftRight className='ml-[40px] text-xl'/>
+        <div className='ml-[40px] text-xl font-medium'>{priceFormat(orderInfo.amount/percent_number)} c</div>
 
+     </div>
       <div className='grid grid-cols-5 w-full gap-4'>
         {dataCard.map((value,index) => {
           return (
             <div key={index} onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount == value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
-              <p className=' px-4 pb-2  pt-4'> {value.value / Number(percent_number)} C</p>
+              <p className=' px-4 pb-2  pt-4'> {priceFormat(value.value / Number(percent_number))} C</p>
             </div>
           )
         })}
