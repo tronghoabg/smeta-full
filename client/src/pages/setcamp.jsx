@@ -586,6 +586,7 @@ const SetCamp = (props) => {
   };
 
   const HandleUploadCamp = async () => {
+    setError('')
     const newDatatoken = await RefreshToken(dataToken);
     setOpen(true);
     dispatch(setDataToken(newDatatoken));
@@ -628,9 +629,6 @@ const SetCamp = (props) => {
   } catch (error) {
     setError(error.response.data.message)
   }
-  
-
-    // const data = await chromeTask.HandleSetCamp(clonedata);
   };
 
   const validationUpload = (data) => {
