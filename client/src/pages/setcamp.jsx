@@ -705,7 +705,7 @@ const SetCamp = (props) => {
       {error.length > 0 ? (
         <Snackbar
           open={open}
-          autoHideDuration={6000}
+          autoHideDuration={2000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "top", horizontal: "left" }}
         >

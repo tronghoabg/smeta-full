@@ -54,7 +54,7 @@ const Login = ({ setdisable }) => {
 
     const handleRegister = async () => {
         setOpen(true)
-
+        setError('')
         if(valueRegister.re_password !== valueRegister.password){
             return setError("Mật khẩu chưa khớp")
         }
