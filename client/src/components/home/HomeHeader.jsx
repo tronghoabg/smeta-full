@@ -17,7 +17,7 @@ import Newpaymentpackage from "../../pages/newpaymentpackage";
 import { IoIosArrowDown } from "react-icons/io";
 import Loading from "../Loading"
 
-function HomeHeader() {
+function HomeHeader({classfull}) {
   let token = Cookies.get("datatoken");
   const nav = useNavigate();
   const counter = useSelector((state) => state.counter);
@@ -220,7 +220,7 @@ function HomeHeader() {
       ) : (
         <p>{null}</p>
       )}
-      <div className="w-[1280px]  flex justify-between items-center">
+      <div className={`w-[1280px] duration-300  ${classfull} flex justify-between items-center`}>
         <div className="flex justify-center items-center">
           <img
             src="/logo.png"

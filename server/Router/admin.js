@@ -13,6 +13,8 @@ router.get('/getuserbuyid/:profileId',middleware.verifyTokenAndAdmin, adminContr
 router.get('/searchAction', middleware.verifyTokenAndAdmin,adminController.searchAction);
 router.get('/searchPayment', middleware.verifyTokenAndAdmin,adminController.searchPayment);
 router.patch('/updateoneuser/:id', middleware.verifyTokenAndAdmin,adminController.updateoneuser);
+router.post('/updatediscount', middleware.verifyTokenAndAdmin,adminController.updatediscount);
+router.post('/updatePrice', middleware.verifyTokenAndAdmin,adminController.updatePrice);
 
 // router.get('/serachuser',middleware.verifyTokenAndAdmin, adminController.serachuser);
 module.exports = router;

@@ -4,36 +4,36 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const authController = {
-    registerUser: async (req, res) => {
-      try {
-        const checkemail = await userModal.find({ email: req.body.email });
-        if (checkemail.length !== 0) {
-          return res.status(401).json({ message: "Email đã tồn tại" });
-        }
-
-        const checkusername = await userModal.find({
-          username: req.body.username,
-        });
-        if (checkusername.length !== 0) {
-          return res.status(401).json({ message: "Tên người dùng đã tồn tại" });
-        }
-        const salt = await bcrypt.genSalt(10);
-        const password = await bcrypt.hash(req.body.password, salt);
-        let newUser = await userModal.create({
-          username: req.body.username,
-          password: password,
-          email: req.body.email,
-          phone: req.body.phone,
-          userLanguage: req.body.language,
-        });
-        const userdata = await userModal.find();
-        // io.emit('userRegistered', { message: 'Người dùng mới đã đăng ký', userData: userdata });
-        res.status(200).json({ message: "Đăng ký thành công", userdata });
-      } catch (error) {
-        console.log(error)
-        res.status(500).json({ message: "Đăng ký error", error });
+  registerUser: async (req, res) => {
+    try {
+      const checkemail = await userModal.find({ email: req.body.email });
+      if (checkemail.length !== 0) {
+        return res.status(401).json({ message: "Email đã tồn tại" });
       }
-    },
+
+      const checkusername = await userModal.find({
+        username: req.body.username,
+      });
+      if (checkusername.length !== 0) {
+        return res.status(401).json({ message: "Tên người dùng đã tồn tại" });
+      }
+      const salt = await bcrypt.genSalt(10);
+      const password = await bcrypt.hash(req.body.password, salt);
+      let newUser = await userModal.create({
+        username: req.body.username,
+        password: password,
+        email: req.body.email,
+        phone: req.body.phone,
+        userLanguage: req.body.language,
+      });
+      const userdata = await userModal.find();
+      // io.emit('userRegistered', { message: 'Người dùng mới đã đăng ký', userData: userdata });
+      res.status(200).json({ message: "Đăng ký thành công", userdata });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Đăng ký error", error });
+    }
+  },
   generateToken: (payload) => {
     const {
       userId,
@@ -84,7 +84,10 @@ const authController = {
   loginUser: async (req, res) => {
     try {
       const { username, password } = req.body;
-      const user = await userModal.findOne({ username });
+      const user = await userModal.findOne(
+        username.includes("@") ? { email: username } : { username }
+      );
+
       if (!user) {
         return res
           .status(401)
@@ -167,19 +170,35 @@ const authController = {
     }
   },
   test_verifyToken: async (req, res) => {
-    res.status(200).json(req.user);
+    const user = await userModal.findOne({ username: req.user.username });
+    res.status(200).json(user);
   },
-  updateLanguage: async (req, res) =>{
+  updateLanguage: async (req, res) => {
     try {
-      console.log(req.body.language);
-      const data = await userModal.updateOne( 
+      const data = await userModal.updateOne(
         { username: req.user.username },
-        { userLanguage: req.body.language})
-        return res.status(200).json({ message: " thành công" });
-          
+        { userLanguage: req.body.language }
+      );
+      return res.status(200).json({ message: " thành công" });
     } catch (error) {
       res.status(500).json({ message: "Lỗi ", error });
     }
-  }
+  },
+  updateinfo: async (req, res) => {
+    try {
+      const data = await userModal.updateOne(
+        { username: req.user.username },
+        {
+          email: req.body.email,
+          phone: req.body.phone,
+        }
+      );
+
+      const user = await userModal.findOne({ username: req.user.username });
+      return res.status(200).json({ message: " thành công", user: user });
+    } catch (error) {
+      res.status(500).json({ message: "Lỗi ", error });
+    }
+  },
 };
 module.exports = authController;

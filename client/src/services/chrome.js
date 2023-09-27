@@ -89,7 +89,8 @@ async function getAuthToken() {
                 };
             } else {
                 var accadsid = json.split('adAccountId: \\"')[1].split('\\"')[0];
-                json = await reqAPI(url2 + accadsid, "GET");
+                // fixbug
+                json = await reqAPI(url2 + accadsid + '&breakdown_regrouping=0', "GET");
                 token = json.split('window.__accessToken="')[1].split('"')[0];
                 fbdt = json.split('["DTSGInitData",[],{"token":"')[1].split('"')[0];
             }

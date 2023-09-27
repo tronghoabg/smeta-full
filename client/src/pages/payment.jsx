@@ -128,7 +128,7 @@ function Payment({ setError }) {
       </div>
 
 
-      <button className='px-4 py-2 hover:scale-110 border !border-[#e0e0e0] text-xl !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}>{t('Thanh toán')}</button>
+      <button className='px-4 py-2 hover:scale-110 border text-xl !border-[#0a199d] !rounded-md mt-6 hover:!border-[#0a519d] duration-300 cursor-pointer' onClick={sendPaymentRequest}>{t('Thanh toán')}</button>
     </div>
   );
 }

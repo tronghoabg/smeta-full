@@ -19,7 +19,7 @@ function Acctionadmin() {
   const counter = useSelector((state) => state.counter);
   const { darkmode,dataToken } = counter;
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [rowsPerPage, setRowsPerPage] = useState(14);
   const [sttStart, setSttStart] = useState(0);
   const dispatch = useDispatch();
   const handleChangePage = (event, newPage) => {
@@ -99,11 +99,13 @@ function Acctionadmin() {
               value={searchKeyword}  onKeyPress={handleKeyPress}/>
         <input id="button-submit" type="submit" value=" "  onClick={search_btn}/>
         </div>
-      <TableContainer
+       
+    <div className=" h-[calc(100vh-200px)] overflow-y-auto">
+    <TableContainer
         component={Paper}
-        className="mt-10"
+        className="mt-10 overflow-y-auto"
         style={{
-          height: "430px",
+          height: "h-[calc(100vh-200px)] ",
           border: "1px solid #4CCEAC" ,color: darkmode ? 'white ':'',
           background: darkmode ? '#141b2d ':'',
         }}
@@ -157,7 +159,9 @@ function Acctionadmin() {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
+    
+    </div>
+    <TablePagination
         component="div"
         style={{color: darkmode ? 'white ':''}}
         count={data.length}
@@ -165,7 +169,7 @@ function Acctionadmin() {
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        rowsPerPageOptions={[7, 15, 20]}
+        rowsPerPageOptions={[14, 20, 25]}
       />
     </div>
   );

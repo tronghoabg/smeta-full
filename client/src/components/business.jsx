@@ -289,7 +289,7 @@ const TableBusiness = (props) => {
   };
 
   const handleClosemodalConfirm_delete = async () => {
-    setmessagestatus({ type: "success", mess: "" });
+    setOpenSnackbar(true);
     setOpen(true)
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken)); 
