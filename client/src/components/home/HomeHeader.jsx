@@ -93,30 +93,31 @@ function HomeHeader({classfull}) {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    // Cookies.remove("datatoken");
-    // dispatch(setUser(null));
-    // dispatch(setDataToken(null));
-    try {
-      const newDatatoken = await RefreshToken(dataToken);
-      dispatch(setDataToken(newDatatoken));
-      const headers = {
-        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
-      };
-      const data = await instace.patch("/auth/logout", null, { headers });
-      if (data?.data?.message === "Đăng xuất thành công") {
-        Cookies.remove("datatoken");
-        dispatch(setUser(null));
-        dispatch(setDataToken(null));
-        window.location.href = "/";
+    Cookies.remove("datatoken");
+    dispatch(setUser(null));
+    dispatch(setDataToken(null));
+    window.location.href = "/";
+    // try {
+    //   const newDatatoken = await RefreshToken(dataToken);
+    //   dispatch(setDataToken(newDatatoken));
+    //   const headers = {
+    //     Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+    //   };
+    //   const data = await instace.patch("/auth/logout", null, { headers });
+    //   if (data?.data?.message === "Đăng xuất thành công") {
+    //     Cookies.remove("datatoken");
+    //     dispatch(setUser(null));
+    //     dispatch(setDataToken(null));
+    //     window.location.href = "/";
 
-      }
-      // Rest of your code
-    } catch (error) {
-      Cookies.remove("datatoken");
-      dispatch(setUser(null));
-      dispatch(setDataToken(null));
-      window.location.href = "/";
-    }
+    //   }
+    //   // Rest of your code
+    // } catch (error) {
+    //   Cookies.remove("datatoken");
+    //   dispatch(setUser(null));
+    //   dispatch(setDataToken(null));
+    //   window.location.href = "/";
+    // }
   };
 
 

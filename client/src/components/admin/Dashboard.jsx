@@ -11,7 +11,7 @@ function Dashboard({setdisable}) {
     setdisable(false)
   },[])
   const counter = useSelector((state) => state.counter);
-  const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
+  const { isSidebar, darkmode } = counter;
 
 
 
@@ -30,7 +30,7 @@ function Dashboard({setdisable}) {
 
 const Render = () => {
   const counter = useSelector((state) => state.counter);
-  const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
+  const {  selectedDashboard } = counter;
   switch (selectedDashboard) {
     case "main":
       return <Main />

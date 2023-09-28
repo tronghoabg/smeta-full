@@ -1,6 +1,4 @@
 import axios from "axios";
-import Cookies from 'js-cookie';
-let token = Cookies.get('datatoken')
 
 const instace = axios.create({
     baseURL:'/api'

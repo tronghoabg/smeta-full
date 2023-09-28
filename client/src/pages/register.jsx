@@ -1,13 +1,10 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import HomeHeader from "../components/home/HomeHeader";
 import HomeFooter from "../components/home/HomeFooter";
 import { useEffect } from "react";
-import axios from "axios"
-import { useSelector, useDispatch } from 'react-redux';
-import RefreshToken from './RefreshToken'
-import { setDataToken } from "../redux/counterSlice";
+import { useSelector } from 'react-redux';
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import instace from "./customer_axios";
@@ -18,7 +15,6 @@ import validatePass from "../config/validatePass"
 
 
 const Login = ({ setdisable }) => {
-    const dispatch = useDispatch()
     const nav = useNavigate()
     useEffect(() => {
         setdisable(false)
@@ -90,30 +86,6 @@ const Login = ({ setdisable }) => {
             setError("Vui lòng điền đầy đủ thông tin")
         }
     }
-    const language = [
-        { value: "VN", label: "Vietnamese" },
-        { value: "US", label: "English" },
-
-    ]
-    const languageStyles = {
-        language: {
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "rgba(167, 170, 200, 0.365)",
-          borderRadius: "2px",
-          margin: "0",
-          height: "18px",
-          width: "60px",
-        },
-        active: {
-          border: "5px solid rgb(127, 200, 249)",
-          borderRadius: "5px",
-        },
-        span: {
-          marginLeft: "10px",
-        },
-      };
-
     return (
         <>
 

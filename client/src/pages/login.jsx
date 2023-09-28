@@ -1,10 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import HomeHeader from '../components/home/HomeHeader';
 import HomeFooter from '../components/home/HomeFooter';
 import { useEffect } from "react";
-import axios from "axios"
 import instace from './customer_axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDataToken, setUser } from '../redux/counterSlice';

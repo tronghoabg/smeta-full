@@ -1,15 +1,8 @@
-import React , {useEffect}from 'react'
 import Cookies from "js-cookie";
-import { useDispatch, useSelector  } from "react-redux";
-import RefreshToken from "../pages/RefreshToken";
-import {setDataToken , setUser} from "../redux/counterSlice"
-import instace from '../pages/customer_axios';
+
 
 
 function MiddleWare({ children }) {
-    const dispatch  = useDispatch()
-    const counter = useSelector((state) => state.counter);
-    let { dataToken, user } = counter;
     let token = Cookies.get('datatoken')
     // useEffect(() => {
     //     const fetch = async () => {

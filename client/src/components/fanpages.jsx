@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { BiSolidUpArrow, BiSolidDownArrow } from "react-icons/bi";
+
 
 const TablePage = (props) => {
   const { listPage } = props;

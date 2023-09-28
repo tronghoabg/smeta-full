@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Logs from "../components/log";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import { Grid } from "@mui/material";
 import "../components/accsetss/sharePixels.css";
 import Button from "@mui/material/Button";
 import chromeTask from "../services/chrome";
@@ -11,12 +10,12 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import instace from "./customer_axios";
 import RefreshToken from "./RefreshToken";
-import { setUser, setDataToken } from "../redux/counterSlice";
+import { setDataToken } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const SharePixel = (props) => {
   const counter = useSelector((state) => state.counter);
-  let { dataToken, user } = counter
+  let { dataToken } = counter
   const dispatch = useDispatch()
   const { t } = useTranslation();
   const [pixelValue, setPixelValue] = useState("");
@@ -108,12 +107,6 @@ const SharePixel = (props) => {
           return setError('các trường không để trống');
         } else {
           try {
-            let option = {
-              token: tokens,
-              idBm: dataSharePixel.idBm,
-              idPixel: pixelValue,
-              listidAds: processedAdlist,
-            };
             const btnsharepixel = async()=>{
               let Arraydata = [];
               await Promise.all(processedAdlist.map(async (value) => {
