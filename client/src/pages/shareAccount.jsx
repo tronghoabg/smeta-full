@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Logs from "../components/log";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -12,8 +12,8 @@ import RefreshToken from "./RefreshToken";
 import { setDataToken } from "../redux/counterSlice";
 import { useDispatch,useSelector } from "react-redux";
 import instace from "./customer_axios";
+
 const SharePixel = (props) => {
-  const [data,setData] =useState([])
   const { t } = useTranslation();
   const [listTKQC, setListTKQC] = useState([]);
   const [listUser_id, setListUser_id] = useState([]);

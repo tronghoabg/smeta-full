@@ -205,7 +205,6 @@ const buypackageControllers = {
       }
       return
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ message: "Lỗi máy chủ nội bộ" });
     }
   },

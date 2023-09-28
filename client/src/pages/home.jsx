@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import TabList from "../components/tabList";
-import Install from "./install";
-import InToLogin from "./intologin";
 import chromeTask from "../services/chrome";
 
 const Home = (props) => {
   const [isInstall, setInstall] = useState(true);
-  const [isLoginFb, setIsLoginFb] = useState(true);
+  // const [ setIsLoginFb] = useState(true);
 
 
   useEffect(() => {
@@ -20,10 +18,9 @@ const Home = (props) => {
     fetchData();
   }, []);
 
-  const isNotLogin = () => {
-    setIsLoginFb(true);
-    console.log("not login");
-  };
+  // const isNotLogin = () => {
+  //   setIsLoginFb(true);
+  // };
 
   return (
     <>

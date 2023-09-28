@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { BiSolidUpArrow, BiSolidDownArrow } from "react-icons/bi";
 import chromeTask from "../services/chrome";
 import { FaUserEdit } from "react-icons/fa";
 import { Table } from "antd";
@@ -9,7 +8,7 @@ import Box from "@mui/material/Box";
 import Loading from "./Loading";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import { setUser, setDataToken } from "../redux/counterSlice";
+import {  setDataToken } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import instace from "../pages/customer_axios";
 import RefreshToken from "../pages/RefreshToken";
@@ -23,7 +22,7 @@ const TableBusiness = (props) => {
   const [selectsort, setSelectsort] = useState({ key: "", count: 0 });
   const [loading, setloading] = useState(false);
   const counter = useSelector((state) => state.counter);
-  let { dataToken, user } = counter
+  let { dataToken } = counter
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     setloading(true);
@@ -170,7 +169,7 @@ const TableBusiness = (props) => {
 
   const handleRemoveAdminADarray = async () => {
     setloading(true);
-    const token = localStorage.getItem("tokensmeta");
+    // const token = localStorage.getItem("tokensmeta");
     const deletesarray = async () => {
       let datas = selectRemove.map(async (value, index) => {
         let deletes = await chromeTask.deleteAdminBM(value.remove);
