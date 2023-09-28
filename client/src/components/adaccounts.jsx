@@ -365,7 +365,7 @@ const TableAdacounts = (props) => {
 
   return (
     <div>
-      <Snackbar
+      {messagestatus.mess ?  <Snackbar
         open={openSnackbar}
         autoHideDuration={1000}
         onClose={handleCloseSnackbar}
@@ -378,7 +378,8 @@ const TableAdacounts = (props) => {
         >
           {messagestatus.mess}
         </Alert>
-      </Snackbar>
+      </Snackbar> : null}
+     
       <Modal
         open={open}
         onClose={handleClose}

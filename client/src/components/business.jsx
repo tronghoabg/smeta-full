@@ -229,9 +229,8 @@ const TableBusiness = (props) => {
       render: (text) => (
         <button
           disabled={selectRemove.length >= 2}
-          className={` btn_remove_style ${
-            selectRemove.length >= 2 ? "remove__btn__disable" : "remove__btn"
-          }`}
+          className={` btn_remove_style ${selectRemove.length >= 2 ? "remove__btn__disable" : "remove__btn"
+            }`}
           onClick={() => {
             setdeleteone(text);
             setmodalConfirm(true);
@@ -292,7 +291,7 @@ const TableBusiness = (props) => {
     setOpenSnackbar(true);
     setOpen(true)
     const newDatatoken = await RefreshToken(dataToken);
-    dispatch(setDataToken(newDatatoken)); 
+    dispatch(setDataToken(newDatatoken));
     try {
       const data = await instace.post('/buypackage/checkedaction', {
         product_name: "remove admin hidden"
@@ -302,7 +301,7 @@ const TableBusiness = (props) => {
             }`,
         },
       })
-      if(data.data.status === true){
+      if (data.data.status === true) {
         if (deleteone) {
           setmodalConfirm(false);
           handleRemoveAdminAD(deleteone);
@@ -315,12 +314,12 @@ const TableBusiness = (props) => {
       setmessagestatus({ type: "error", mess: error.response.data.message });
 
     }
-   
+
   };
 
   return (
     <table>
-      <Snackbar
+      {messagestatus.mess ? <Snackbar
         open={openSnackbar}
         autoHideDuration={1000}
         onClose={handleCloseSnackbar}
@@ -333,7 +332,8 @@ const TableBusiness = (props) => {
         >
           {messagestatus.mess}
         </Alert>
-      </Snackbar>
+      </Snackbar> : null}
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -364,11 +364,9 @@ const TableBusiness = (props) => {
                 </div>
               </div>
             ) : null}
-            <h3 className="header__modal">{`Account Id: ${
-              datamodal.ID ? datamodal.ID : "..."
-            } - ${t("admin")} (${
-              datamodal.array?.length ? datamodal.array?.length : 0
-            })`}</h3>
+            <h3 className="header__modal">{`Account Id: ${datamodal.ID ? datamodal.ID : "..."
+              } - ${t("admin")} (${datamodal.array?.length ? datamodal.array?.length : 0
+              })`}</h3>
             {loading ? <Loading loadingoption="loading__modal" /> : null}
             <Table
               className="over"
@@ -379,7 +377,7 @@ const TableBusiness = (props) => {
               }}
               columns={columns}
               dataSource={data}
-              
+
             />
           </div>
         </Box>
@@ -402,26 +400,23 @@ const TableBusiness = (props) => {
                 <div className="flex_s header_flex">
                   <span>{value.value}</span>
                   <div
-                    className={`flex_s header_flex icon_header ${
-                      selectsort.count === 0 ||
-                      (selectsort.key === value.key && selectsort.count > 0)
+                    className={`flex_s header_flex icon_header ${selectsort.count === 0 ||
+                        (selectsort.key === value.key && selectsort.count > 0)
                         ? "visible"
                         : "invisible"
-                    }`}
+                      }`}
                   >
                     <div
-                      className={`icon_header1 mb-0.5 ${
-                        selectsort.count % 2 === 0 && selectsort.count > 0
+                      className={`icon_header1 mb-0.5 ${selectsort.count % 2 === 0 && selectsort.count > 0
                           ? "icon_header_action"
                           : ""
-                      }`}
+                        }`}
                     >
                       <i className="fa-solid fa-caret-up" />
                     </div>
                     <div
-                      className={`icon_header2 ${
-                        selectsort.count % 2 === 1 ? "icon_header_action" : ""
-                      }`}
+                      className={`icon_header2 ${selectsort.count % 2 === 1 ? "icon_header_action" : ""
+                        }`}
                     >
                       <i className="fa-solid fa-caret-down"></i>
                     </div>
