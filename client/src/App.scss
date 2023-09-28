@@ -21,6 +21,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.ant-btn-primary{
+  color: #048ae4 !important;
+}
+.ant-btn-primary:hover{
+  color: #fff !important;
+}
 
 .dark_mode_bg_items{
   background-color: #1f2a40 !important;

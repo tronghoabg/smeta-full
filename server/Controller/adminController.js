@@ -2,9 +2,9 @@ const userModal = require("../Modal/userModal");
 const acctionModal = require("../Modal/acctionModal");
 const paymentModal = require("../Modal/paymentModal");
 const buyerPackageModal = require("../Modal/buyerPackageModal");
-const { server } = require("../server")
+const { server } = require("../server");
+const productModal = require("../Modal/productModal");
 // const io = require('socket.io')(server);
-
 
 const adminController = {
   getallUser: async (req, res) => {
@@ -119,14 +119,12 @@ const adminController = {
         payment_total += value.amount;
       });
       const datapackagebuyed = await buyerPackageModal.find();
-      res
-        .status(200)
-        .json({
-          datapackagebuyed: datapackagebuyed.length,
-          payment_total,
-          datauser: datauser.length,
-          dataaction: dataaction.length,
-        });
+      res.status(200).json({
+        datapackagebuyed: datapackagebuyed.length,
+        payment_total,
+        datauser: datauser.length,
+        dataaction: dataaction.length,
+      });
     } catch (error) {
       res.status(500).json({ message: "lỗi server" });
     }
@@ -134,7 +132,7 @@ const adminController = {
   getallpayment: async (req, res) => {
     try {
       const payments = await paymentModal.find().populate("userId");
-      const outputData = payments.map(payment => {
+      const outputData = payments.map((payment) => {
         const { _id, username } = payment.userId;
         return {
           _id,
@@ -142,7 +140,7 @@ const adminController = {
           orderCode: payment.orderCode,
           amount: payment.amount,
           signature: payment.signature,
-          createdAt: payment.createdAt
+          createdAt: payment.createdAt,
         };
       });
 
@@ -152,15 +150,13 @@ const adminController = {
     }
   },
 
-
-
   searchProduct: async (req, res) => {
     try {
       const data = await userModal.find();
       const keyword = req.query.searchbyname.trim().toLowerCase();
       const results = data.filter((item) => {
         for (const key in item) {
-          if (typeof item[key] === 'string' || typeof item[key] === 'number') {
+          if (typeof item[key] === "string" || typeof item[key] === "number") {
             const normalizedValue = String(item[key]).trim().toLowerCase();
             if (normalizedValue.includes(keyword)) {
               return true;
@@ -171,28 +167,36 @@ const adminController = {
       });
       res.status(200).json(results);
     } catch (error) {
-      console.error('Lỗi:', error);
+      console.error("Lỗi:", error);
       res.status(500).json(error);
     }
   },
   getUserBuyId: async (req, res) => {
     try {
-      const userProfile = await userModal.find({ _id: req.params.profileId })
-      const userPayment = await paymentModal.find({ userId: req.params.profileId })
-      const userBuyed = await buyerPackageModal.find({ userId: req.params.profileId })
-      newdata = [...userPayment, ...userBuyed]
-      newdata = newdata.map(value => {
-        if (value.key) {
-          value.createdAt = value.time_start
-        }
-        return value
-      }).sort((a, b) => {
-        const timeA = new Date(a.createdAt).getTime();
-        const timeB = new Date(b.createdAt).getTime();
-        return timeB - timeA;
+      const userProfile = await userModal.find({ _id: req.params.profileId });
+      const userPayment = await paymentModal.find({
+        userId: req.params.profileId,
       });
+      const userBuyed = await buyerPackageModal.find({
+        userId: req.params.profileId,
+      });
+      newdata = [...userPayment, ...userBuyed];
+      newdata = newdata
+        .map((value) => {
+          if (value.key) {
+            value.createdAt = value.time_start;
+          }
+          return value;
+        })
+        .sort((a, b) => {
+          const timeA = new Date(a.createdAt).getTime();
+          const timeB = new Date(b.createdAt).getTime();
+          return timeB - timeA;
+        });
 
-      res.status(200).json({ userProfile: userProfile[0], userPayment: newdata });
+      res
+        .status(200)
+        .json({ userProfile: userProfile[0], userPayment: newdata });
     } catch (error) {
       res.status(500).json(error);
     }
@@ -203,7 +207,7 @@ const adminController = {
       const keyword = req.query.searchbyname.trim().toLowerCase();
       const results = data.filter((item) => {
         for (const key in item) {
-          if (typeof item[key] === 'string' || typeof item[key] === 'number') {
+          if (typeof item[key] === "string" || typeof item[key] === "number") {
             const normalizedValue = String(item[key]).trim().toLowerCase();
             if (normalizedValue.includes(keyword)) {
               return true;
@@ -214,17 +218,14 @@ const adminController = {
       });
       res.status(200).json(results);
     } catch (error) {
-      console.error('Lỗi:', error);
+      console.error("Lỗi:", error);
       res.status(500).json(error);
     }
   },
   searchPayment: async (req, res) => {
     try {
-
-      const data = await paymentModal
-        .find()
-        .populate("userId");
-      const outputData = data.map(payment => {
+      const data = await paymentModal.find().populate("userId");
+      const outputData = data.map((payment) => {
         const { _id, username } = payment.userId;
         return {
           _id,
@@ -232,13 +233,13 @@ const adminController = {
           orderCode: payment.orderCode,
           amount: payment.amount,
           signature: payment.signature,
-          createdAt: payment.createdAt
+          createdAt: payment.createdAt,
         };
       });
       const keyword = req.query.searchbyname.trim().toLowerCase();
       const results = outputData.filter((item) => {
         for (const key in item) {
-          if (typeof item[key] === 'string' || typeof item[key] === 'number') {
+          if (typeof item[key] === "string" || typeof item[key] === "number") {
             const normalizedValue = String(item[key]).trim().toLowerCase();
             if (normalizedValue.includes(keyword)) {
               return true;
@@ -249,42 +250,68 @@ const adminController = {
       });
       res.status(200).json(results);
     } catch (error) {
-      console.error('Lỗi:', error);
+      console.error("Lỗi:", error);
       res.status(500).json(error);
     }
   },
   updateoneuser: async (req, res) => {
     try {
-      const username = req.body.username
-      const email = req.body.email
-      const phone = req.body.phone
-      const role = req.body.role
-      const totleMoney = req.body.totalmoney
-      const action = req.body.action
-     const datauser = userModal.find({username:username})
-     const datauseraction = datauser.action
-      const dataaction = action.map((value,index)=>{
-        const date = new Date
-       return {key:value,time_end: date.setFullYear(date.getFullYear() + 100)}
-      })
-      const update = await userModal.updateOne({ _id: req.params.id }, {
-        username :username,
-        phone:phone,
-        email:email,
-        role:role,
-        totleMoney:totleMoney,
-        action:dataaction
-      })
-      let data = await userModal.find()
-      res.status(200).json({ message: 'sucsess', data })
+      const username = req.body.username;
+      const email = req.body.email;
+      const phone = req.body.phone;
+      const role = req.body.role;
+      const totleMoney = req.body.totalmoney;
+      const action = req.body.action;
+      const datauser = userModal.find({ username: username });
+      const datauseraction = datauser.action;
+      const dataaction = action.map((value, index) => {
+        const date = new Date();
+        return {
+          key: value,
+          time_end: date.setFullYear(date.getFullYear() + 100),
+        };
+      });
+      const update = await userModal.updateOne(
+        { _id: req.params.id },
+        {
+          username: username,
+          phone: phone,
+          email: email,
+          role: role,
+          totleMoney: totleMoney,
+          action: dataaction,
+        }
+      );
+      let data = await userModal.find();
+      res.status(200).json({ message: "sucsess", data });
     } catch (error) {
       res.status(500).json(error);
     }
-  }
-}
+  },
+  updatediscount: async (req, res) => {
+    try {
+      const { timezone, newdiscount } = req.body;
+      const update = await productModal.updateMany(
+        { product_timezone: timezone },
+        { product_desc_discount: newdiscount }
+      );
+      res.status(200).json({ message: "success" });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+  updatePrice: async (req, res) => {
+    try {
+      const { id, newPrice } = req.body;
+      const update = await productModal.updateOne(
+        { _id: id },
+        { product_price: newPrice }
+      );
+      res.status(200).json({ message: "success" });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  },
+};
 
 module.exports = adminController;
-
-
-
-

@@ -164,7 +164,7 @@ function Invoice() {
         </div>
 
     <div className="pt-12">
-      <table className="w-full table-auto border border-collapse">
+      <table className="w-full table-auto border border-collapse max-h-[calc(100vh-200px)] overflow-y-auto">
         <thead>
           <tr>
             {tablehead.map((value, index) => {
@@ -209,7 +209,7 @@ function Invoice() {
           </tr>
         </thead>
         {!loading ? (
-          <tbody>
+          <tbody className=''>
             {displayedData?.map((value, index) => {
               return (
                 <tr

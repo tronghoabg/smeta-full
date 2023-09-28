@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Team from "./Team";
 import Acctionadmin from "./Acctionadmin";
 import Invoice from "./Invoice";
+import Package from "./Package";
 function Dashboard({setdisable}) {
   useEffect(()=>{
     setdisable(false)
@@ -39,6 +40,8 @@ const Render = () => {
       return <Acctionadmin />
     case "main":
       return <Main />
+      case "package":
+      return <Package />
     default:
       return <Invoice />
   }

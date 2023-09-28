@@ -96,7 +96,7 @@ const Login = ({ setdisable, setlogintoken, logintoken }) => {
                         <h1 className='text-2xl text-center mb-[60px]'>{t('login')}</h1>
                         <div>
                             <p className='text-base mb-2 '>{t('account')} </p>
-                            <input type="text" className='w-full p-2 placeholder:text-base' value={valueLogin.username} onChange={(e) => { handleChangeValue(e, "username") }} placeholder='Tên đăng nhập bằng SDT' />
+                            <input type="text" className='w-full p-2 placeholder:text-base' value={valueLogin.username} onChange={(e) => { handleChangeValue(e, "username") }} placeholder='Email/tên đăng nhập' />
                         </div>
                         <div>
                             <p className='text-base mb-2 mt-6 '>{t('password')} </p>

@@ -263,8 +263,9 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
                                 <button onClick={buypackage} className='text-[#fff] bg-blue-400 px-6 py-2.5 hover:bg-blue-600 duration-300  rounded-lg text-base font-medium'>Thanh toán</button>
                             </div>
                         </div>
-                        : <div>
-                            <h1 className='text-center font-medium text-base'>Chưa có thông tin thanh toán</h1>
+                        : <div className='overflow-hidden	'>
+                            <img src="./paymentimg.png" alt="" />
+                            <h1 className='text-center mt-10 font-medium text-base'>Chưa có thông tin thanh toán</h1>
                             <p className='text-center text-[#95AAC9] '>Bạn hãy chọn ít nhất một chức năng để hiển thị
                                 thông tin thanh toán nhé</p>
                         </div>}

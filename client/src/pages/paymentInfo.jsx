@@ -3,9 +3,9 @@ import instace from './customer_axios'
 import RefreshToken from "./RefreshToken";
 import { setDataToken, setUser } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from '../components/Loading';
 import dateFormat from '../config/dateFormat';
 import priceFormat from '../config/priceFormat';
+import { Spin } from 'antd';
 
 function PaymentInfo() {
     const counter = useSelector((state) => state.counter);
@@ -139,8 +139,8 @@ const percent_number = process.env.PERCENT_NUMBER || 1
                         })}
                     </tbody>
                 ) : (
-                    <div className="w-full h-[500px] flex justify-center items-center">
-                        <Loading />
+                    <div className="w-[500px] h-[500px] flex justify-center items-center">
+                        <Spin/>
                     </div>
                 )}
             </table>

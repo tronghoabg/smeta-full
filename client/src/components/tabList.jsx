@@ -18,6 +18,7 @@ const TabList = () => {
   const [refe, setRefe] = useState(true);
   const [token, setToken] = useState("");
 
+
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
@@ -34,14 +35,20 @@ const TabList = () => {
         setLoading(false);
 
         if (!res.isStorage) {
-          var loadBM = await chromeTask.load_business(res);
-          setListBM(loadBM);
+          try {
+            let loadBM = await chromeTask.load_business(res);
+          setListBM([...loadBM]);
+          } catch (error) {
+            console.log(error);
+          }
+          
         }
       }
     }
     fetchData();
-    return () => {};
+    return () => { };
   }, [refe]);
+
 
   const handleTabClick = (index) => {
     if (index === 1) {

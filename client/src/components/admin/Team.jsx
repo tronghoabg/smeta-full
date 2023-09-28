@@ -35,7 +35,7 @@ function Team(props) {
   const { darkmode, loading, profileId } = counter;
   const dispatch = useDispatch();
   let { dataToken } = counter;
-  const [rowsPerPage, setRowsPerPage] = useState(7);
+  const [rowsPerPage, setRowsPerPage] = useState(14);
   const [sttStart, setSttStart] = useState(0);
 
   // const socket = io.connect('http://localhost:5000')
@@ -171,6 +171,48 @@ function Team(props) {
   const [idedit, setIdedit] = useState("");
   const [dataedit, setDataedit] = useState("");
   const [packagee, setPackagee] = useState([]);
+  const [datapackage, setdatapackage] = useState([]);
+
+  useEffect(() => {
+    instace.get('/buypackage/getallprouct')
+        .then(value => {
+            const data = value.data
+            // const productName = data.filter((item, index) => data.indexOf(item.product_name) === index)
+            // console.log(productName);
+            let uniqueProducts = data.reduce((acc, current) => {
+                const existingProduct = acc.find(item => item.product_name === current.product_name);
+
+                if (!existingProduct) {
+                    acc.push(current);
+                }
+
+                return acc;
+            }, []);
+            uniqueProducts = uniqueProducts.reverse().map(value => {
+                let newvalue = { key: value.product_name, option: [] }
+                data.map(item => {
+                    if (item.product_name === value.product_name) {
+                        const newop = [...newvalue.option, item]
+                        newvalue = { ...newvalue, option: newop }
+                    }
+                })
+                return newvalue
+            })
+            let datasss = daoViTri(uniqueProducts)
+            setdatapackage(datasss)
+        })
+}, [])
+
+
+function daoViTri(arr) {
+    if (arr.length >= 5) {  // Đảm bảo mảng có ít nhất 5 phần tử
+      [arr[2], arr[4]] = [arr[4], arr[2]]
+    }
+    return arr;
+  }
+
+  console.log(datapackage);
+
   const showModal = async (id) => {
     setIsModalOpen(true);
     setIdedit(id);
@@ -241,8 +283,7 @@ function Team(props) {
     setPhone(e.target.value);
   };
 
-  const handlePackageChange = (e) => {
-    const value = e.target.value;
+  const handlePackageChange = (value) => {
     if (packagee.includes(value)) {
       setPackagee(packagee.filter((item) => item !== value));
     } else {
@@ -271,14 +312,15 @@ function Team(props) {
         User
       </p>
       <Modal
-        title="Basic Modal"
+        // title="Basic Modal"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        style={{ background: "rgb(227 137 137)" }}
+        // style={{ background: "rgb(227 137 137)" }}
         closable={false}
+        className="px-2 rounded-lg bg-[#f9fbfd]"
       >
-        <div style={{ marginTop: "20px", padding: "0px 30px" }}>
+        <div   style={{ marginTop: "20px", padding: "0px 30px" }}>
           <div
             style={{
               display: "flex",
@@ -340,7 +382,21 @@ function Team(props) {
           >
             <label style={{ width: "20%" }}>Package</label>
             <div style={{ width: "80%" }}>
-              <label style={{ display: "block", marginRight: "20px" }}>
+              {datapackage.map(value=>{
+                return (
+                  <label style={{ display: "block", marginRight: "20px" }}>
+                  <input
+                    type="checkbox"
+                    checked={packagee.includes(value.key)}
+                    onChange={()=>{handlePackageChange(value.key)}}
+                    style={{ marginRight: "20px" }}
+                    value={value.key}
+                  />
+                 {value.key}
+                </label>
+                )
+              })}
+              {/* <label style={{ display: "block", marginRight: "20px" }}>
                 <input
                   type="checkbox"
                   checked={packagee.includes("Share TKQC")}
@@ -379,7 +435,7 @@ function Team(props) {
                   style={{ marginRight: "20px" }}
                 />
                 All
-              </label>
+              </label> */}
             </div>
           </div>
 
@@ -451,7 +507,7 @@ function Team(props) {
               onClick={search_btn}
             />
           </div>
-          <div className="pt-12">
+          <div className="pt-12 h-[calc(100vh-200px)] overflow-y-auto">
             <table className="w-full table-auto border border-collapse">
               <thead>
                 <tr>
@@ -508,7 +564,7 @@ function Team(props) {
                 </tr>
               </thead>
               {!loading ? (
-                <tbody>
+                <tbody className="">
                   {displayedData?.map((value, index) => {
                     return (
                       <tr
@@ -531,10 +587,10 @@ function Team(props) {
                           {dateFormat(value.createAt)}
                         </td>
                         <td className="border p-2 text-start">
-                          {`${priceFormat(value.totleMoney)} c`}
+                          {`${priceFormat(value.totleMoney)}`}
                         </td>
                         <td className="border p-2 text-start">
-                          {`${priceFormat(value.usedMonney)} c`}
+                          {`${priceFormat(value.usedMonney)}`}
                         </td>
                         <td className=" p-2 text-center">
                           <Button

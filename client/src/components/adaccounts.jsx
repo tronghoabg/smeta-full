@@ -57,7 +57,6 @@ const TableAdacounts = (props) => {
           userID,
           token
         );
-        console.log(deletes, "deletes");
         if (deletes.success) {
           setdeleteone(null);
           setloading(false);
@@ -336,8 +335,8 @@ const TableAdacounts = (props) => {
   };
 
   const handleClosemodalConfirm_delete = async () => {
-    setmessagestatus({ type: "success", mess: "" });
-    setOpen(true)
+    // setmessagestatus({ type: "error", mess: "Vui lòng nạp tiền để sử dụng dịch vụ " });
+    setOpenSnackbar(true);
     const newDatatoken = await RefreshToken(dataToken);
     dispatch(setDataToken(newDatatoken));
     try {
