@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route  } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Home from "./pages/home";
@@ -11,7 +11,6 @@ import ShareAccount from "./pages/shareAccount";
 import SharePixel from "./pages/sharePixel";
 import { useEffect, useState } from "react";
 import Test from "./pages/test";
-import axios from "axios";
 import Verifypassword from "./pages/verifypassword";
 import instace from "./pages/customer_axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,12 +23,12 @@ import MiddleWare from "./middleware/MiddleWare";
 import MiddleWareAdmin from "./middleware/MiddlewareAdmin";
 import Payment from "./pages/payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
-import Newpaymentpackage from "./pages/newpaymentpackage";
+// import Newpaymentpackage from "./pages/newpaymentpackage";
 
 function App() {
   const [disable, setdisable] = useState(true);
   let token = Cookies.get("datatoken");
-  const checked = token ? JSON.parse(token).accessToken : null;
+  // const checked = token ? JSON.parse(token).accessToken : null;
   const counter = useSelector((state) => state.counter);
   let { dataToken, user } = counter;
 

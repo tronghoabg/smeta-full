@@ -381,7 +381,7 @@ function daoViTri(arr) {
             <div style={{ width: "80%" }}>
               {datapackage.map(value=>{
                 return (
-                  <label style={{ display: "block", marginRight: "20px" }}>
+                  <label key={value.key} style={{ display: "block", marginRight: "20px" }}>
                   <input
                     type="checkbox"
                     checked={packagee.includes(value.key)}

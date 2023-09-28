@@ -111,7 +111,7 @@ function Package() {
                 <div className='w-[380px]'>
                     {datapackage[0]?.option.map(value => {
                         return (
-                            <div className='flex items-center justify-between m-2 bg-[#f9fbfd] !border-[#c7c7c7] border p-4'>
+                            <div key={value.product_timezone} className='flex items-center justify-between m-2 bg-[#f9fbfd] !border-[#c7c7c7] border p-4'>
                                 <div> <span className='text-base font-medium '>{value.product_timezone / 30}</span> tháng</div>
                                 {openEditDiscount.key === value.product_timezone ? <div className='text-base font-medium ml-8 '>
                                     <input type="number" onChange={(e) => { handleChangeDis(e, value) }} value={openEditDiscount.value} className='w-[80px] !p-0' /> %
@@ -146,7 +146,7 @@ function Package() {
                                 <div className=' w-full '>
                                     {value.option.map(item => {
                                         return (
-                                            <div className='flex items-center justify-between mr-8 mb-2 border bg-[#f9fbfd] !border-[#c7c7c7] p-2 !rounded-md'>
+                                            <div key={item.product_timezone} className='flex items-center justify-between mr-8 mb-2 border bg-[#f9fbfd] !border-[#c7c7c7] p-2 !rounded-md'>
 
                                                 <div className='flex items-center'>
                                                     <div className='mr-8'>

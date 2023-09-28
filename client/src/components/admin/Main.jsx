@@ -7,30 +7,32 @@ import { useSelector, useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import RevenueChart from "./RevenueChart";
 import Header from "./Header";
-import { setUser, setDataToken } from "../../redux/counterSlice";
+import { setDataToken } from "../../redux/counterSlice";
 import RefreshToken from "../../pages/RefreshToken";
 import instace from "../../pages/customer_axios";
+import priceFormat from "../../config/priceFormat";
 
 function Main() {
   const counter = useSelector(
     (state) => state.counter
   );
-  const { loading, payment, isSidebar, darkmode, dataToken } = counter;
-  const [data, setdata] = useState({
-    countEmailMessenger: 0,
-    countPurchasing: 0,
-    countUser: 0,
-  });
-  const dispatch = useDispatch()
-  const Revenue = data.countPurchasing || 0;
+  const { darkmode, dataToken } = counter;
+  // const [data, setdata] = useState({
+  //   countEmailMessenger: 0,
+  //   countPurchasing: 0,
+  //   countUser: 0,
+  // });
 
-  const [dataNewBuyer, setdataNewBuyer] = useState([])
+  const dispatch = useDispatch()
+  // const Revenue = data.countPurchasing || 0;
+
+  // const [dataNewBuyer, setdataNewBuyer] = useState([])
   const [chartData, setChartData] = useState({ data: [], totleMoneydata: 0 })
   const [dataTrans, setDataTrans] = useState([])
 
   const [dataOption, setDataOption] = useState({})
 
- 
+
   // socket.on('register_socket', function (data) {
   //   console.log(data, 12312313);
   // });
@@ -123,10 +125,8 @@ function Main() {
                 className={`font-medium text-xl  ${darkmode ? "text-white" : ""
                   }`}
               >
-                {value.label == "Sales Obtained"
-                  ? `${value.amount
-                    .toLocaleString("en-US")
-                    .replace(".00", "")} c`
+                {value.label === "Sales Obtained"
+                  ? `${priceFormat(value.amount / 1000)} c`
                   : value.amount.toLocaleString("en-US").replace(".00", "")}
               </p>
               <p className="text-dashboard">{value.label}</p>
@@ -146,7 +146,7 @@ function Main() {
             Revenue Generated
           </h1>
           <p className="text-2xl font-bold text-dashboard">
-            {chartData.totleMoneydata.toLocaleString("en-US").replace(".00", "")} c
+            {priceFormat(chartData.totleMoneydata / 1000)} c
           </p>
           <div
             className={`w-full min-h-[380px] flex justify-center items-center   ${darkmode ? "dark_mode_bg" : ""
@@ -187,9 +187,7 @@ function Main() {
                   </div>
                   <div>
                     <p className="px-3 py-1 rounded-sm bg-[#4CCEAC] ">
-                      {Number(value.amount)
-                        .toLocaleString("en-US")
-                        .replace(".00", "")} c
+                      {priceFormat(value.amount / 1000)} c
                     </p>
                   </div>
                 </div>
