@@ -46,16 +46,33 @@ const buypackageControllers = {
         key: "All",
         time_end: { $gt: currentDate },
       });
-      if(checkeddata){
+
+      const checkbuy = userdata.action.filter(value=> value.key === checkeddata.key)
+      const checkAll = userdata.action.filter(value=> value.key === "All")
+
+      if(checkeddata && checkAll.length > 0){
+        return res.status(401).json({ message: "Đã mua gói All" });
+      }
+      if(checkeddata && checkbuy.length > 0){
+        return res.status(401).json({ message: checkbuy[0].product_name });
+      }
+
+      if(checkbuy.length > 0){
         return res.status(401).json({ message: "Đã mua" });
       }
+
       const buyerData = await buyerPackageModal.findOne({
         userId: userdata._id,
         key: productData.product_name,
         time_end: { $gt: currentDate },
       });
+      const checkbuy1 = userdata.action.filter(value=> value.key === buyerData.key)
 
-      if (buyerData) {
+      if(checkbuy1.length > 0){
+        return res.status(401).json({ message: "Đã mua" });
+      }
+
+      if (buyerData && checkbuy.length > 0) {
         res.status(401).json({ message: "Đã mua" });
       } else {
         if (req.user.totleMoney >=realPrice) {
