@@ -119,7 +119,7 @@ function App() {
           <div className="containers">
                 <Routes>
                   <Route
-                    path="/extention"
+                    path="/extension"
                     element={<Home handlerShowHeader={handlerShowHeader}/>}
                   />
                   <Route path="/createadaccount" element={<CreateAccount />} />

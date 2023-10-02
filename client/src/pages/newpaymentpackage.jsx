@@ -201,7 +201,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
                                             {value.option.map(values => {
                                                 if (values.product_timezone === valueTimezone) {
                                                     return (
-                                                        <div key={values.product_timezone}><span className={`font-medium text-base ${value.key === "All" ? "text-yellow-400" : ""}`}>{priceFormat(values.product_price / percent_number)}C</span>
+                                                        <div key={values.product_timezone}><span className={`font-medium text-base ${value.key === "All" ? "text-yellow-400" : ""}`}>{priceFormat(values.product_price / percent_number)} <i class="fa-solid fa-coins coin"></i></span>
                                                             <span className='text-[#95AAC9] italic text-sm'> /{values.product_timezone / 30} monthly</span></div>
                                                     )
                                                 }
@@ -219,7 +219,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
                             <h1 className='text-xl font-medium mb-6'>Hóa đơn</h1>
                             <div className='flex justify-between items-center w-full mb-3 text-base font-medium'>
                                 <p className='text-[14px]'> {valueOption.length} <span>TÍNH NĂNG</span></p>
-                                <p> {priceFormat(curenttotal / percent_number)}c</p>
+                                <p> {priceFormat(curenttotal / percent_number)}  <i class="fa-solid fa-coins coin"></i></p>
                             </div>
 
                             <div className='flex justify-between items-center mb-14 text-[14px] w-full '>
@@ -239,18 +239,18 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
                             </div>
                             <div className='flex justify-between items-center mt-4 w-full mb-3 text-base font-medium'>
                                 <p><span>Tổng số tiền</span></p>
-                                <p className='font-normal'> {priceFormat(curenttotal / percent_number)}c</p>
+                                <p className='font-normal'> {priceFormat(curenttotal / percent_number)}  <i class="fa-solid fa-coins coin"></i></p>
                             </div>
 
                             <div className='flex justify-between items-center w-full mb-3 text-base font-medium'>
                                 <p><span>Giảm giá</span></p>
-                                <p className='font-normal'> - {priceFormat((curenttotal - totalbuy)/percent_number )}c</p>
+                                <p className='font-normal'> - {priceFormat((curenttotal - totalbuy)/percent_number )} <i class="fa-solid fa-coins coin"></i></p>
                             </div>
                             <div className='w-full border-t border-dashed mt-4	!border-blue-600 h-[1px]'>
                             </div>
                             <div className='flex justify-between items-center w-full mb-[50px] mt-4 text-base font-medium'>
                                 <p> <span>Tổng thanh toán</span></p>
-                                <p className=''> {priceFormat(totalbuy / percent_number)}c</p>
+                                <p className=''> {priceFormat(totalbuy / percent_number)}  <i class="fa-solid fa-coins coin"></i></p>
                             </div>
                             <div className='flex w-full justify-center items-center '>
                                 <button onClick={buypackage} className='text-[#fff] bg-blue-400 px-6 py-2.5 hover:bg-blue-600 duration-300  rounded-lg text-base font-medium'>Thanh toán</button>

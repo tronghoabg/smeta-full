@@ -45,7 +45,7 @@ const Header = (props) => {
         }
       </div>
       <div className="header-mid">
-        <NavLink to="/extention">
+        <NavLink to="/extension">
           <img className="logo" src="/logo.png" alt="sMeta.vn"></img>
         </NavLink>
       </div>
