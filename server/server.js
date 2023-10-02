@@ -18,14 +18,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
-app.use(express.static('public')); 
 
+const react = `/apps/server/client/build`
+app.use(express.static('public')); 
+app.use(express.static(react));
 
 app.use('/api/auth', authRouter);
 app.use('/api/pass', password);
 app.use('/api/payment', paymentRouter);
 app.use('/api/buypackage', buypackageRouter);
 app.use('/api/admin', adminRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(`${react}/index.html`);
+}); 
 
 const PORT = process.env.PORT || 5000;
 
