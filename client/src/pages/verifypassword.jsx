@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import HomeHeader from '../components/home/HomeHeader'
 import HomeFooter from '../components/home/HomeFooter'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import ConfirmEmail from '../components/ConfirmEmail'

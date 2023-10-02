@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import instace from "../../pages/customer_axios";
 import { useDispatch } from "react-redux";
 import RefreshToken from "../../pages/RefreshToken";
-import { setUser, setDataToken, setprofileId } from "../../redux/counterSlice";
+import {  setDataToken, setprofileId } from "../../redux/counterSlice";
 import priceFormat from "../../config/priceFormat";
 import dateFormat from "../../config/dateFormat";
 import { useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import { TbArrowBackUp } from "react-icons/tb";
 
 function ViewProfileUser() {
   const counter = useSelector((state) => state.counter);
-  const { darkmode, loading, dataToken, profileId } = counter;
+  const {dataToken, profileId } = counter;
   const dispatch = useDispatch();
   const [data, setData] = useState({})
   const { t } = useTranslation();

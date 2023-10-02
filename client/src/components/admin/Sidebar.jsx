@@ -1,14 +1,10 @@
 import React from "react";
-import { Button } from "antd";
 import SidebarOpen from "./SidebarOpen";
-import { useDispatch, useSelector } from "react-redux";
-import { setisSidebar } from "../../redux/counterSlice";
-import { PiListBold } from "react-icons/pi";
+import {  useSelector } from "react-redux";
 
 const Sidebar = () => {
   const counter = useSelector((state) => state.counter);
   const { isSidebar, darkmode } = counter;
-  const dispatch = useDispatch();
 
   return (
     <div className="w-full h-screen">

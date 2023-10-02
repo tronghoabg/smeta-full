@@ -1,16 +1,14 @@
 import { useTranslation } from "react-i18next";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import { FaCoins, FaUserEdit } from "react-icons/fa";
+import {  FaUserEdit } from "react-icons/fa";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import React, { useEffect, useState } from "react";
 import chromeTask from "../services/chrome";
 import { Table } from "antd";
-import { BiSolidUpArrow, BiSolidDownArrow } from "react-icons/bi";
 import Loading from "./Loading";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
-import { setUser, setDataToken } from "../redux/counterSlice";
+import {  setDataToken } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import instace from "../pages/customer_axios";
 import RefreshToken from "../pages/RefreshToken";
@@ -29,7 +27,7 @@ const TableAdacounts = (props) => {
   const [datamodal, setdatamodal] = useState({});
   const [loading, setloading] = useState(false);
   const counter = useSelector((state) => state.counter);
-  let { dataToken, user } = counter
+  let { dataToken } = counter
   const handleOpen = async (data) => {
     setloading(true);
     setOpen(true);
@@ -365,7 +363,7 @@ const TableAdacounts = (props) => {
 
   return (
     <div>
-      <Snackbar
+      {messagestatus.mess ?  <Snackbar
         open={openSnackbar}
         autoHideDuration={1000}
         onClose={handleCloseSnackbar}
@@ -378,7 +376,8 @@ const TableAdacounts = (props) => {
         >
           {messagestatus.mess}
         </Alert>
-      </Snackbar>
+      </Snackbar> : null}
+     
       <Modal
         open={open}
         onClose={handleClose}

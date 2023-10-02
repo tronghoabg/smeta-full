@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const SidebarOpen = (props) => {
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counter);
-  const { loading, payment, isSidebar, darkmode, selectedDashboard } = counter;
+  const {  isSidebar, darkmode, selectedDashboard } = counter;
 
   const handleTabChange = (event, newValue) => {
     dispatch(setSelectedDashboard(newValue));

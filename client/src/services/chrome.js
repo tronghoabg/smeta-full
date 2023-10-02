@@ -1,4 +1,3 @@
-import { message } from "antd";
 
 /*global chrome */
 const editorExtensionId = "ookgnahfklmejhicejjbfjifppjbfnlk";
@@ -382,31 +381,30 @@ async function getBmlimit(idBm, fbdt) {
     return levelBM;
 }
 
-async function getBusinessInfo() {
-    var authFb = await getAuthFb();
-    if (!authFb) {
-        return { error: "201" };
-    }
-    var arrBM = [];
-    var url = `https://graph.facebook.com/v15.0/me/businesses?fields=can_create_ad_account,owned_ad_accounts{id,currency,timezone_id}&access_token=${authFb.token}`;
+// async function getBusinessInfo() {
+//     var authFb = await getAuthFb();
+//     if (!authFb) {
+//         return { error: "201" };
+//     }
+//     var arrBM = [];
+//     var url = `https://graph.facebook.com/v15.0/me/businesses?fields=can_create_ad_account,owned_ad_accounts{id,currency,timezone_id}&access_token=${authFb.token}`;
 
-    var json = await reqAPI(url, "GET");
-    var obj = JSON.parse(json);
-    var tempNext = obj.paging;
-    var objList = obj.data;
-    if (objList.length === 0) {
-        authFb.listBM = arrBM;
-        return arrBM;
-    }
-    while ("next" in tempNext) {
-        var urlNext = tempNext.next;
-        json = await reqAPI(urlNext, "GET");
-        obj = JSON.parse(json);
-        objList = objList.concat(obj.data);
-        tempNext = obj.paging;
-    }
-    console.log(objList);
-}
+//     var json = await reqAPI(url, "GET");
+//     var obj = JSON.parse(json);
+//     var tempNext = obj.paging;
+//     var objList = obj.data;
+//     if (objList.length === 0) {
+//         authFb.listBM = arrBM;
+//         return arrBM;
+//     }
+//     while ("next" in tempNext) {
+//         var urlNext = tempNext.next;
+//         json = await reqAPI(urlNext, "GET");
+//         obj = JSON.parse(json);
+//         objList = objList.concat(obj.data);
+//         tempNext = obj.paging;
+//     }
+// }
 
 // Lấy tất cả tài khoản business (fields id)
 async function getBusiness(authFb) {
@@ -1158,24 +1156,24 @@ async function deleteAdminBM(id) {
     return obj;
 }
 
-async function renderPixel2(act) {
-    let pixel_select = document.getElementById("pixel-select");
-    let token = localStorage.getItem("token");
-    token = token.token;
-    let url = `https://graph.facebook.com/v15.0/act_${act}/adspixels?fields=id,name&access_token=${token}`;
-    let json = await reqAPI(url, "GET");
-    let objJSON = JSON.parse(json);
-    objJSON = objJSON.data;
-    var html = "";
-    for (var pixel of objJSON) {
-        html += `<option value=${pixel.id}>${pixel.name}</option>`;
-    }
-    if (html === "") {
-        pixel_select.innerHTML = `<option>No Pixel</option>`;
-        return;
-    }
-    pixel_select.innerHTML = html;
-}
+// async function renderPixel2(act) {
+//     let pixel_select = document.getElementById("pixel-select");
+//     let token = localStorage.getItem("token");
+//     token = token.token;
+//     let url = `https://graph.facebook.com/v15.0/act_${act}/adspixels?fields=id,name&access_token=${token}`;
+//     let json = await reqAPI(url, "GET");
+//     let objJSON = JSON.parse(json);
+//     objJSON = objJSON.data;
+//     var html = "";
+//     for (var pixel of objJSON) {
+//         html += `<option value=${pixel.id}>${pixel.name}</option>`;
+//     }
+//     if (html === "") {
+//         pixel_select.innerHTML = `<option>No Pixel</option>`;
+//         return;
+//     }
+//     pixel_select.innerHTML = html;
+// }
 
 async function renderPixeltkqc(act, token) {
     let url = `https://graph.facebook.com/v15.0/act_${act}/adspixels?fields=id,name&access_token=${token}`;
@@ -1818,7 +1816,6 @@ async function create_Ads_Upload_Draft(
 }
 
 async function create_Ad_creative(data) {
-    console.log(data.post_id, " data.post_id");
     let body = {
         access_token: data.token,
         name: "sMt Adcreative",

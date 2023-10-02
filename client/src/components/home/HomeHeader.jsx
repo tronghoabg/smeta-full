@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useRoutes } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import instace from "../../pages/customer_axios";
 import { setUser, setDataToken, setPayFocus } from "../../redux/counterSlice";
 import RefreshToken from "../../pages/RefreshToken";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
-import { Button, Modal } from "antd";
-import ProductPackage from "../../pages/productPackage";
+import {  Modal } from "antd";
 import { AiFillStar } from "react-icons/ai";
 import priceFormat from "../../config/priceFormat";
 import Alert from "@mui/material/Alert";
@@ -76,7 +75,7 @@ function HomeHeader({classfull}) {
       const headers = {
         Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
       };
-      const data = await instace.patch("/auth/updatelang", { language: lng }, { headers });
+       await instace.patch("/auth/updatelang", { language: lng }, { headers });
       setLoading(false)
       i18n.changeLanguage(lng);
       setLng(lng);
@@ -94,53 +93,36 @@ function HomeHeader({classfull}) {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    // Cookies.remove("datatoken");
-    // dispatch(setUser(null));
-    // dispatch(setDataToken(null));
-    try {
-      const newDatatoken = await RefreshToken(dataToken);
-      dispatch(setDataToken(newDatatoken));
-      const headers = {
-        Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
-      };
-      const data = await instace.patch("/auth/logout", null, { headers });
-      if (data?.data?.message == "Đăng xuất thành công") {
-        Cookies.remove("datatoken");
-        dispatch(setUser(null));
-        dispatch(setDataToken(null));
-        window.location.href = "/";
+    Cookies.remove("datatoken");
+    dispatch(setUser(null));
+    dispatch(setDataToken(null));
+    window.location.href = "/";
+    // try {
+    //   const newDatatoken = await RefreshToken(dataToken);
+    //   dispatch(setDataToken(newDatatoken));
+    //   const headers = {
+    //     Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
+    //   };
+    //   const data = await instace.patch("/auth/logout", null, { headers });
+    //   if (data?.data?.message === "Đăng xuất thành công") {
+    //     Cookies.remove("datatoken");
+    //     dispatch(setUser(null));
+    //     dispatch(setDataToken(null));
+    //     window.location.href = "/";
 
-      }
-      // Rest of your code
-    } catch (error) {
-      Cookies.remove("datatoken");
-      dispatch(setUser(null));
-      dispatch(setDataToken(null));
-      window.location.href = "/";
-      console.log(error);
-    }
+    //   }
+    //   // Rest of your code
+    // } catch (error) {
+    //   Cookies.remove("datatoken");
+    //   dispatch(setUser(null));
+    //   dispatch(setDataToken(null));
+    //   window.location.href = "/";
+    // }
   };
 
 
-  const languageStyles = {
-    language: {
-      display: "flex",
-      alignItems: "center",
-      backgroundColor: "rgba(167, 170, 200, 0.365)",
-      borderRadius: "2px",
-      margin: "0",
-      height: "18px",
-      width: "60px",
-    },
-    active: {
-      border: "5px solid rgb(127, 200, 249)",
-      borderRadius: "5px",
-    },
-    span: {
-      marginLeft: "10px",
-    },
-  };
-  const percent_number = process.env.PERCENT_NUMBER || 1;
+ 
+  // const percent_number = process.env.PERCENT_NUMBER || 1;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen1, setIsModalOpen1] = useState(false);
 

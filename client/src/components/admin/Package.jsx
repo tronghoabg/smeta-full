@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import instace from '../../pages/customer_axios';
-import { setUser, setDataToken } from "../../redux/counterSlice";
+import {  setDataToken } from "../../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import RefreshToken from "../../pages/RefreshToken";
 
 function Package() {
     const counter = useSelector((state) => state.counter);
-    let { dataToken, user, darkmode } = counter
+    let { dataToken, darkmode } = counter
     const dispatch = useDispatch()
     const [datapackage, setdatapackage] = useState([]);
     const [openEditDiscount, setOpenEditDiscount] = useState({ key: "", value: "" })
@@ -53,7 +53,7 @@ function Package() {
             try {
                 const newDatatoken = await RefreshToken(dataToken);
                 dispatch(setDataToken(newDatatoken));
-                const data = await instace.post('/admin/updatediscount', {
+                await instace.post('/admin/updatediscount', {
                     timezone: openEditDiscount.key,
                     newdiscount: openEditDiscount.value
                 }, {
@@ -64,13 +64,9 @@ function Package() {
                 })
                 setOpenEditDiscount({ key: "", value: "" })
                 setrefe(!refe)
-                console.log("ok");
             } catch (error) {
-                console.log(error);
             }
-        } else {
-            console.log("điền đủ thông tin");
-        }
+        } 
 
     }
 
@@ -85,7 +81,7 @@ function Package() {
             try {
                 const newDatatoken = await RefreshToken(dataToken);
                 dispatch(setDataToken(newDatatoken));
-                const data = await instace.post('/admin/updatePrice', {
+                 await instace.post('/admin/updatePrice', {
                     id: openEditPrice.id,
                     newPrice: openEditPrice.value
                 }, {
@@ -96,12 +92,9 @@ function Package() {
                 })
                 setOpenEditPrice({ id: "", value: "" })
                 setrefe(!refe)
-                console.log("ok");
             } catch (error) {
-                console.log(error);
             }
         } else {
-            console.log("điền đủ thông tin");
         }
     }
 
@@ -118,7 +111,7 @@ function Package() {
                 <div className='w-[380px]'>
                     {datapackage[0]?.option.map(value => {
                         return (
-                            <div className='flex items-center justify-between m-2 bg-[#f9fbfd] !border-[#c7c7c7] border p-4'>
+                            <div key={value.product_timezone} className='flex items-center justify-between m-2 bg-[#f9fbfd] !border-[#c7c7c7] border p-4'>
                                 <div> <span className='text-base font-medium '>{value.product_timezone / 30}</span> tháng</div>
                                 {openEditDiscount.key === value.product_timezone ? <div className='text-base font-medium ml-8 '>
                                     <input type="number" onChange={(e) => { handleChangeDis(e, value) }} value={openEditDiscount.value} className='w-[80px] !p-0' /> %
@@ -153,7 +146,7 @@ function Package() {
                                 <div className=' w-full '>
                                     {value.option.map(item => {
                                         return (
-                                            <div className='flex items-center justify-between mr-8 mb-2 border bg-[#f9fbfd] !border-[#c7c7c7] p-2 !rounded-md'>
+                                            <div key={item.product_timezone} className='flex items-center justify-between mr-8 mb-2 border bg-[#f9fbfd] !border-[#c7c7c7] p-2 !rounded-md'>
 
                                                 <div className='flex items-center'>
                                                     <div className='mr-8'>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TabList from "../components/tabList";
-import Install from "./install";
 import InToLogin from "./intologin";
+import Install from './install'
 import chromeTask from "../services/chrome";
 
 const Home = (props) => {
@@ -26,6 +26,9 @@ const Home = (props) => {
     setIsLoginFb(false);
     handlerShowHeader()
   };
+  // const isNotLogin = () => {
+  //   setIsLoginFb(true);
+  // };
 
   return (
     <>

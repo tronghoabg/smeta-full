@@ -1,6 +1,5 @@
 import React from 'react'
 import Cookies from "js-cookie";
-import { useDispatch, useSelector } from "react-redux";
 import Loading from '../components/Loading';
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Header from "./Header";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
@@ -6,13 +6,12 @@ import instace from "../../pages/customer_axios";
 import { useDispatch } from "react-redux";
 import Loading from "../Loading";
 import RefreshToken from "../../pages/RefreshToken";
-import { setUser, setDataToken, setprofileId } from "../../redux/counterSlice";
+import {  setDataToken, setprofileId } from "../../redux/counterSlice";
 import { Button } from "antd";
 import { TablePagination } from "@mui/material";
 import priceFormat from "../../config/priceFormat";
 import dateFormat from "../../config/dateFormat";
 import ViewProfileUser from "./ViewProfileUser";
-import io from "socket.io-client";
 import { Modal } from "antd";
 
 function Team(props) {
@@ -211,8 +210,6 @@ function daoViTri(arr) {
     return arr;
   }
 
-  console.log(datapackage);
-
   const showModal = async (id) => {
     setIsModalOpen(true);
     setIdedit(id);
@@ -384,7 +381,7 @@ function daoViTri(arr) {
             <div style={{ width: "80%" }}>
               {datapackage.map(value=>{
                 return (
-                  <label style={{ display: "block", marginRight: "20px" }}>
+                  <label key={value.key} style={{ display: "block", marginRight: "20px" }}>
                   <input
                     type="checkbox"
                     checked={packagee.includes(value.key)}

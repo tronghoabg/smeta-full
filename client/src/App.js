@@ -1,5 +1,5 @@
 import "./App.scss";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route  } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Home from "./pages/home";
@@ -23,7 +23,7 @@ import MiddleWare from "./middleware/MiddleWare";
 import MiddleWareAdmin from "./middleware/MiddlewareAdmin";
 import Payment from "./pages/payment";
 import PaymentSuccess from "./pages/PaymentSuccess";
-
+// import Newpaymentpackage from "./pages/newpaymentpackage";
 
 function App() {
   const [disable, setdisable] = useState(true);

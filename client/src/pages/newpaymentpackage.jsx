@@ -4,14 +4,10 @@ import RefreshToken from "./RefreshToken";
 import { setDataToken, setPayFocus, setUser } from "../redux/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import priceFormat from '../config/priceFormat';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from "react-i18next"
-import { BsFillCheckCircleFill, BsCalendar2Date, BsCheck } from "react-icons/bs";
+import { BsCalendar2Date, BsCheck } from "react-icons/bs";
 import { Radio } from 'antd';
 import { HiOutlineColorSwatch } from "react-icons/hi";
 import { PiMedalFill } from "react-icons/pi";
-
-
 
 
 function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
@@ -21,9 +17,8 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
         }
     }, [])
     const counter = useSelector((state) => state.counter);
-    const { t } = useTranslation();
     const dispatch = useDispatch()
-    let { dataToken, user } = counter
+    let { dataToken } = counter
     const [data, setdata] = useState([])
 
 
@@ -31,8 +26,6 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
         instace.get('/buypackage/getallprouct')
             .then(value => {
                 const data = value.data
-                // const productName = data.filter((item, index) => data.indexOf(item.product_name) === index)
-                // console.log(productName);
                 let uniqueProducts = data.reduce((acc, current) => {
                     const existingProduct = acc.find(item => item.product_name === current.product_name);
 
@@ -70,7 +63,7 @@ function Newpaymentpackage({ setError, setOpen, setdisable, handleCancel }) {
         setError({ type: "error", error: "" })
         setOpen(true)
 
-        if (valueOption?.length ==0) {
+        if (valueOption?.length === 0) {
             return setError({ type: "error", error: "Chọn gói của bạn" })
         }
         try {

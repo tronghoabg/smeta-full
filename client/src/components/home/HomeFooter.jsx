@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineFieldTime,AiFillFacebook,AiOutlineSend } from "react-icons/ai";
+import { AiFillFacebook,AiOutlineSend } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 
 function HomeFooter() {

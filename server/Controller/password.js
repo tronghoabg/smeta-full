@@ -54,7 +54,6 @@ async function passwordretrieval(req, res) {
       const bta = await user.findOne({username:username})
       const pass = bta.password
       // const passwordMatch = await bcrypt.compare(password,pass);
-      console.log(pass);
       res.status(200).json({ message: 'Thành công',pass });
     } catch (error) {
       console.error(error);
@@ -102,7 +101,6 @@ async function passwordretrieval(req, res) {
     try {
       const { username, pass, newpassword } = req.body;
       const userToUpdate = await user.findOne({ username: username, password:pass });
-      console.log(userToUpdate, "userToUpdate");
       if (!userToUpdate) {
         return res.status(404).json({ message: 'Không tìm thấy người dùng' });
       }

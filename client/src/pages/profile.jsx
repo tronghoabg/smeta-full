@@ -9,7 +9,6 @@ import validatePass from "../config/validatePass"
 import instace from "./customer_axios";
 import { setUser, setDataToken } from "../redux/counterSlice";
 import RefreshToken from "./RefreshToken";
-import { message } from "antd";
 import Payment from "./payment";
 import PaymentInfo from "./paymentInfo";
 import priceFormat from "../config/priceFormat";
@@ -24,7 +23,6 @@ import { BiSolidUserCircle, BiCoinStack, BiSolidColor, BiHistory } from "react-i
 const Profile = ({ setdisable }) => {
     const [searchParams] = useSearchParams();
     const queryParamValue = !searchParams.get('option') ? "profile" : searchParams.get('option');
-    console.log(queryParamValue);
     const counter = useSelector((state) => state.counter);
     let { dataToken, user } = counter
     const [openChange, setOpenChange] = useState(false)
@@ -41,8 +39,11 @@ const Profile = ({ setdisable }) => {
     };
 
     useEffect(() => {
-        setdisable(false)
+        if(setdisable){
+            setdisable(false)
+        }
     }, [])
+
     const percent_number = process.env.PERCENT_NUMBER || 1
     const options = {
         hour: 'numeric',
@@ -76,7 +77,7 @@ const Profile = ({ setdisable }) => {
         setOpen(true)
         if (dataPass.newPass && dataPass.oldpass && dataPass.renewPass) {
             if (validatePass(dataPass.newPass)) {
-                if (dataPass.renewPass == dataPass.newPass) {
+                if (dataPass.renewPass === dataPass.newPass) {
                     try {
                         const newDatatoken = await RefreshToken(dataToken);
                         dispatch(setDataToken(newDatatoken));
@@ -89,7 +90,6 @@ const Profile = ({ setdisable }) => {
                         setError({ type: "success", error: data.data.message })
                         setOpenChange(false)
                     } catch (error) {
-                        console.log(error.response.data.message);
                         setError({ type: "error", error: error.response.data.message })
                     }
                 } else {
@@ -123,7 +123,6 @@ const Profile = ({ setdisable }) => {
     }
 
     const hanldleSave = async (key) => {
-        console.log(updateInfo);
         setError({ type: "success", error: "" })
         setOpen(true)
         if (validateEmail(updateInfo.email) && validatePhoneNumber(updateInfo.phone)) {
@@ -140,7 +139,6 @@ const Profile = ({ setdisable }) => {
             })
             setError({ type: "success", error: "Cập nhật thành công" })
             dispatch(setUser(data.data.user))
-            console.log(data);
             setopenkeyupdate({ ...openkeyupdate, [`${key}`]: !openkeyupdate[`${key}`] })
         } else {
             setError({ type: "error", error: "Sai định dạng" })
@@ -164,7 +162,7 @@ const Profile = ({ setdisable }) => {
                             <div className="col-span-2 border !border-[#999] h-fit  p-4 text-[16px] text-[#212529] rounded-md">
                                 {!openChange ? <div>
                                     {dataProfile.map(value => {
-                                        if (value.title == "Email" || value.title == "Số điện thoại") {
+                                        if (value.title === "Email" || value.title === "Số điện thoại") {
                                             return (
                                                 <div key={value.title} className="flex border-b border-b-[#c2c1c1] py-3">
                                                     <div className="w-[200px] mr-[50px]">{t(value.title)}</div>

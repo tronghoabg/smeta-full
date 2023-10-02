@@ -12,7 +12,7 @@ function Payment({ setError }) {
   const counter = useSelector((state) => state.counter);
   const { t } = useTranslation();
 
-  let { dataToken, user } = counter
+  let {  user } = counter
   const paymentGatewayUrl = 'https://api-merchant.payos.vn/v2/payment-requests';
   const payosApiKey = '2c147a4d-568a-454d-afd8-bb7ea084125f';
   const checksumKey = '1fdf589537cd65762241d2163a631d7f8f8ad6ad54bd01ad24f0d05122d53fe7';
@@ -113,7 +113,7 @@ function Payment({ setError }) {
       <div className='grid grid-cols-5 w-full gap-4'>
         {dataCard.map((value,index) => {
           return (
-            <div key={index} onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount == value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
+            <div key={index} onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount === value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
               <p className=' px-4 pb-2  pt-4'> {priceFormat(value.value / Number(percent_number))} C</p>
             </div>
