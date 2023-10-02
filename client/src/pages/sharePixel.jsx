@@ -170,8 +170,8 @@ const SharePixel = (props) => {
       <div className="tool-bar">
         <div className="icon">
           <i className="fa-solid fa-shapes"></i>
+          <span>{t("sharepixel")}</span>
         </div>
-        <div className="link-text">{t("sharepixel")}</div>
       </div>
       <div className="tab-content">
         <div className="main-screen">

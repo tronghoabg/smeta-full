@@ -7,7 +7,8 @@ import Loading from "./Loading";
 import InToLogin from "../pages/intologin";
 import * as XLSX from "xlsx";
 
-const TabList = () => {
+const TabList = (props) => {
+  const {isNotLogin} = props
   const [activeTab, setActiveTab] = useState(1);
   const [listAd, setListAd] = useState([]);
   const [listBM, setListBM] = useState([]);
@@ -24,6 +25,7 @@ const TabList = () => {
     async function fetchData() {
       var res = await chromeTask.load_data();
       if (res.error === "201") {
+        isNotLogin()
         return;
       } else {
         setToken(res.token);
@@ -156,6 +158,11 @@ const TabList = () => {
 
   return (
     <>
+    {isNotLogin ?
+    ''
+    :
+    ''  
+  }
       <div className="tool-bar">
         <div className="left">
           <div className="tab-list">

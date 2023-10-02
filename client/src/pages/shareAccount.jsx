@@ -10,7 +10,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import RefreshToken from "./RefreshToken";
 import { setDataToken } from "../redux/counterSlice";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import instace from "./customer_axios";
 
 const SharePixel = (props) => {
@@ -25,8 +25,8 @@ const SharePixel = (props) => {
   const [error, setError] = useState(null);
   const [log, setLog] = useState([]);
   const counter = useSelector((state) => state.counter);
-  let { dataToken } = counter
-  const dispatch = useDispatch()
+  let { dataToken } = counter;
+  const dispatch = useDispatch();
   const options = [
     { value: "281423141961500", label: t("admin") },
     { value: "461336843905730", label: t("advertisers") },
@@ -65,92 +65,94 @@ const SharePixel = (props) => {
   };
 
   async function btnsharetkqc() {
-    setError('')
+    setError("");
     setOpen(true);
     const tokensmeta = localStorage.getItem("tokensmeta");
     if (
       listTKQC.length === 0 ||
       listUser_id.length === 0 ||
       listrole.length === 0
-      ) {
-        return setError("Vui lòng nhập đầy đủ thông tin");
-      } else if (listrole === "vui lòng chọn quyền") {
-        return setError("Vui lòng chọn quyền");
-      } else {
-        const newDatatoken = await RefreshToken(dataToken);
-        dispatch(setDataToken(newDatatoken));
-        try {
-        const dataa  = await instace.post('/buypackage/checkedaction', {
-          product_name: "Share TKQC"
-        }, {
-          headers: {
-            Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""
-                }`,
-        },
-      }
-      )
-      if(dataa.data.status === true){}
-      const btnsharepixel = async () => {
-        const tasks = apilisttkqc.map(async (tk) => {
-        let Arraydata = [];
-        for (let i = 0; i < apilistUser_id.length; i++) {
-          let user = apilistUser_id[i];
-          const res = await chromeTask.ShareTKQC_one(
-            tokensmeta,
-            tk,
-            user,
-            apirole
-          );
-          Arraydata.push(res);
-        }
-        return Arraydata;
-      });
-      return await Promise.all(tasks);
-    };
-    const kq = await btnsharepixel();
-    setListTKQC("");
-    setListUser_id("");
-    const data = kq;
-    let array = [];
-    data.map((item) => {
-      item.map((value) => {
-        let messages = "";
-        if (value.obj.success) {
-          messages = `${value.adacc} ---> ${value.user_id} Share thành công`;
-        } else {
-          if (value.obj.error) {
-            messages = value.obj.error.message;
+    ) {
+      return setError("Vui lòng nhập đầy đủ thông tin");
+    } else if (listrole === "vui lòng chọn quyền") {
+      return setError("Vui lòng chọn quyền");
+    } else {
+      const newDatatoken = await RefreshToken(dataToken);
+      dispatch(setDataToken(newDatatoken));
+      try {
+        const dataa = await instace.post(
+          "/buypackage/checkedaction",
+          {
+            product_name: "Share TKQC",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${
+                newDatatoken ? newDatatoken.accessToken : ""
+              }`,
+            },
           }
+        );
+        if (dataa.data.status === true) {
         }
-        array.push(messages);
-      });
-    });
-    setLog(array);
+        const btnsharepixel = async () => {
+          const tasks = apilisttkqc.map(async (tk) => {
+            let Arraydata = [];
+            for (let i = 0; i < apilistUser_id.length; i++) {
+              let user = apilistUser_id[i];
+              const res = await chromeTask.ShareTKQC_one(
+                tokensmeta,
+                tk,
+                user,
+                apirole
+              );
+              Arraydata.push(res);
+            }
+            return Arraydata;
+          });
+          return await Promise.all(tasks);
+        };
+        const kq = await btnsharepixel();
+        setListTKQC("");
+        setListUser_id("");
+        const data = kq;
+        let array = [];
+        data.map((item) => {
+          item.map((value) => {
+            let messages = "";
+            if (value.obj.success) {
+              messages = `${value.adacc} ---> ${value.user_id} Share thành công`;
+            } else {
+              if (value.obj.error) {
+                messages = value.obj.error.message;
+              }
+            }
+            array.push(messages);
+          });
+        });
+        setLog(array);
+      } catch (error) {
+        setError(error.response.data.message);
       }
-      
-      catch (error) {
-        setError(error.response.data.message)
-      }
-    } 
+    }
   }
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    
+
     setOpen(false);
   };
-  
-
 
   return (
     <>
       <div className="tool-bar">
         <div className="icon">
           <i className="fa-solid fa-shapes"></i>
+          <span>{t("shareAdAccount")}</span>
         </div>
-        <div className="link-text">{t("shareAdAccount")}</div>
       </div>
+
       <div className="tab-content">
         <div className="main-screen">
           <div className="screen">

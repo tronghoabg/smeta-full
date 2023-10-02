@@ -108,7 +108,7 @@ const percent_number = process.env.PERCENT_NUMBER || 1
                                             {dateFormat(value.createdAt)}
                                         </td>
                                         <td className="!border-[#ccc] border p-2 text-center text-base text-red-500 font-medium">
-                                            -{priceFormat(value.price / Number(percent_number))} C
+                                            -{priceFormat(value.price / Number(percent_number))} <i class="fa-solid fa-coins"></i>
                                         </td>
                                     </tr>
                                 )
@@ -131,7 +131,7 @@ const percent_number = process.env.PERCENT_NUMBER || 1
                                     {dateFormat(value.createdAt)}
                                 </td>
                                 <td className="!border-[#ccc] border p-2 text-center text-base text-green-500 font-medium">
-                                    +{priceFormat(value.amount / Number(percent_number))} C
+                                    +{priceFormat(value.amount / Number(percent_number))} <i class="fa-solid fa-coins"></i>
                                 </td>
                             </tr>
                             )

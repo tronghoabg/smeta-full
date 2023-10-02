@@ -213,7 +213,7 @@ function HomeHeader({classfull}) {
             }}
           />
           <h1 className="text-base text-white opacity-80 font-medium ml-8 cursor-pointer">
-            <a href="/extention"> Go to Extention</a>
+            <a href="/extension"> Go to Extention</a>
           </h1>
           {dataToken ? <button
             className="text-base text-[#fffc53] opacity-80 font-medium ml-8 cursor-pointer relative hover:text-[rgb(124,255,130)]"
@@ -258,7 +258,7 @@ function HomeHeader({classfull}) {
                 setIsModalOpen1(true)
                 setIsModalOpen(false)
               }} className={`text-[#56ff47] mx-5 cursor-pointer ${payFocus ? "payFocus_animation" : ""}`}>
-                {priceFormat(user?.totleMoney)} C
+                {priceFormat(user?.totleMoney)} <i class="fa-solid fa-coins coin"></i>
               </p>
               <button className="" onClick={handleLogout}>
                 {t("logout")}
