@@ -31,8 +31,8 @@ function Payment({ setError }) {
     //       price: 500000,
     //     },
     //   ],
-    cancelUrl: 'https://havensavvy.com',
-    returnUrl: 'https://havensavvy.com/paymentsuccess',
+    cancelUrl: 'https://app.smeta.vn',
+    returnUrl: 'https://app.smeta.vn/paymentsuccess',
     //   signature: '',
   });
 
