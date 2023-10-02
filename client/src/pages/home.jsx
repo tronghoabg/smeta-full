@@ -5,6 +5,7 @@ import InToLogin from "./intologin";
 import chromeTask from "../services/chrome";
 
 const Home = (props) => {
+  const {handlerShowHeader} = props
   const [isInstall, setInstall] = useState(true);
   const [isLoginFb, setIsLoginFb] = useState(true);
 
@@ -13,6 +14,7 @@ const Home = (props) => {
     async function fetchData() {
       let checkInstall = await chromeTask.sendTask("checkinstall");
       if (checkInstall === "not install") {
+        handlerShowHeader()
         setInstall(false);
         return;
       }
@@ -21,15 +23,23 @@ const Home = (props) => {
   }, []);
 
   const isNotLogin = () => {
-    setIsLoginFb(true);
-    console.log("not login");
+    setIsLoginFb(false);
+    handlerShowHeader()
   };
 
   return (
     <>
-    {isInstall &&
-          <TabList />
-    }
+        {isInstall ?
+          <>    
+          {!isLoginFb ?
+                <InToLogin/>
+              :
+                <TabList isNotLogin={isNotLogin}/>
+              }
+              </>
+              :
+              <Install/>
+        }
     </>
   );
 };
