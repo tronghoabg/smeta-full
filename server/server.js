@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(cookieParser());
 
-const react = `/apps/server/client/build`
+const react = `/apps/smeta-full/client/build`
 app.use(express.static('public')); 
 app.use(express.static(react));
 

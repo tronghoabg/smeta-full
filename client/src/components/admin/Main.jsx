@@ -133,7 +133,7 @@ console.log(chartData, dataTrans,dataOption )
                   }`}
               >
                 {value.label === "Sales Obtained"
-                  ? `${priceFormat(value.amount / 1000)}`
+                  ? `${priceFormat(value.amount)}`
                   : value.amount.toLocaleString("en-US").replace(".00", "")}
               </p>
               <p className="text-dashboard">{value.label}</p>
@@ -153,7 +153,7 @@ console.log(chartData, dataTrans,dataOption )
             Revenue Generated
           </h1>
           <p className="text-2xl font-bold text-dashboard">
-            {priceFormat(chartData.totleMoneydata / 1000)}  <i class="fa-solid fa-coins coin"></i>
+            {priceFormat(chartData.totleMoneydata )}  <i class="fa-solid fa-coins coin"></i>
           </p>
           <div
             className={`w-full min-h-[380px] flex justify-center items-center   ${darkmode ? "dark_mode_bg" : ""
@@ -195,7 +195,7 @@ console.log(chartData, dataTrans,dataOption )
                   </div>
                   <div>
                     <p className="px-3 py-1 rounded-sm bg-[#4CCEAC] ">
-                      {priceFormat(value.amount / 1000)}  <i class="fa-solid fa-coins coin"></i>
+                      {priceFormat(value.amount )}  <i class="fa-solid fa-coins coin"></i>
                     </p>
                   </div>
                 </div>

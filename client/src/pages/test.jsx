@@ -26,7 +26,7 @@ const settings = {
 // downloadFromStore
 function Test({setdisable}) {
   const downnow = () => {
-    window.location.href = 'https://chrome.google.com/webstore/detail/smeta/ookgnahfklmejhicejjbfjifppjbfnlk?hl=vi';
+    window.location.href = '/files/smetav4.zip';
   }
   const { t } = useTranslation();
 
