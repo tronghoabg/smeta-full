@@ -31,8 +31,10 @@ function Payment({ setError }) {
     //       price: 500000,
     //     },
     //   ],
-    cancelUrl: 'https://app.smeta.vn',
-    returnUrl: 'https://app.smeta.vn/paymentsuccess',
+    // cancelUrl: 'https://app.smeta.vn',
+    // returnUrl: 'https://app.smeta.vn/paymentsuccess',
+    cancelUrl: 'http://localhost:3000',
+    returnUrl: 'http://localhost:3000/paymentsuccess',
     //   signature: '',
   });
 

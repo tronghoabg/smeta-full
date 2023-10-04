@@ -51,6 +51,7 @@ function PaymentSuccess() {
             if (data?.createPayment.data.message === "Error") {
                 return  nav('/')
             }else{
+                console.log(data.data);
                 setPrice(data.data.data.data.amount)
                 let newuser = {...data?.createPayment?.data.user, totleMoney: Number(data?.createPayment?.data.user.totleMoney) + Number(data.data.data.data.amount) }
                 dispatch(setUser(newuser))
