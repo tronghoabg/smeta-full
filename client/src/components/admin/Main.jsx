@@ -46,7 +46,7 @@ function Main() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const newDatatoken = await RefreshToken(dataToken);
+        let newDatatoken = await RefreshToken(dataToken);
         dispatch(setDataToken(newDatatoken));
 
         const response = await instace.get('/admin/getallpayment', {
@@ -55,6 +55,9 @@ function Main() {
           },
         });
         setChartData({ data: response.data.data, totleMoneydata: response.data.totleMoneydata })
+
+        newDatatoken = await RefreshToken(newDatatoken);
+        dispatch(setDataToken(newDatatoken))
         const responseTran = await instace.get('/admin/getpaymentmost', {
           headers: {
             Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
@@ -62,6 +65,9 @@ function Main() {
         });
         setDataTrans(responseTran.data.data)
 
+
+        newDatatoken = await RefreshToken(newDatatoken);
+        dispatch(setDataToken(newDatatoken))
         const responseOption = await instace.get('/admin/getadminoption', {
           headers: {
             Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
