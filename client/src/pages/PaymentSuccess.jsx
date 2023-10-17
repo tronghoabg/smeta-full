@@ -25,7 +25,7 @@ function PaymentSuccess() {
                 'x-api-key': payosApiKey,
             };
             const data = await axios.get(`https://api-merchant.payos.vn/v2/payment-requests/${orderCode}`, { headers })
-            if (data.data.data.status == "PAID") {
+            if (data.data.data.status === "PAID") {
                 const createPayment = await instace.post('/payment/postpayment', {
                     orderCode: orderCode,
                     createdAt: data.data.data.createdAt,

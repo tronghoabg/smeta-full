@@ -13,7 +13,7 @@ async function RefreshToken(dataToken) {
       Cookies.set("datatoken", JSON.stringify(response.data), {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       });
-      return response.data; //Trả về dữ liệu từ phản hồi API
+      return response.data; 
     } else {
       return dataToken;
     }
