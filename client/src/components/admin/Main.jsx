@@ -31,7 +31,7 @@ function Main() {
   const [dataTrans, setDataTrans] = useState([])
 
   const [dataOption, setDataOption] = useState({})
-
+console.log(chartData, dataTrans,dataOption )
 
   // socket.on('register_socket', function (data) {
   //   console.log(data, 12312313);
@@ -43,10 +43,11 @@ function Main() {
     // socket.emit('soket-reveive', "client to sever ")
   }
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const newDatatoken = await RefreshToken(dataToken);
+        let newDatatoken = await RefreshToken(dataToken);
         dispatch(setDataToken(newDatatoken));
 
         const response = await instace.get('/admin/getallpayment', {
@@ -55,6 +56,9 @@ function Main() {
           },
         });
         setChartData({ data: response.data.data, totleMoneydata: response.data.totleMoneydata })
+
+        newDatatoken = await RefreshToken(newDatatoken);
+        dispatch(setDataToken(newDatatoken))
         const responseTran = await instace.get('/admin/getpaymentmost', {
           headers: {
             Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
@@ -62,6 +66,9 @@ function Main() {
         });
         setDataTrans(responseTran.data.data)
 
+
+        newDatatoken = await RefreshToken(newDatatoken);
+        dispatch(setDataToken(newDatatoken))
         const responseOption = await instace.get('/admin/getadminoption', {
           headers: {
             Authorization: `Bearer ${newDatatoken ? newDatatoken.accessToken : ""}`,
@@ -126,7 +133,7 @@ function Main() {
                   }`}
               >
                 {value.label === "Sales Obtained"
-                  ? `${priceFormat(value.amount / 1000)} c`
+                  ? `${priceFormat(value.amount)}`
                   : value.amount.toLocaleString("en-US").replace(".00", "")}
               </p>
               <p className="text-dashboard">{value.label}</p>
@@ -146,7 +153,7 @@ function Main() {
             Revenue Generated
           </h1>
           <p className="text-2xl font-bold text-dashboard">
-            {priceFormat(chartData.totleMoneydata / 1000)} c
+            {priceFormat(chartData.totleMoneydata )}  <i class="fa-solid fa-coins coin"></i>
           </p>
           <div
             className={`w-full min-h-[380px] flex justify-center items-center   ${darkmode ? "dark_mode_bg" : ""
@@ -176,10 +183,11 @@ function Main() {
                 >
                   <div>
                     <p className="text-base text-dashboard font-medium w-[200px] overflow-hidden">
-                      {value.userId.email}
+                      {value.userId?  value.userId.email: "None" }
                     </p>
                     <p className={`text-sm ${darkmode ? "text-white" : ""}`}>
-                      {value.userId.name}
+                      {value.userId?  value.userId.name: "None" }
+
                     </p>
                   </div>
                   <div className={`${darkmode ? "text-white" : "text-black"}`}>
@@ -187,7 +195,7 @@ function Main() {
                   </div>
                   <div>
                     <p className="px-3 py-1 rounded-sm bg-[#4CCEAC] ">
-                      {priceFormat(value.amount / 1000)} c
+                      {priceFormat(value.amount )}  <i class="fa-solid fa-coins coin"></i>
                     </p>
                   </div>
                 </div>

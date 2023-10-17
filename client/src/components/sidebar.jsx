@@ -70,7 +70,7 @@ const Sidebar = ({ active }) => {
                 </div>
             </div>
             <div className='mid'>
-                <NavLink to='/extention' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
+                <NavLink to='/extension' className='side-link flex pr-1 !justify-between items-center' onClick={closeSidebar}>
                     <div className='flex'>
                     <div className='icon'><i className="fa-solid fa-house"></i></div>
                     <div className='link-text'>{t('home')}</div>

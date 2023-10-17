@@ -27,6 +27,7 @@ import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const [disable, setdisable] = useState(true);
+  const [isShowHeader, setShowHeader] = useState(true)
   let token = Cookies.get("datatoken");
   // const checked = token ? JSON.parse(token).accessToken : null;
   const counter = useSelector((state) => state.counter);
@@ -67,7 +68,10 @@ function App() {
     fetch();
   }, []);
 
-
+  const handlerShowHeader = () => {
+    setShowHeader(false)
+  }
+ 
   return (
     <>
       <Routes>
@@ -111,12 +115,12 @@ function App() {
 
       {disable ? (
         <div className="app-container">
-          <Header />
+          <Header isShowHeader={isShowHeader}/>
           <div className="containers">
                 <Routes>
                   <Route
-                    path="/extention"
-                    element={<Home />}
+                    path="/extension"
+                    element={<Home handlerShowHeader={handlerShowHeader}/>}
                   />
                   <Route path="/createadaccount" element={<CreateAccount />} />
                   <Route path="/setcamp" element={<SetCamp />} />

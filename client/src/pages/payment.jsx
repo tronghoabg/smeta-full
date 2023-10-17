@@ -31,8 +31,8 @@ function Payment({ setError }) {
     //       price: 500000,
     //     },
     //   ],
-    cancelUrl: 'https://havensavvy.com',
-    returnUrl: 'https://havensavvy.com/paymentsuccess',
+    cancelUrl: 'https://app.smeta.vn',
+    returnUrl: 'https://app.smeta.vn/paymentsuccess',
     //   signature: '',
   });
 
@@ -107,7 +107,7 @@ function Payment({ setError }) {
           }
         }} />
       <BsArrowLeftRight className='ml-[40px] text-xl'/>
-        <div className='ml-[40px] text-xl font-medium'>{priceFormat(orderInfo.amount/percent_number)} c</div>
+        <div className='ml-[40px] text-xl font-medium'>{priceFormat(orderInfo.amount/percent_number)} <i class="fa-solid fa-coins coin"></i></div>
 
      </div>
       <div className='grid grid-cols-5 w-full gap-4'>
@@ -115,7 +115,8 @@ function Payment({ setError }) {
           return (
             <div key={index} onClick={() => { setOrderInfo({ ...orderInfo, amount: value.value }) }} className={`border-2 rounded-lg ${orderInfo.amount === value.value ? "border-2 !border-[#ff8b8b] scale-110 !shadow-lg" : "!border-[#f0f0f0]"} hover:shadow-lg overflow-hidden duration-500  text-start shadow-sm cursor-pointer`}>
               <h1 className='text-xl px-4 py-2 font-medium border-b !border-[#f0f0f0] bg-[#0a519d] text-white'>{value.name}</h1>
-              <p className=' px-4 pb-2  pt-4'> {priceFormat(value.value / Number(percent_number))} C</p>
+              <p className=' px-4 pb-2  pt-4'> {priceFormat(value.value / Number(percent_number))} <i class="fa-solid fa-coins coin"></i>
+               </p>
             </div>
           )
         })}
