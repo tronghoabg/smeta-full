@@ -11,7 +11,7 @@ function PaymentSuccess() {
     const payosApiKey = '2c147a4d-568a-454d-afd8-bb7ea084125f';
     const orderCode = window.localStorage.getItem("sMetaOrderCode")
     const counter = useSelector((state) => state.counter);
-    let { dataToken, user } = counter
+    let { dataToken} = counter
     const nav = useNavigate()
     const dispatch = useDispatch()
     const [price, setPrice] = useState(0)
